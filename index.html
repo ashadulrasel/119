@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>𒆜𝔸𝕤𝕙𝕒𝕕𝕦𝕝 ℝ𝕒𝕤𝕖𝕝𒆜</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Premium glassmorphic card with Telegram button above logo and robust toast." />
+  <meta name="description" content="Premium glassmorphic card with Telegram button above logo and robust top toast." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,19 +12,18 @@
     :root{
       --accent-1: #00eaff;
       --accent-2: #7cffc4;
-      --accent-3: #3be9ff;
       --text: #ffffff;
-      --toast-offset: clamp(56px, 10svh, 120px);
       --card-radius: 32px;
       --easing: cubic-bezier(.2,.8,.2,1);
+      --name-shift: clamp(10px, 2.2vw, 36px);
 
-      /* এখানে বদলান: লোগো টেক্সট ডানে কতটা যাবে */
-      --name-shift: clamp(12px, 2.2vw, 40px);
+      /* টপ টোস্ট অফসেট (উপরে কতটা নিচে বসবে) */
+      --toast-offset: clamp(24px, 8svh, 96px);
     }
     @property --rx { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
     @property --ry { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
     @property --float { syntax: "<length>"; inherits: false; initial-value: 0px; }
-    @property --ty { syntax: "<length>"; inherits: false; initial-value: 120vh; } /* Toast translateY (px only) */
+    @property --ty { syntax: "<length>"; inherits: false; initial-value: 120vh; } /* Toast translateY (px only, for top) */
 
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -40,33 +39,26 @@
       position: relative;
       isolation: isolate;
     }
-
-    /* Aurora backdrop */
+    /* Aurora */
     body::before{
-      content:"";
-      position: absolute; inset: -20%;
+      content:""; position:absolute; inset:-20%;
       background:
         radial-gradient(60% 80% at 10% 20%, #00eaff26 0%, transparent 60%),
         radial-gradient(60% 80% at 90% 80%, #7cffc420 0%, transparent 70%),
         radial-gradient(60% 60% at 30% 90%, #3be9ff1f 0%, transparent 70%);
-      filter: blur(40px) saturate(120%);
-      z-index: -2;
+      filter: blur(40px) saturate(120%); z-index:-2;
       animation: aurora 16s ease-in-out infinite alternate;
     }
-    @keyframes aurora { 0% { transform: translateY(-2%) scale(1); opacity:.9; } 100%{ transform: translateY(2%) scale(1.03); opacity:1; } }
+    @keyframes aurora { 0%{ transform:translateY(-2%) scale(1); opacity:.9;} 100%{ transform:translateY(2%) scale(1.03); opacity:1;} }
     @media (prefers-reduced-motion: reduce){ body::before{ animation:none; } }
 
     .container {
-      width: 100%;
-      min-height: inherit;
-      display: grid;
-      place-items: center;
+      width: 100%; min-height: inherit; display: grid; place-items: center;
       padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
-      perspective: 1200px;
-      gap: clamp(12px,4vw,26px);
+      perspective: 1200px; gap: clamp(12px,4vw,26px);
     }
 
-    /* Logo card */
+    /* Card */
     .logo-area {
       display: grid;
       grid-template-areas:
@@ -80,156 +72,110 @@
       padding: clamp(16px, 3.8vw, 40px) clamp(16px, 4vw, 48px);
       border-radius: var(--card-radius);
       box-shadow: 0 10px 50px #0006, 0 1.5px 0 #ffffff22 inset;
-      -webkit-backdrop-filter: blur(6px);
-      backdrop-filter: blur(6px);
-      max-width: min(92vw, 920px);
-      width: 100%;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      max-width: min(92vw, 920px); width: 100%;
       transform-style: preserve-3d;
       transform: rotateX(var(--rx)) rotateY(var(--ry));
       transition: transform .35s var(--easing), box-shadow .35s var(--easing);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-    .logo-area::after{
-      content:""; position:absolute; inset:0;
+    .logo-area::after{ content:""; position:absolute; inset:0;
       background: linear-gradient(120deg, transparent 0%, #ffffff0f 40%, transparent 60%);
-      transform: translateX(-120%); animation: sheen 6s ease-in-out infinite; pointer-events:none;
-    }
-    @keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+      transform: translateX(-120%); animation: sheen 6s ease-in-out infinite; pointer-events:none; }
+    @keyframes sheen { 0%,70%{ transform:translateX(-120%);} 100%{ transform:translateX(120%);} }
 
-    /* Telegram button (inside card) */
     .telegram-btn {
       grid-area: btn; justify-self: center;
       display: inline-flex; align-items: center; justify-content: center;
       gap: clamp(8px, 2vw, 12px);
       padding: clamp(10px, 2.6vw, 14px) clamp(16px, 3.6vw, 24px);
       font-size: clamp(13px, 2.8vw, 16px);
-      font-weight: 800; color: #fff; text-decoration: none;
-      border: none; border-radius: 999px;
+      font-weight: 800; color:#fff; text-decoration:none; border:none; border-radius:999px;
       background: linear-gradient(90deg, #0088cc 0%, #00eaff 100%);
       box-shadow: 0 12px 34px #00b3ff55, 0 1px 0 #ffffff88 inset;
-      max-width: min(92vw, 520px);
-      position: relative; overflow: hidden;
-      transform: translate(var(--mx, 0px), calc(var(--my, 0px) + var(--float))) scale(1);
+      max-width: min(92vw, 520px); position: relative; overflow: hidden;
+      transform: translate(var(--mx,0px), calc(var(--my,0px) + var(--float))) scale(1);
       animation: tgPop .7s var(--easing) both, tgFloat 4.2s ease-in-out 1.2s infinite alternate;
-      -webkit-tap-highlight-color: transparent;
     }
-    .telegram-btn::after{
-      content:""; position:absolute; inset:0;
+    .telegram-btn::after{ content:""; position:absolute; inset:0;
       background: linear-gradient(120deg, transparent 0%, #ffffff2a 45%, transparent 60%);
-      transform: translateX(-120%); animation: tgSheen 6s ease-in-out 1.6s infinite; pointer-events: none;
-    }
+      transform: translateX(-120%); animation: tgSheen 6s ease-in-out 1.6s infinite; pointer-events:none; }
     .telegram-icon{ width: clamp(18px, 2.8vw, 24px); height: clamp(18px, 2.8vw, 24px); fill:#fff; filter: drop-shadow(0 0 6px #00eaffcc); }
-    @keyframes tgPop{ from { opacity:0; transform: translateY(-10px) scale(.96);} to { opacity:1; transform: translateY(0) scale(1);} }
-    @keyframes tgFloat{ 0%{ --float: 0px; } 100%{ --float: -6px; } }
-    @keyframes tgSheen{ 0%,70%{ transform: translateX(-120%);} 100%{ transform: translateX(120%);} }
+    @keyframes tgPop{ from{ opacity:0; transform:translateY(-10px) scale(.96);} to{ opacity:1; transform:translateY(0) scale(1);} }
+    @keyframes tgFloat{ 0%{ --float:0px;} 100%{ --float:-6px;} }
+    @keyframes tgSheen{ 0%,70%{ transform:translateX(-120%);} 100%{ transform:translateX(120%);} }
 
-    /* Avatar + SVG ring */
-    .logo-avatar { grid-area: avatar; position: relative; width: clamp(68px, 15vw, 122px); aspect-ratio: 1; }
-    .logo-img { width:100%; height:100%; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow: 0 0 28px #ffffffaa, 0 0 22px #00eaff55; }
-    .ring {
-      position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px);
-      pointer-events: none; filter: drop-shadow(0 0 8px #00eaff88);
-      animation: ringSpin 9s linear infinite;
-    }
-    @keyframes ringSpin { to { transform: rotate(360deg); } }
+    .logo-avatar{ grid-area: avatar; position: relative; width: clamp(68px, 15vw, 122px); aspect-ratio: 1; }
+    .logo-img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow: 0 0 28px #ffffffaa, 0 0 22px #00eaff55; }
+    .ring{ position:absolute; inset:-6px; width:calc(100% + 12px); height:calc(100% + 12px); pointer-events:none; filter:drop-shadow(0 0 8px #00eaff88); animation: ringSpin 9s linear infinite; }
+    @keyframes ringSpin{ to{ transform:rotate(360deg);} }
 
-    .logo-text {
+    .logo-text{
       grid-area: name; margin:0;
-      font-size: clamp(1.25rem, 6vw, 2.7rem); line-height: 1.15; font-weight: 800; letter-spacing: 1.1px;
+      font-size: clamp(1.25rem, 6vw, 2.7rem); line-height:1.15; font-weight:800; letter-spacing:1.1px;
       background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff00cc);
-      background-size: 1000% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size:1000% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
       animation: gradientMove 9s ease-in-out infinite;
-      text-shadow: 0 2px 10px #0008, 0 0 20px #fff6, 0 0 40px #00f4;
-      filter: drop-shadow(0 0 16px #fff6);
-      overflow-wrap:anywhere;
-
-      /* মূল কাজ: একটু ডান দিকে শিফট */
-      margin-left: var(--name-shift);
-      justify-self: start;
+      text-shadow:0 2px 10px #0008, 0 0 20px #fff6, 0 0 40px #00f4; filter:drop-shadow(0 0 16px #fff6);
+      overflow-wrap:anywhere; margin-left: var(--name-shift); justify-self: start;
     }
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50%{ background-position: 100% 50%; } 100%{ background-position: 0% 50%; } }
+    @keyframes gradientMove{ 0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } }
 
-    /* ছোট স্ক্রিনে টেক্সট সেন্টার + শিফট রিসেট */
-    @media (max-width: 640px){
-      .logo-area{
-        grid-template-areas:
-          "btn"
-          "avatar"
-          "name";
-        grid-template-columns: 1fr;
-        justify-items: center;
-        text-align: center;
-      }
-      .logo-text{ text-align:center; margin-left:0; }
+    @media (max-width:640px){
+      .logo-area{ grid-template-areas:"btn" "avatar" "name"; grid-template-columns:1fr; justify-items:center; text-align:center; }
+      .logo-text{ margin-left:0; text-align:center; }
     }
 
-    /* Toast (stable on mobile) */
-    .note-toast {
-      --radius: 18px; --glass: rgba(255, 255, 255, 0.12); --border: rgba(255, 255, 255, 0.28);
-      position: fixed; left: 50%;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--toast-offset));
+    /* TOP Toast (stable) */
+    .note-toast{
+      --radius:18px; --glass:rgba(255,255,255,0.12); --border:rgba(255,255,255,0.28);
+      position: fixed; left:50%;
+      top: calc(env(safe-area-inset-top, 0px) + var(--toast-offset));
       width: clamp(280px, calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)), 780px);
       box-sizing: border-box; contain: layout paint; will-change: transform, opacity;
       padding: clamp(12px, 3.5vw, 16px) clamp(12px, 3.5vw, 16px) clamp(14px, 4vw, 20px);
-      display: grid; grid-template-areas: "icon content actions"; grid-template-columns: auto 1fr auto; align-items: start; gap: clamp(10px, 2.8vw, 14px);
-      z-index: 9999; overflow: hidden; isolation: isolate; touch-action: pan-y;
+      display:grid; grid-template-areas:"icon content actions"; grid-template-columns:auto 1fr auto; align-items:start; gap:clamp(10px,2.8vw,14px);
+      z-index:9999; overflow:hidden; isolation:isolate; touch-action: pan-y;
       color:#fff; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-      background: radial-gradient(120% 140% at 0% 100%, #ffffff1a 0%, #ffffff0d 50%, #ffffff08 100%), var(--glass);
-      border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 16px 60px #0007, 0 1px 0 #ffffff22 inset;
+      background: radial-gradient(120% 140% at 0% 0%, #ffffff1a 0%, #ffffff0d 50%, #ffffff08 100%), var(--glass);
+      border-radius: var(--radius); border:1px solid var(--border); box-shadow: 0 16px 60px #0007, 0 1px 0 #ffffff22 inset;
+
       --scale: .98;
-      transform: translate3d(-50%, var(--ty, 120vh), 0) scale(var(--scale));
-      transition: transform 540ms var(--easing), opacity 420ms ease; opacity: 0;
+      /* টপে থাকার কারণে উপরে লুকোনোর জন্য negative translate ব্যবহার */
+      transform: translate3d(-50%, calc(-1 * var(--ty, 120vh)), 0) scale(var(--scale));
+      transition: transform 540ms var(--easing), opacity 420ms ease;
+      opacity:0;
     }
-    .note-toast.show { --ty: 0px; --scale: 1; opacity: 1; }
-    .note-toast::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); box-shadow: 0 0 26px #00eaff66; }
+    .note-toast.show{ --ty: 0px; --scale:1; opacity:1; }
+    .note-toast::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:linear-gradient(180deg, var(--accent-1), var(--accent-2)); box-shadow:0 0 26px #00eaff66; }
 
-    .note-icon { grid-area: icon; width: clamp(36px, 8vw, 44px); height: clamp(36px, 8vw, 44px);
-      display:grid; place-content:center; border-radius:12px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      box-shadow: 0 10px 26px #00eaff66, inset 0 1px 0 #ffffff66; color:#00232e; align-self:start; margin-left:2px; }
-    .note-icon .emoji { font-size: clamp(18px, 4.2vw, 24px); filter: drop-shadow(0 0 6px #ffffffaa); }
+    .note-icon{ grid-area:icon; width:clamp(36px,8vw,44px); height:clamp(36px,8vw,44px); display:grid; place-content:center; border-radius:12px; background:linear-gradient(135deg, var(--accent-1), var(--accent-2)); box-shadow:0 10px 26px #00eaff66, inset 0 1px 0 #ffffff66; color:#00232e; align-self:start; margin-left:2px;}
+    .note-icon .emoji{ font-size:clamp(18px,4.2vw,24px); filter:drop-shadow(0 0 6px #ffffffaa); }
+    .note-content{ grid-area:content; display:flex; flex-direction:column; gap:6px; min-width:0; }
+    .note-title{ margin:0; font-size:clamp(15px,3.5vw,18px); font-weight:700; }
+    .note-text{ margin:0; font-size:clamp(13px,3.2vw,16px); line-height:1.55; text-wrap:pretty; }
+    .note-actions{ grid-area:actions; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+    .note-cta{ appearance:none; border:none; cursor:pointer; padding:clamp(8px,2.2vw,10px) clamp(12px,3vw,14px); border-radius:12px; font-weight:800; color:#00232e; background:linear-gradient(135deg,#00ffc6,#3be9ff); box-shadow:0 8px 26px #00eaff66, inset 0 1px 0 #ffffffaa; text-decoration:none; white-space:nowrap; font-size:clamp(12px,2.8vw,14px); transition:transform .15s ease, box-shadow .25s ease; }
+    .note-cta:hover{ transform:translateY(-1px); box-shadow:0 12px 32px #00eaff99; }
+    .note-close,.note-optout{ height:clamp(30px,7vw,36px); display:grid; place-content:center; border-radius:999px; background:#ffffff16; color:#fff; border:1px solid #ffffff22; box-shadow: inset 0 1px 0 #ffffff55; cursor:pointer; padding:0 clamp(10px,2.6vw,12px); font-weight:700; font-size:clamp(11px,2.6vw,13px); transition:background .2s ease, transform .15s ease; }
+    .note-close{ width:clamp(30px,7vw,36px); padding:0; }
+    .note-close:hover,.note-optout:hover{ background:#ffffff24; transform:translateY(-1px); }
+    .note-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:#ffffff1a; border-radius:0 0 18px 18px; overflow:hidden;}
+    .note-progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#00ffc6,#00eaff,#77faff); background-size:200% 100%; box-shadow:0 0 12px #00eaffaa; }
+    @keyframes noteProgress{ from{width:0%; background-position:0% 50%;} to{width:100%; background-position:100% 50%;} }
 
-    .note-content { grid-area: content; display:flex; flex-direction:column; gap:6px; min-width:0; }
-    .note-title{ margin:0; font-size: clamp(15px, 3.5vw, 18px); font-weight:700; letter-spacing:.2px; }
-    .note-text { margin:0; font-size: clamp(13px, 3.2vw, 16px); line-height: 1.55; text-wrap: pretty; }
-    .note-actions{ grid-area: actions; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-    .note-cta {
-      appearance:none; border:none; cursor:pointer;
-      padding: clamp(8px, 2.2vw, 10px) clamp(12px, 3vw, 14px);
-      border-radius:12px; font-weight:800; color:#00232e;
-      background: linear-gradient(135deg, #00ffc6, #3be9ff);
-      box-shadow: 0 8px 26px #00eaff66, inset 0 1px 0 #ffffffaa;
-      text-decoration:none; white-space:nowrap; font-size: clamp(12px, 2.8vw, 14px); position:relative; overflow:hidden;
-      transition: transform .15s ease, box-shadow .25s ease, filter .2s ease;
-    }
-    .note-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 32px #00eaff99; }
-    .note-close, .note-optout {
-      height: clamp(30px, 7vw, 36px); display:grid; place-content:center; border-radius:999px; background:#ffffff16; color:#fff;
-      border:1px solid #ffffff22; box-shadow: inset 0 1px 0 #ffffff55; cursor:pointer;
-      padding:0 clamp(10px, 2.6vw, 12px); font-weight:700; font-size: clamp(11px, 2.6vw, 13px);
-      transition: background .2s ease, transform .15s ease;
-    }
-    .note-close { width: clamp(30px, 7vw, 36px); padding:0; }
-    .note-close:hover, .note-optout:hover { background:#ffffff24; transform: translateY(-1px); }
-    .note-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:#ffffff1a; border-radius:0 0 18px 18px; overflow:hidden; }
-    .note-progress-bar{ width:0%; height:100%; background: linear-gradient(90deg, #00ffc6, #00eaff, #77faff); background-size:200% 100%; box-shadow:0 0 12px #00eaffaa; }
-
-    @keyframes noteProgress{ from { width:0%; background-position:0% 50%; } to { width:100%; background-position:100% 50%; } }
-
-    @media (max-width: 420px){
-      .note-toast{ grid-template-areas: "icon content" "actions actions"; grid-template-columns: auto 1fr; gap:10px; }
+    @media (max-width:420px){
+      .note-toast{ grid-template-areas:"icon content" "actions actions"; grid-template-columns:auto 1fr; gap:10px; }
       .note-progress{ height:2px; }
     }
-
     @media (prefers-reduced-motion: reduce){
-      .telegram-btn, .logo-area, .logo-img, .ring, .note-toast { animation: none !important; transition: none !important; }
-      .note-progress-bar{ animation: none !important; }
+      .telegram-btn, .logo-area, .ring, .note-toast{ animation:none !important; transition:none !important; }
+      .note-progress-bar{ animation:none !important; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Logo card -->
     <div class="logo-area" id="card">
       <a href="https://t.me/AllFreePlatform" target="_blank" rel="noopener noreferrer" class="telegram-btn" id="tgBtn" aria-label="Join on Telegram">
         <svg class="telegram-icon" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="120" fill="#0088cc"/><path d="M180.7 70.6c2.2-9.1-7.1-16.6-15.2-12.7L44.7 120.2c-8.1 3.9-7.7 15.5.6 18.7l34.2 13.7 13.7 34.2c3.2 8.3 14.8 8.7 18.7.6l62.3-120.8z" fill="#fff"/><path d="M180.7 70.6l-62.3 120.8c-3.9 8.1-15.5 7.7-18.7-.6l-13.7-34.2 94.7-85.9z" fill="#c8e6fa"/></svg>
@@ -238,16 +184,13 @@
 
       <div class="logo-avatar">
         <img class="logo-img" src="https://iili.io/F4fJTgI.jpg" alt="Ashadul Rasel logo" width="122" height="122" decoding="async" fetchpriority="high">
-        <!-- SVG ring overlay -->
         <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"  stop-color="#00eaff"/>
-              <stop offset="50%" stop-color="#7cffc4"/>
-              <stop offset="100%" stop-color="#00eaff"/>
+              <stop offset="0%"  stop-color="#00eaff"/><stop offset="50%" stop-color="#7cffc4"/><stop offset="100%" stop-color="#00eaff"/>
             </linearGradient>
           </defs>
-          <circle cx="60" cy="60" r="56" fill="none" stroke="url(#ringGrad)" stroke-width="6" stroke-linecap="round" />
+          <circle cx="60" cy="60" r="56" fill="none" stroke="url(#ringGrad)" stroke-width="6" stroke-linecap="round"/>
         </svg>
       </div>
 
@@ -255,7 +198,7 @@
     </div>
   </div>
 
-  <!-- Toast -->
+  <!-- TOP Toast -->
   <div id="note-toast" class="note-toast" role="status" aria-live="polite" aria-atomic="true" aria-label="App download notification">
     <div class="note-icon"><span class="emoji">📺</span></div>
     <div class="note-content">
@@ -271,7 +214,7 @@
   </div>
 
   <script>
-    // Card tilt + magnetic button (pointer devices)
+    // Card tilt + magnetic btn (pointer devices)
     (function () {
       const card = document.getElementById('card');
       const btn  = document.getElementById('tgBtn');
@@ -286,7 +229,6 @@
         const y = (e.clientY - r.top)  / r.height;
         const ry = (x - 0.5) * 10, rx = -(y - 0.5) * 8;
         const mx = (x - 0.5) * 10, my = (y - 0.5) * 8;
-
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
@@ -305,7 +247,7 @@
       window.addEventListener('blur', leave);
     })();
 
-    // Toast controller (px-only translate to avoid mobile glitch)
+    // TOP toast controller (px-only, swipe-up to dismiss)
     (function () {
       const toast = document.getElementById('note-toast');
       const closeBtn = document.getElementById('note-close');
@@ -321,14 +263,13 @@
 
       function progress(ms){
         bar.style.animation = 'none'; bar.style.width = '0%';
-        void bar.offsetWidth; // reflow
+        void bar.offsetWidth;
         bar.style.animation = `noteProgress ${ms}ms linear forwards`;
       }
       function show(){
         if (showing || optedOut() || document.hidden) return;
         showing = true; remain = VISIBLE; start = performance.now();
-        toast.classList.add('show'); // --ty: 0px via CSS
-        progress(remain);
+        toast.classList.add('show'); progress(remain);
         hideT = setTimeout(hide, remain);
       }
       function hide(){
@@ -336,7 +277,6 @@
         clearTimeout(hideT); hideT = null; bar.style.animation = 'none';
         toast.style.removeProperty('--ty'); toast.style.removeProperty('--scale'); toast.style.removeProperty('opacity');
       }
-
       function pause(){
         if (!showing) return;
         const elapsed = performance.now() - start;
@@ -362,16 +302,16 @@
       toast.addEventListener('focusin', pause);
       toast.addEventListener('focusout', resume);
 
-      // Touch: swipe-down to dismiss (px-only)
+      // Touch: swipe-up to dismiss (top toast)
       let sy = 0, drag = false;
       toast.addEventListener('touchstart', e => { if (!showing) return; sy = e.touches[0].clientY; drag = true; pause(); }, {passive:true});
       toast.addEventListener('touchmove',  e => {
         if (!drag) return;
-        const dy = e.touches[0].clientY - sy;
-        const y = Math.max(0, dy);
-        toast.style.setProperty('--ty', y + 'px');
+        const dy = e.touches[0].clientY - sy; // up = negative
+        const up = Math.max(0, -dy);          // px to move up
+        toast.style.setProperty('--ty', up + 'px');
         toast.style.setProperty('--scale', '0.98');
-        toast.style.opacity = String(Math.max(0.35, 1 - y/300));
+        toast.style.opacity = String(Math.max(0.35, 1 - up/300));
       }, {passive:true});
       toast.addEventListener('touchend',   () => {
         if (!drag) return; drag = false;
@@ -395,7 +335,6 @@
       });
 
       window.addEventListener('keydown', e => { if (e.key === 'Escape' && showing) hide(); });
-
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) { clearInterval(loop); }
         else if (!optedOut()) { clearInterval(loop); loop = setInterval(show, INTERVAL); }
