@@ -18,20 +18,20 @@
       --card-radius: 32px;
       --easing: cubic-bezier(.2,.8,.2,1);
 
-      /* নতুন: লোগো টেক্সটকে একটু ডান দিকে সরানোর শিফট */
-      --name-shift: clamp(8px, 2.6vw, 28px);
+      /* এখানে বদলান: লোগো টেক্সট ডানে কতটা যাবে */
+      --name-shift: clamp(10px, 2.2vw, 36px);
     }
     @property --rx { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
     @property --ry { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
     @property --float { syntax: "<length>"; inherits: false; initial-value: 0px; }
-    @property --ty { syntax: "<length>"; inherits: false; initial-value: 120vh; } /* Toast translateY */
+    @property --ty { syntax: "<length>"; inherits: false; initial-value: 120vh; } /* Toast translateY (px only) */
 
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     body {
       margin: 0;
       min-height: 100svh;
-      font-family: 'Hind Silliguri','Hind Siliguri',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+      font-family: 'Hind Siliguri', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
       color: var(--text);
       display: grid;
       place-items: center;
@@ -72,7 +72,6 @@
       grid-template-areas:
         "btn btn"
         "avatar name";
-      /* নতুন: টেক্সট কলামকে minmax(0,1fr) করে ওভারফ্লো সেফ */
       grid-template-columns: auto minmax(0,1fr);
       align-items: center;
       column-gap: clamp(12px, 3.2vw, 28px);
@@ -144,7 +143,8 @@
       text-shadow: 0 2px 10px #0008, 0 0 20px #fff6, 0 0 40px #00f4;
       filter: drop-shadow(0 0 16px #fff6);
       overflow-wrap:anywhere;
-      /* নতুন: একটু ডান দিকে সরানো */
+
+      /* মূল কাজ: একটু ডান দিকে শিফট */
       margin-left: var(--name-shift);
       justify-self: start;
     }
@@ -164,7 +164,7 @@
       .logo-text{ text-align:center; margin-left:0; }
     }
 
-    /* Toast (stable) */
+    /* Toast (stable on mobile) */
     .note-toast {
       --radius: 18px; --glass: rgba(255, 255, 255, 0.12); --border: rgba(255, 255, 255, 0.28);
       position: fixed; left: 50%;
@@ -251,7 +251,7 @@
         </svg>
       </div>
 
-      <h1 class="logo-text" translate="no">𒆜𝔸𝕤𝕙𝕒𝕕𝕦𝕝 ℝ𝕖𝕤𝕖𝕝𒆜</h1>
+      <h1 class="logo-text" translate="no">𒆜𝔸𝕤𝕙𝕒𝕕𝕦𝕝 ℝ𝕒𝕤𝕖𝕝𒆜</h1>
     </div>
   </div>
 
