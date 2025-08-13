@@ -17,6 +17,9 @@
       --toast-offset: clamp(56px, 10svh, 120px);
       --card-radius: 32px;
       --easing: cubic-bezier(.2,.8,.2,1);
+
+      /* নতুন: লোগো টেক্সটকে একটু ডান দিকে সরানোর শিফট */
+      --name-shift: clamp(8px, 2.2vw, 28px);
     }
     @property --rx { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
     @property --ry { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
@@ -69,7 +72,8 @@
       grid-template-areas:
         "btn btn"
         "avatar name";
-      grid-template-columns: auto 1fr;
+      /* নতুন: টেক্সট কলামকে minmax(0,1fr) করে ওভারফ্লো সেফ */
+      grid-template-columns: auto minmax(0,1fr);
       align-items: center;
       column-gap: clamp(12px, 3.2vw, 28px);
       row-gap: clamp(12px, 3vw, 20px);
@@ -114,15 +118,14 @@
     .telegram-btn::after{
       content:""; position:absolute; inset:0;
       background: linear-gradient(120deg, transparent 0%, #ffffff2a 45%, transparent 60%);
-      transform: translateX(-120%); animation: tgSheen 6s ease-in-out 1.6s infinite;
-      pointer-events: none;
+      transform: translateX(-120%); animation: tgSheen 6s ease-in-out 1.6s infinite; pointer-events: none;
     }
     .telegram-icon{ width: clamp(18px, 2.8vw, 24px); height: clamp(18px, 2.8vw, 24px); fill:#fff; filter: drop-shadow(0 0 6px #00eaffcc); }
     @keyframes tgPop{ from { opacity:0; transform: translateY(-10px) scale(.96);} to { opacity:1; transform: translateY(0) scale(1);} }
     @keyframes tgFloat{ 0%{ --float: 0px; } 100%{ --float: -6px; } }
     @keyframes tgSheen{ 0%,70%{ transform: translateX(-120%);} 100%{ transform: translateX(120%);} }
 
-    /* Avatar with cross‑browser SVG ring */
+    /* Avatar + SVG ring */
     .logo-avatar { grid-area: avatar; position: relative; width: clamp(68px, 15vw, 122px); aspect-ratio: 1; }
     .logo-img { width:100%; height:100%; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow: 0 0 28px #ffffffaa, 0 0 22px #00eaff55; }
     .ring {
@@ -138,11 +141,16 @@
       background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff00cc);
       background-size: 1000% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: gradientMove 9s ease-in-out infinite;
-      text-shadow: 0 2px 10px #0008, 0 0 20px #fff6, 0 0 40px #00f4; filter: drop-shadow(0 0 16px #fff6);
+      text-shadow: 0 2px 10px #0008, 0 0 20px #fff6, 0 0 40px #00f4;
+      filter: drop-shadow(0 0 16px #fff6);
       overflow-wrap:anywhere;
+      /* নতুন: একটু ডান দিকে সরানো */
+      margin-left: var(--name-shift);
+      justify-self: start;
     }
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50%{ background-position: 100% 50%; } 100%{ background-position: 0% 50%; } }
 
+    /* ছোট স্ক্রিনে টেক্সট সেন্টার + শিফট রিসেট */
     @media (max-width: 640px){
       .logo-area{
         grid-template-areas:
@@ -153,10 +161,10 @@
         justify-items: center;
         text-align: center;
       }
-      .logo-text{ text-align:center; }
+      .logo-text{ text-align:center; margin-left:0; }
     }
 
-    /* Toast: robust on mobile */
+    /* Toast (stable) */
     .note-toast {
       --radius: 18px; --glass: rgba(255, 255, 255, 0.12); --border: rgba(255, 255, 255, 0.28);
       position: fixed; left: 50%;
@@ -243,7 +251,7 @@
         </svg>
       </div>
 
-      <h1 class="logo-text" translate="no">𒆜𝔸𝕤𝕙𝕒𝕕𝕦𝕝 ℝ𝕒𝕤𝕖𝕝𒆜</h1>
+      <h1 class="logo-text" translate="no">𒆜𝔸𝕤𝕙𝕒𝕕𝕦𝕝 ℝ𝕖𝕤𝕖𝕝𒆜</h1>
     </div>
   </div>
 
@@ -252,7 +260,7 @@
     <div class="note-icon"><span class="emoji">📺</span></div>
     <div class="note-content">
       <h3 class="note-title">Dear IPTV users,</h3>
-      <p class="note-text">We have brought you a great app for enjoying buffering-free TV, the 📺 A.R Live Stream app. Download it now and enjoy.</p>
+      <p class="note-text">We have brought you a great app for enjoying buffering-free TV, the A.R Live Stream app. Download it now and enjoy.</p>
     </div>
     <div class="note-actions">
       <a id="note-cta" class="note-cta" href="https://t.me/AllFreePlatform/359" target="_blank" rel="noopener noreferrer">Download Now</a>
@@ -386,10 +394,8 @@
         cta.appendChild(s); setTimeout(() => s.remove(), 650);
       });
 
-      // ESC to close
       window.addEventListener('keydown', e => { if (e.key === 'Escape' && showing) hide(); });
 
-      // Visibility-aware scheduler
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) { clearInterval(loop); }
         else if (!optedOut()) { clearInterval(loop); loop = setInterval(show, INTERVAL); }
