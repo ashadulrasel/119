@@ -1,0 +1,3162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞 - Ultra Premium Live TV</title>
+    
+    <!-- ============================================
+         প্রিমিয়াম CSS স্টাইলিং সেকশন
+         সম্পূর্ণ গ্লাসমরফিজম ও এনিমেশন সহ
+    ============================================ -->
+    <style>
+        /* ===== ইমপোর্ট প্রিমিয়াম ফন্ট ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        /* ===== রুট ভেরিয়েবল - প্রিমিয়াম কালার প্যালেট ===== */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --premium-gold: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f5576c;
+            --dark-bg: #0a0e27;
+            --darker-bg: #070b1f;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #ffffff;
+            --text-secondary: #b4bcd0;
+            --success: #43e97b;
+            --warning: #ffa502;
+            --danger: #ff4757;
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.4);
+            
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ===== গ্লোবাল রিসেট ও বেসিক স্টাইল ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* ===== অ্যানিমেটেড ব্যাকগ্রাউন্ড গ্রেডিয়েন্ট ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            z-index: -2;
+        }
+
+        /* ===== অ্যানিমেটেড পার্টিকেল ব্যাকগ্রাউন্ড ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            33% {
+                transform: translateY(-50px) translateX(50px) scale(1.1);
+            }
+            66% {
+                transform: translateY(-100px) translateX(-50px) scale(0.9);
+            }
+        }
+
+        /* ===== প্রিমিয়াম স্ক্রলবার ===== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* ===== প্রिमियम ইন্ট্রো স্ক্রিন ===== */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: introFadeOut 0.8s ease 2.5s forwards;
+        }
+
+        @keyframes introFadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                transform: scale(1.1);
+            }
+        }
+
+        /* ===== ইন্ট্রো লোগো উন্নত এনিমেশন ===== */
+        .intro-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 35px;
+            margin-bottom: 40px;
+            animation: logoEntrance 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 30px 80px rgba(102, 126, 234, 0.6),
+                        0 0 100px rgba(118, 75, 162, 0.4);
+            position: relative;
+        }
+
+        @keyframes logoEntrance {
+            0% {
+                transform: scale(0) rotate(-360deg);
+                opacity: 0;
+                filter: blur(20px);
+            }
+            60% {
+                transform: scale(1.3) rotate(20deg);
+                filter: blur(5px);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        /* ===== লোগো গ্লো এফেক্ট ===== */
+        .intro-logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--primary-gradient);
+            border-radius: 40px;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.7;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        /* ===== ইন্ট্রো টেক্সট প্রিমিয়াম এনিমেশন ===== */
+        .intro-text {
+            font-size: 56px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textReveal 1.5s ease 0.3s backwards;
+            position: relative;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes textReveal {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+                letter-spacing: 20px;
+                filter: blur(10px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+                letter-spacing: normal;
+                filter: blur(0);
+            }
+        }
+
+        /* ===== লোডিং স্পিনার ===== */
+        .intro-loader {
+            margin-top: 30px;
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== প্রিমিয়াম নেভিগেশন বার (গ্লাসমরফিজম) ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 18px 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: var(--transition-normal);
+        }
+
+        nav.scrolled {
+            padding: 12px 0;
+            background: rgba(10, 14, 39, 0.9);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+        }
+
+        /* ===== প্রিমিয়াম ব্র্যান্ড লোগো ===== */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand:hover {
+            transform: translateY(-3px);
+        }
+
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            transition: var(--transition-bounce);
+            position: relative;
+        }
+
+        .brand:hover .brand-logo {
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.9);
+        }
+
+        /* ===== লোগো রিং এনিমেশন ===== */
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            z-index: -1;
+            animation: rotate 3s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .brand-text {
+            font-size: 36px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+            animation: brandGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes brandGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.6));
+            }
+            50% {
+                filter: drop-shadow(0 0 25px rgba(118, 75, 162, 0.9));
+            }
+        }
+
+        /* ===== নেভ মেনু প্রিমিয়াম স্টাইল ===== */
+        .nav-menu {
+            display: flex;
+            gap: 12px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu li a, 
+        .nav-menu li button {
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== হোভার গ্লো এফেক্ট ===== */
+        .nav-menu li a::before,
+        .nav-menu li button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .nav-menu li a:hover::before,
+        .nav-menu li button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-menu li a:hover, 
+        .nav-menu li button:hover {
+            background: var(--primary-gradient);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+            border-color: transparent;
+        }
+
+        /* ===== হ্যামবার্গার মেনু প্রিমিয়াম ===== */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 7px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 14px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+            transition: var(--transition-normal);
+        }
+
+        .menu-toggle:hover {
+            background: var(--glass-bg);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(10px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10px);
+        }
+
+        /* ===== প্রোফাইল বাটন আল্ট্রা প্রিমিয়াম ===== */
+        .profile-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            overflow: hidden;
+        }
+
+        .profile-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .profile-btn:hover::before {
+            left: 100%;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-name {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .profile-type {
+            font-size: 12px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        /* ===== প্রোফাইল ড্রপডাউন আল্ট্রা প্রিমিয়াম ===== */
+        .profile-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 360px;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 30px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+            animation: dropdownSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-dropdown.active {
+            display: flex;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .profile-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: avatarPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            }
+            50% {
+                box-shadow: 0 12px 35px rgba(118, 75, 162, 0.8);
+            }
+        }
+
+        .profile-details h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .profile-details p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            padding: 18px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition-normal);
+        }
+
+        .stat-item:hover {
+            background: var(--glass-border);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary-gradient);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            box-shadow: 0 6px 18px rgba(245, 87, 108, 0.4);
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(245, 87, 108, 0.6);
+        }
+
+        /* ===== নোটিফিকেশন বার আল্ট্রা প্রিমিয়াম ===== */
+        .notification-bar {
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.15), 
+                rgba(118, 75, 162, 0.15));
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .notification-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            to { left: 100%; }
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            animation: marquee 35s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 25px;
+            background: var(--glass-bg);
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            font-weight: 500;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification-icon {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: notificationPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        @keyframes notificationPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.6;
+            }
+        }
+
+        /* ===== ব্যানার স্লাইডার আল্ট্রা প্রিমিয়াম ===== */
+        .banner-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .banner-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            height: 500px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+        }
+
+        .banner-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+            transform: scale(1.1);
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(102, 126, 234, 0.3) 50%,
+                rgba(0, 0, 0, 0.6) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 70px;
+        }
+
+        .banner-title {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            animation: bannerSlideIn 1s ease;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        @keyframes bannerSlideIn {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .banner-description {
+            font-size: 22px;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin-bottom: 30px;
+            animation: bannerSlideIn 1s ease 0.2s backwards;
+            line-height: 1.6;
+        }
+
+        .banner-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            animation: bannerSlideIn 1s ease 0.4s backwards;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .banner-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .banner-btn:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 18px 50px rgba(102, 126, 234, 0.7);
+        }
+
+        /* ===== স্লাইডার নেভিগেশন উন্নত ===== */
+        .slider-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+            background: rgba(10, 14, 39, 0.6);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: 2px solid transparent;
+        }
+
+        .slider-dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(1.2);
+        }
+
+        .slider-dot.active {
+            width: 45px;
+            border-radius: 7px;
+            background: var(--primary-gradient);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
+        }
+
+        /* ===== লাইভ ইভেন্ট সেকশন প্রিমিয়াম ===== */
+        .live-events-section {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 120px;
+            height: 5px;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+            animation: underlineExpand 3s ease-in-out infinite;
+        }
+
+        @keyframes underlineExpand {
+            0%, 100% {
+                width: 120px;
+            }
+            50% {
+                width: 200px;
+            }
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: var(--transition-bounce);
+            cursor: pointer;
+            animation: cardFadeIn 0.8s ease;
+            position: relative;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: 0;
+        }
+
+        .event-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .event-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.15) rotate(2deg);
+            filter: brightness(1.1);
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: var(--danger);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: liveBadgePulse 2s ease-in-out infinite;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.6);
+            z-index: 10;
+        }
+
+        @keyframes liveBadgePulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(255, 71, 87, 0.6);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(255, 71, 87, 0.9);
+                transform: scale(1.05);
+            }
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: liveDotBlink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes liveDotBlink {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.3);
+            }
+        }
+
+        .event-content {
+            padding: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .countdown {
+            display: inline-block;
+            padding: 8px 18px;
+            background: var(--success-gradient);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(67, 233, 123, 0.4);
+        }
+
+        /* ===== চ্যানেল সেকশন প্রিমিয়াম ===== */
+        .channels-section {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 14px 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            font-weight: 600;
+            font-size: 15px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-tab::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .category-tab:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .category-tab:hover {
+            background: var(--glass-border);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .category-tab.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .channel-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== চ্যানেল কার্ড শাইন এফেক্ট ===== */
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 70%);
+            transform: rotate(45deg);
+            transition: var(--transition-slow);
+        }
+
+        .channel-card:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.4);
+            border-color: var(--primary-color);
+            background: var(--glass-border);
+        }
+
+        .channel-logo-wrapper {
+            width: 100%;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .channel-logo {
+            max-width: 95%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 18px;
+            transition: var(--transition-bounce);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        .channel-card:hover .channel-logo {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 8px 20px rgba(102, 126, 234, 0.5));
+        }
+
+        .channel-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .channel-badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== প্রিমিয়াম ব্যাজ ডিজাইন ===== */
+        .badge {
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            animation: badgeFloat 3s ease-in-out infinite;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .badge-live {
+            background: linear-gradient(135deg, #ff4757, #ff6348);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.5);
+        }
+
+        .badge-hd {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .badge-pro {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5);
+        }
+
+        .badge-free {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .badge-2k {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5);
+        }
+
+        .badge-4k {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.5);
+        }
+
+        .badge-8k {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+        }
+
+        .badge-basic {
+            background: linear-gradient(135deg, #64748b, #475569);
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.5);
+        }
+
+        .badge-pro-plus {
+            background: var(--premium-gold);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.6);
+            animation: goldShine 2s ease-in-out infinite;
+        }
+
+        @keyframes goldShine {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(255, 215, 0, 0.6);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(255, 237, 78, 0.9);
+            }
+        }
+
+        /* ===== প্লেয়ার মোডাল আল্ট্রা প্রিমিয়াম ===== */
+        .player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+            to {
+                opacity: 1;
+                backdrop-filter: blur(20px);
+            }
+        }
+
+        .player-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-container {
+            position: relative;
+            width: 96%;
+            max-width: 1300px;
+            background: rgba(10, 14, 39, 0.98);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            animation: playerSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes playerSlideIn {
+            from {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 35px;
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.15), 
+                rgba(118, 75, 162, 0.15));
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .player-title {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .close-player {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 71, 87, 0.2);
+            border: 2px solid rgba(255, 71, 87, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            font-size: 28px;
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .close-player:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6);
+        }
+
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+        }
+
+        #video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== ব্র্যান্ড ওভারলে প্রিমিয়াম ===== */
+        .player-brand-overlay {
+            position: absolute;
+            top: 50%;
+            left: 35px;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            animation: brandOverlayFadeIn 1.5s ease 1.5s forwards;
+        }
+
+        @keyframes brandOverlayFadeIn {
+            to {
+                opacity: 0.8;
+            }
+        }
+
+        .player-brand-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: brandLogoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes brandLogoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .player-brand-text {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.9);
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.8));
+        }
+
+        /* ===== কাস্টম ভিডিও কন্ট্রোল প্রিমিয়াম ===== */
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(0deg, 
+                rgba(0, 0, 0, 0.95) 0%, 
+                rgba(0, 0, 0, 0.7) 50%,
+                transparent 100%);
+            padding: 25px;
+            opacity: 0;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+        }
+
+        .player-wrapper:hover .custom-controls,
+        .player-wrapper.show-controls .custom-controls {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            margin-bottom: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            animation: progressShimmer 2s infinite;
+        }
+
+        @keyframes progressShimmer {
+            to { transform: translateX(100%); }
+        }
+
+        .progress-filled {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+            position: relative;
+        }
+
+        .progress-filled::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-controls, 
+        .right-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            color: white;
+            font-size: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-gradient);
+            transform: scale(1.15);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .quality-selector {
+            position: relative;
+        }
+
+        .quality-menu {
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 140px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            animation: menuSlideUp 0.3s ease;
+        }
+
+        @keyframes menuSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quality-menu.active {
+            display: flex;
+        }
+
+        .quality-option {
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+
+        .quality-option:hover {
+            background: var(--glass-bg);
+            border-color: var(--glass-border);
+        }
+
+        .quality-option.active {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        /* ===== লগইন মোডাল আইফোন স্টাইল আল্ট্রা প্রিমিয়াম ===== */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-container {
+            width: 92%;
+            max-width: 480px;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 40px;
+            padding: 55px 45px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.7);
+            animation: loginSlideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes loginSlideUp {
+            from {
+                transform: translateY(150px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .login-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+            animation: loginLogoBounce 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes loginLogoBounce {
+            0% {
+                transform: scale(0) rotate(-180deg);
+            }
+            60% {
+                transform: scale(1.2) rotate(20deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .login-title {
+            font-size: 32px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            animation: titleSlideIn 0.6s ease 0.2s backwards;
+        }
+
+        @keyframes titleSlideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            animation: titleSlideIn 0.6s ease 0.3s backwards;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 20px 22px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid var(--glass-border);
+            border-radius: 18px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.15),
+                        0 8px 25px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .login-btn {
+            padding: 20px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 18px;
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .login-btn:hover::before {
+            width: 500px;
+            height: 500px;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.03) translateY(-2px);
+            box-shadow: 0 15px 45px rgba(102, 126, 234, 0.7);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ===== ফুটার আল্ট্রা প্রিমিয়াম ===== */
+        footer {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--glass-border);
+            padding: 60px 30px 35px;
+            margin-top: 100px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 50px;
+            margin-bottom: 45px;
+        }
+
+        .footer-section h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition-bounce);
+            font-size: 22px;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-btn:hover {
+            background: var(--primary-gradient);
+            transform: translateY(-6px) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-normal);
+            display: inline-block;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 35px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ===== স্ক্রোল অ্যানিমেশন ===== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-slow);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== রেসপন্সিভ ডিজাইন - ট্যাবলেট ===== */
+        @media (max-width: 1024px) {
+            .brand-text {
+                font-size: 30px;
+            }
+
+            .brand-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .banner-slider {
+                height: 400px;
+            }
+
+            .banner-title {
+                font-size: 44px;
+            }
+
+            .banner-description {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            }
+        }
+
+        /* ===== রেসপন্সিভ ডিজাইন - মোবাইল ===== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 100px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(10, 14, 39, 0.98);
+                backdrop-filter: blur(30px);
+                width: 300px;
+                padding: 25px;
+                border-radius: 25px 0 0 25px;
+                border: 1px solid var(--glass-border);
+                box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
+                transition: var(--transition-bounce);
+                height: calc(100vh - 100px);
+                overflow-y: auto;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-menu li a, 
+            .nav-menu li button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .brand-text {
+                font-size: 24px;
+            }
+
+            .brand-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .intro-text {
+                font-size: 40px;
+            }
+
+            .intro-logo {
+                width: 130px;
+                height: 130px;
+            }
+
+            .banner-slider {
+                height: 320px;
+                border-radius: 20px;
+            }
+
+            .banner-overlay {
+                padding: 40px 25px;
+            }
+
+            .banner-title {
+                font-size: 32px;
+            }
+
+            .banner-description {
+                font-size: 16px;
+            }
+
+            .banner-btn {
+                padding: 15px 35px;
+                font-size: 15px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card {
+                border-radius: 20px;
+            }
+
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 18px;
+            }
+
+            .channel-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .player-container {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .player-header {
+                padding: 20px 25px;
+            }
+
+            .player-title {
+                font-size: 18px;
+            }
+
+            .player-brand-overlay {
+                left: 20px;
+            }
+
+            .player-brand-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .player-brand-text {
+                font-size: 24px;
+            }
+
+            .profile-dropdown {
+                width: 300px;
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .login-container {
+                margin: 20px;
+                padding: 45px 35px;
+                border-radius: 30px;
+            }
+
+            .login-title {
+                font-size: 28px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .category-tabs {
+                gap: 12px;
+            }
+
+            .category-tab {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* ===== ছোট মোবাইল ===== */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .brand-text {
+                font-size: 20px;
+            }
+
+            .brand-logo {
+                width: 45px;
+                height: 45px;
+            }
+
+            .intro-text {
+                font-size: 32px;
+            }
+
+            .banner-title {
+                font-size: 26px;
+            }
+
+            .banner-description {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .player-brand-overlay {
+                display: none;
+            }
+
+            .login-container {
+                padding: 40px 28px;
+            }
+        }
+
+        /* ===== হাইড ক্লাস ===== */
+        .hide {
+            display: none !important;
+        }
+
+        /* ===== লোডিং স্পিনার ===== */
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 60px auto;
+        }
+
+        /* ===== মেসেজ স্টাইল ===== */
+        .error-message {
+            background: rgba(255, 71, 87, 0.15);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            padding: 18px 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            font-weight: 600;
+            animation: shake 0.6s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            background: rgba(67, 233, 123, 0.15);
+            border: 2px solid var(--success);
+            color: var(--success);
+            padding: 18px 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            font-weight: 600;
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* ===== কাস্টম সিলেকশন ===== */
+        ::selection {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        ::-moz-selection {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         পার্টিকেল ব্যাকগ্রাউন্ড এনিমেশন
+    ============================================ -->
+    <div class="particles" id="particles"></div>
+
+    <!-- ============================================
+         প্রিমিয়াম ইন্ট্রো স্ক্রিন
+    ============================================ -->
+    <div id="intro-screen">
+        <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="intro-logo">
+        <div class="intro-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+        <div class="intro-loader"></div>
+    </div>
+
+    <!-- ============================================
+         প্রিমিয়াম নেভিগেশন বার
+    ============================================ -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Brand Logo" class="brand-logo">
+                <span class="brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</span>
+            </div>
+
+            <div class="menu-toggle" onclick="toggleMenu()" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#live-events">Live Events</a></li>
+                <li><a href="#channels">Channels</a></li>
+                <li><a href="https://example.com" target="_blank">Premium Zone</a></li>
+                <li><a href="https://example.com" target="_blank">VIP Access</a></li>
+                <li><button onclick="openLogin()" id="loginBtn">Sign In</button></li>
+                
+                <li class="hide" id="profileBtnContainer">
+                    <div class="profile-btn" onclick="toggleProfile()">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <div class="profile-info">
+                            <div class="profile-name" id="profileName">User</div>
+                            <div class="profile-type" id="profileType">Basic</div>
+                        </div>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-header">
+                            <div class="profile-avatar-large" id="profileAvatarLarge">U</div>
+                            <div class="profile-details">
+                                <h3 id="profileNameLarge">Username</h3>
+                                <p id="profileEmailLarge">user@example.com</p>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="accountType">Basic</div>
+                                <div class="stat-label">Account Type</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="daysLeft">30</div>
+                                <div class="stat-label">Days Left</div>
+                            </div>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         প্রিমিয়াম নোটিফিকেশন বার
+    ============================================ -->
+    <div class="notification-bar">
+        <div class="notification-content">
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>🎉 Welcome to Ultra Premium Live Streaming Platform!</span>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>📺 Watch 1000+ Live TV Channels in 4K/8K Quality</span>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>🔥 New Live Sports Events Added Every Day</span>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>⚡ Ultra Fast Streaming with Zero Buffer</span>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>🎯 Stream on Mobile, TV, Tablet & Desktop</span>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon"></div>
+                <span>🌟 Premium Content Available 24/7</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         আল্ট্রা প্রিমিয়াম ব্যানার স্লাইডার
+    ============================================ -->
+    <section class="banner-section">
+        <div class="banner-slider">
+            <div class="banner-slide active">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=1400" alt="Banner 1">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Experience Premium Live TV</h1>
+                    <p class="banner-description">Stream your favorite channels in stunning 4K & 8K quality. Watch anywhere, anytime on any device with our ultra-fast streaming platform.</p>
+                    <a href="#channels" class="banner-btn">Explore Channels</a>
+                </div>
+            </div>
+            
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=1400" alt="Banner 2">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Live Sports in 4K/8K</h1>
+                    <p class="banner-description">Never miss a moment! Watch all major sports events live in crystal clear quality with instant replay and multi-angle views.</p>
+                    <a href="#live-events" class="banner-btn">View Live Events</a>
+                </div>
+            </div>
+            
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1400" alt="Banner 3">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Premium Entertainment Hub</h1>
+                    <p class="banner-description">Access exclusive content from around the globe. Movies, series, news, and more - all in one premium platform.</p>
+                    <a href="#" class="banner-btn" onclick="openLogin()">Get Premium Access</a>
+                </div>
+            </div>
+
+            <div class="slider-nav">
+                <div class="slider-dot active" onclick="goToSlide(0)"></div>
+                <div class="slider-dot" onclick="goToSlide(1)"></div>
+                <div class="slider-dot" onclick="goToSlide(2)"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         লাইভ ইভেন্ট সেকশন
+    ============================================ -->
+    <section class="live-events-section scroll-reveal" id="live-events">
+        <div class="section-header">
+            <h2 class="section-title">🔴 Live Events</h2>
+        </div>
+        <div class="events-grid" id="eventsGrid">
+            <div class="event-card" data-event-end="2025-12-31" onclick="playChannel('https://example.com/stream.m3u8', 'UEFA Champions League Final', 'event')">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600" alt="Event">
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE NOW
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">UEFA Champions League Final</h3>
+                    <div class="event-meta">
+                        <div class="event-time">⏰ Live Now</div>
+                        <div class="event-viewers">👥 2.5M watching</div>
+                    </div>
+                    <div class="countdown">Streaming in 4K Quality</div>
+                </div>
+            </div>
+
+            <div class="event-card" data-event-end="2025-12-31" onclick="playChannel('https://example.com/stream2.m3u8', 'ICC T20 World Cup', 'event')">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600" alt="Event">
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE NOW
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">ICC T20 World Cup Semi-Final</h3>
+                    <div class="event-meta">
+                        <div class="event-time">⏰ Live Now</div>
+                        <div class="event-viewers">👥 1.8M watching</div>
+                    </div>
+                    <div class="countdown">Streaming in 8K Quality</div>
+                </div>
+            </div>
+
+            <div class="event-card" data-event-end="2025-12-31" onclick="playChannel('https://example.com/stream3.m3u8', 'NBA Finals', 'event')">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600" alt="Event">
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE NOW
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">NBA Finals Game 7</h3>
+                    <div class="event-meta">
+                        <div class="event-time">⏰ Live Now</div>
+                        <div class="event-viewers">👥 950K watching</div>
+                    </div>
+                    <div class="countdown">Streaming in 4K HDR</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         চ্যানেল সেকশন
+    ============================================ -->
+    <section class="channels-section scroll-reveal" id="channels">
+        <div class="section-header">
+            <h2 class="section-title">📺 Premium TV Channels</h2>
+        </div>
+
+        <div class="category-tabs">
+            <div class="category-tab active" onclick="filterCategory('all')">All Channels</div>
+            <div class="category-tab" onclick="filterCategory('bangladeshi')">Bangladeshi</div>
+            <div class="category-tab" onclick="filterCategory('sports')">Sports</div>
+            <div class="category-tab" onclick="filterCategory('news')">News</div>
+            <div class="category-tab" onclick="filterCategory('entertainment')">Entertainment</div>
+            <div class="category-tab" onclick="filterCategory('movies')">Movies</div>
+        </div>
+
+        <div class="channels-grid" id="channelsGrid">
+            <!-- চ্যানেল জাভাস্ক্রিপ্ট দ্বারা লোড হবে -->
+        </div>
+    </section>
+
+    <!-- ============================================
+         ভিডিও প্লেয়ার মোডাল
+    ============================================ -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-container">
+            <div class="player-header">
+                <div class="player-title">
+                    <span id="currentChannelName">Channel Name</span>
+                    <span class="badge badge-live">LIVE</span>
+                </div>
+                <div class="close-player" onclick="closePlayer()">×</div>
+            </div>
+
+            <div class="player-wrapper">
+                <div class="player-brand-overlay">
+                    <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="player-brand-logo">
+                    <div class="player-brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+                </div>
+
+                <video id="video-player" controls autoplay></video>
+
+                <div class="custom-controls">
+                    <div class="progress-bar" onclick="seek(event)">
+                        <div class="progress-filled" id="progressFilled"></div>
+                    </div>
+                    <div class="control-buttons">
+                        <div class="left-controls">
+                            <div class="control-btn" onclick="togglePlay()" id="playPauseBtn">▶</div>
+                            <div class="control-btn" onclick="toggleMute()" id="muteBtn">🔊</div>
+                        </div>
+                        <div class="right-controls">
+                            <div class="quality-selector">
+                                <div class="control-btn" onclick="toggleQuality()">⚙️</div>
+                                <div class="quality-menu" id="qualityMenu">
+                                    <div class="quality-option active" onclick="changeQuality('auto')">Auto</div>
+                                    <div class="quality-option" onclick="changeQuality('1080p')">1080p HD</div>
+                                    <div class="quality-option" onclick="changeQuality('720p')">720p HD</div>
+                                    <div class="quality-option" onclick="changeQuality('480p')">480p</div>
+                                </div>
+                            </div>
+                            <div class="control-btn" onclick="togglePIP()">📺</div>
+                            <div class="control-btn" onclick="toggleFullscreen()">⛶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         লগইন মোডাল
+    ============================================ -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="login-logo">
+                <h2 class="login-title">Welcome Back!</h2>
+                <p class="login-subtitle">Sign in to access premium content</p>
+            </div>
+            <form class="login-form" onsubmit="login(event)">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="login-footer">
+                <p>By signing in, you agree to our Terms & Privacy Policy</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         ফুটার
+    ============================================ -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Live Stream</h3>
+                <p>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞 is your ultimate premium destination for live TV streaming. Watch 1000+ channels in stunning 4K/8K quality with zero buffering.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" class="social-btn">f</a>
+                    <a href="https://twitter.com" target="_blank" class="social-btn">𝕏</a>
+                    <a href="https://instagram.com" target="_blank" class="social-btn">📷</a>
+                    <a href="https://youtube.com" target="_blank" class="social-btn">▶</a>
+                    <a href="https://t.me/yourchannel" target="_blank" class="social-btn">✈️</a>
+                    <a href="https://discord.com" target="_blank" class="social-btn">💬</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#live-events">Live Events</a></li>
+                    <li><a href="#channels">All Channels</a></li>
+                    <li><a href="#" onclick="openLogin()">Premium Access</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="filterCategory('bangladeshi')">Bangladeshi Channels</a></li>
+                    <li><a href="#" onclick="filterCategory('sports')">Sports & Games</a></li>
+                    <li><a href="#" onclick="filterCategory('news')">News & Updates</a></li>
+                    <li><a href="#" onclick="filterCategory('entertainment')">Entertainment</a></li>
+                    <li><a href="#" onclick="filterCategory('movies')">Movies & Series</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📧 Email: support@livestream.tv</p>
+                <p>📱 Phone: +880 1234-567890</p>
+                <p>🌐 Website: www.livestream.tv</p>
+                <p>💬 Live Chat: Available 24/7</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞. All rights reserved. Crafted with ❤️ for the ultimate streaming experience.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         জাভাস্ক্রিপ্ট কোড
+    ============================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        // ===== একাউন্ট ডাটাবেস =====
+        const ACCOUNTS = {
+            'basic_user': {
+                password: 'basic123',
+                type: 'Basic',
+                badge: 'B',
+                expiryDate: '2025-12-31',
+                email: 'basic@livestream.tv'
+            },
+            'pro_user': {
+                password: 'pro123',
+                type: 'Pro',
+                badge: 'Pro',
+                expiryDate: '2025-12-31',
+                email: 'pro@livestream.tv'
+            },
+            'ultra_user': {
+                password: 'ultra123',
+                type: 'Ultra Pro',
+                badge: 'Pro+',
+                expiryDate: '2025-12-31',
+                email: 'ultra@livestream.tv'
+            }
+        };
+
+        // ===== চ্যানেল ডাটাবেস =====
+        const CHANNELS = [
+            {
+                name: 'BTV',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/BTV_Logo.svg/250px-BTV_Logo.svg.png',
+                url: 'https://example.com/btv.m3u8',
+                category: 'bangladeshi',
+                badges: ['B', 'HD', 'Free'],
+                requiredPlan: 'B'
+            },
+            {
+                name: 'ATN Bangla',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/53/ATN_Bangla.svg/250px-ATN_Bangla.svg.png',
+                url: 'https://example.com/atn.m3u8',
+                category: 'bangladeshi',
+                badges: ['B', 'HD', 'Live'],
+                requiredPlan: 'B'
+            },
+            {
+                name: 'Channel i',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Channel-i.svg/250px-Channel-i.svg.png',
+                url: 'https://example.com/channeli.m3u8',
+                category: 'bangladeshi',
+                badges: ['Pro', 'HD', '2k'],
+                requiredPlan: 'Pro'
+            },
+            {
+                name: 'Sony Ten 1',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Sony_Ten_1_HD.png/250px-Sony_Ten_1_HD.png',
+                url: 'https://example.com/sonyten1.m3u8',
+                category: 'sports',
+                badges: ['Pro', 'HD', '4k', 'Live'],
+                requiredPlan: 'Pro'
+            },
+            {
+                name: 'Star Sports 1',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Star_Sports_logo.svg/250px-Star_Sports_logo.svg.png',
+                url: 'https://example.com/starsports.m3u8',
+                category: 'sports',
+                badges: ['Pro+', 'HD', '4k', 'Live'],
+                requiredPlan: 'Pro+'
+            },
+            {
+                name: 'BBC News',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/BBC_News_2019.svg/250px-BBC_News_2019.svg.png',
+                url: 'https://example.com/bbc.m3u8',
+                category: 'news',
+                badges: ['B', 'HD', 'Live', 'Free'],
+                requiredPlan: 'B'
+            },
+            {
+                name: 'CNN',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/250px-CNN.svg.png',
+                url: 'https://example.com/cnn.m3u8',
+                category: 'news',
+                badges: ['Pro', 'HD', 'Live'],
+                requiredPlan: 'Pro'
+            },
+            {
+                name: 'HBO',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/250px-HBO_logo.svg.png',
+                url: 'https://example.com/hbo.m3u8',
+                category: 'entertainment',
+                badges: ['Pro+', 'HD', '8k'],
+                requiredPlan: 'Pro+'
+            },
+            {
+                name: 'Star Plus',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Star_Plus_2016.png/250px-Star_Plus_2016.png',
+                url: 'https://example.com/starplus.m3u8',
+                category: 'entertainment',
+                badges: ['Pro', 'HD', '2k'],
+                requiredPlan: 'Pro'
+            },
+            {
+                name: 'Star Movies',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Star_Movies_logo.svg/250px-Star_Movies_logo.svg.png',
+                url: 'https://example.com/starmovies.m3u8',
+                category: 'movies',
+                badges: ['Pro+', 'HD', '4k'],
+                requiredPlan: 'Pro+'
+            }
+        ];
+
+        // ===== গ্লোবাল ভেরিয়েবল =====
+        let currentUser = null;
+        let currentSlide = 0;
+        let hls = null;
+        let currentCategory = 'all';
+
+        // ===== পার্টিকেল তৈরি করা =====
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 5 + 2;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 20 + 10;
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = left + '%';
+                particle.style.background = `rgba(${Math.random() * 150 + 100}, ${Math.random() * 150 + 100}, 255, 0.5)`;
+                particle.style.animationDelay = delay + 's';
+                particle.style.animationDuration = duration + 's';
+                
+                particles.appendChild(particle);
+            }
+        }
+
+        // ===== ইনিশিয়ালাইজেশন =====
+        window.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+            }, 3000);
+
+            startSlider();
+            checkLoginStatus();
+            loadChannels();
+            checkEvents();
+            setupScrollAnimations();
+            setupNavbarScroll();
+        });
+
+        // ===== স্ক্রোল এনিমেশন =====
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // ===== নেভবার স্ক্রোল এফেক্ট =====
+        function setupNavbarScroll() {
+            let lastScroll = 0;
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                
+                lastScroll = currentScroll;
+            });
+        }
+
+        // ===== স্লাইডার ফাংশন =====
+        function startSlider() {
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % 3;
+                goToSlide(currentSlide);
+            }, 6000);
+        }
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSlide = index;
+        }
+
+        // ===== মেনু টগল =====
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.getElementById('menuToggle');
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        // ===== প্রোফাইল টগল =====
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const profileBtn = document.querySelector('.profile-btn');
+            const dropdown = document.getElementById('profileDropdown');
+            
+            if (profileBtn && !profileBtn.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // ===== লগইন সিস্টেম =====
+        function openLogin() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (ACCOUNTS[username] && ACCOUNTS[username].password === password) {
+                const account = ACCOUNTS[username];
+                
+                const expiryDate = new Date(account.expiryDate);
+                const today = new Date();
+                
+                if (expiryDate < today) {
+                    alert('❌ Your account has expired! Please contact support to renew.');
+                    return;
+                }
+                
+                const daysLeft = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+                
+                currentUser = {
+                    username: username,
+                    type: account.type,
+                    badge: account.badge,
+                    email: account.email,
+                    daysLeft: daysLeft
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateUI();
+                closeLogin();
+                
+                alert(`✅ Welcome back, ${username}! Your ${account.type} account is active for ${daysLeft} more days.`);
+            } else {
+                alert('❌ Invalid username or password!');
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateUI();
+                alert('✅ Logged out successfully!');
+            }
+        }
+
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const profileContainer = document.getElementById('profileBtnContainer');
+            
+            if (currentUser) {
+                loginBtn.parentElement.classList.add('hide');
+                profileContainer.classList.remove('hide');
+                
+                const firstLetter = currentUser.username.charAt(0).toUpperCase();
+                document.getElementById('profileAvatar').textContent = firstLetter;
+                document.getElementById('profileAvatarLarge').textContent = firstLetter;
+                document.getElementById('profileName').textContent = currentUser.username;
+                document.getElementById('profileType').textContent = currentUser.type;
+                document.getElementById('profileNameLarge').textContent = currentUser.username;
+                document.getElementById('profileEmailLarge').textContent = currentUser.email;
+                document.getElementById('accountType').textContent = currentUser.type;
+                document.getElementById('daysLeft').textContent = currentUser.daysLeft;
+                
+                loadChannels();
+            } else {
+                loginBtn.parentElement.classList.remove('hide');
+                profileContainer.classList.add('hide');
+            }
+        }
+
+        // ===== চ্যানেল লোড =====
+        function loadChannels() {
+            const grid = document.getElementById('channelsGrid');
+            grid.innerHTML = '';
+            
+            let filteredChannels = CHANNELS.filter(channel => {
+                if (currentCategory !== 'all' && channel.category !== currentCategory) {
+                    return false;
+                }
+                
+                if (!currentUser) {
+                    return channel.requiredPlan === 'B';
+                }
+                
+                if (currentUser.badge === 'B') {
+                    return channel.requiredPlan === 'B';
+                } else if (currentUser.badge === 'Pro') {
+                    return channel.requiredPlan === 'B' || channel.requiredPlan === 'Pro';
+                } else if (currentUser.badge === 'Pro+') {
+                    return true;
+                }
+                
+                return false;
+            });
+            
+            filteredChannels.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
+                card.onclick = () => playChannel(channel.url, channel.name, 'channel');
+                
+                let badgesHTML = '';
+                channel.badges.forEach(badge => {
+                    let badgeClass = 'badge';
+                    if (badge === 'Live') badgeClass += ' badge-live';
+                    else if (badge === 'HD') badgeClass += ' badge-hd';
+                    else if (badge === 'Pro') badgeClass += ' badge-pro';
+                    else if (badge === 'Free') badgeClass += ' badge-free';
+                    else if (badge === '2k') badgeClass += ' badge-2k';
+                    else if (badge === '4k') badgeClass += ' badge-4k';
+                    else if (badge === '8k') badgeClass += ' badge-8k';
+                    else if (badge === 'B') badgeClass += ' badge-basic';
+                    else if (badge === 'Pro+') badgeClass += ' badge-pro-plus';
+                    
+                    badgesHTML += `<span class="${badgeClass}">${badge}</span>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="channel-logo-wrapper">
+                        <img src="${channel.logo}" alt="${channel.name}" class="channel-logo">
+                    </div>
+                    <div class="channel-name">${channel.name}</div>
+                    <div class="channel-badges">
+                        ${badgesHTML}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            if (filteredChannels.length === 0) {
+                grid.innerHTML = '<div class="error-message">⚠️ No channels available for your subscription. Please upgrade to access more content.</div>';
+            }
+        }
+
+        // ===== ক্যাটেগরি ফিল্টার =====
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            loadChannels();
+        }
+
+        // ===== ভিডিও প্লেয়ার =====
+        function playChannel(url, name, type) {
+            if (!currentUser && type !== 'event') {
+                alert('⚠️ Please sign in to watch this channel');
+                openLogin();
+                return;
+            }
+            
+            const modal = document.getElementById('playerModal');
+            const video = document.getElementById('video-player');
+            document.getElementById('currentChannelName').textContent = name;
+            
+            modal.classList.add('active');
+            
+            if (Hls.isSupported()) {
+                if (hls) {
+                    hls.destroy();
+                }
+                
+                hls = new Hls({
+                    enableWorker: true,
+                    lowLatencyMode: true,
+                    backBufferLength: 90
+                });
+                
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+                
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    console.error('HLS Error:', data);
+                    if (data.fatal) {
+                        alert('❌ Failed to load stream. Please try another channel.');
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            }
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            const video = document.getElementById('video-player');
+            
+            modal.classList.remove('active');
+            video.pause();
+            
+            if (hls) {
+                hls.destroy();
+            }
+        }
+
+        function togglePlay() {
+            const video = document.getElementById('video-player');
+            const btn = document.getElementById('playPauseBtn');
+            
+            if (video.paused) {
+                video.play();
+                btn.textContent = '⏸';
+            } else {
+                video.pause();
+                btn.textContent = '▶';
+            }
+        }
+
+        function toggleMute() {
+            const video = document.getElementById('video-player');
+            const btn = document.getElementById('muteBtn');
+            
+            video.muted = !video.muted;
+            btn.textContent = video.muted ? '🔇' : '🔊';
+        }
+
+        function toggleFullscreen() {
+            const container = document.querySelector('.player-wrapper');
+            
+            if (!document.fullscreenElement) {
+                container.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function togglePIP() {
+            const video = document.getElementById('video-player');
+            
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+            } else {
+                video.requestPictureInPicture();
+            }
+        }
+
+        function toggleQuality() {
+            const menu = document.getElementById('qualityMenu');
+            menu.classList.toggle('active');
+        }
+
+        function changeQuality(quality) {
+            document.querySelectorAll('.quality-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            console.log('Quality changed to:', quality);
+            toggleQuality();
+        }
+
+        function seek(event) {
+            const video = document.getElementById('video-player');
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            
+            video.currentTime = percent * video.duration;
+        }
+
+        setInterval(() => {
+            const video = document.getElementById('video-player');
+            const filled = document.getElementById('progressFilled');
+            
+            if (video && !isNaN(video.duration)) {
+                const percent = (video.currentTime / video.duration) * 100;
+                filled.style.width = percent + '%';
+            }
+        }, 100);
+
+        // ===== ইভেন্ট চেক =====
+        function checkEvents() {
+            const eventCards = document.querySelectorAll('.event-card');
+            const today = new Date();
+            
+            eventCards.forEach(card => {
+                const endDate = new Date(card.dataset.eventEnd);
+                if (endDate < today) {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ===== ESC কী =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePlayer();
+                closeLogin();
+            }
+        });
+
+        // ===== ডিসেবল রাইট ক্লিক =====
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('copy', e => e.preventDefault());
+    </script>
+</body>
+</html>
