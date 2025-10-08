@@ -3124,5 +3124,124 @@
                 }
             }
         }
+// ==========================================
+        // ব্যানার স্লাইডার ফাংশন
+        // অটোমেটিক ইমেজ স্লাইডার
+        // ==========================================
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides[currentSlideIndex].classList.remove('active');
+            dots[currentSlideIndex].classList.remove('active');
+            
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+            
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
 
-        function 
+        function currentSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides[currentSlideIndex].classList.remove('active');
+            dots[currentSlideIndex].classList.remove('active');
+            
+            currentSlideIndex = index;
+            
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function startAutoSlide() {
+            setInterval(() => {
+                changeSlide(1);
+            }, 5000); // প্রতি ৫ সেকেন্ডে পরিবর্তন
+        }
+
+        // ==========================================
+        // মোবাইল মেনু টগল
+        // হ্যামবার্গার মেনু চালু/বন্ধ
+        // ==========================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // ==========================================
+        // ইভেন্ট লিসেনার সেটআপ
+        // সব ইভেন্ট হ্যান্ডলার যোগ করা
+        // ==========================================
+        function setupEventListeners() {
+            // ESC কী দিয়ে প্লেয়ার বন্ধ
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePlayer();
+                }
+            });
+            
+            // প্লেয়ার মডেল বাইরে ক্লিক করলে বন্ধ
+            document.getElementById('playerModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePlayer();
+                }
+            });
+            
+            // প্রতি ১০ মিনিটে ইভেন্ট রিফ্রেশ
+            setInterval(loadLiveEvents, 600000);
+        }
+
+        // ==========================================
+        // স্ক্রিপ্ট প্রটেকশন
+        // ডেভেলপার টুলস এবং কপি প্রিভেন্ট
+        // ==========================================
+        
+        // রাইট ক্লিক ডিজেবল
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // কপি প্রিভেন্ট
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+        });
+
+        // ডেভেলপার টুলস ডিটেক্ট
+        (function() {
+            const devtools = {
+                isOpen: false,
+                orientation: null
+            };
+            
+            const threshold = 160;
+            
+            setInterval(function() {
+                if (window.outerWidth - window.innerWidth > threshold || 
+                    window.outerHeight - window.innerHeight > threshold) {
+                    if (!devtools.isOpen) {
+                        devtools.isOpen = true;
+                        console.log('Developer tools detected');
+                    }
+                } else {
+                    if (devtools.isOpen) {
+                        devtools.isOpen = false;
+                    }
+                }
+            }, 500);
+        })();
+
+        // কনসোল লগ ডিজেবল
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+
+        /* ==========================================
+           স্ক্রিপ্ট শেষ
+           সব ফাংশনালিটি ইমপ্লিমেন্ট করা হয়েছে
+        ========================================== */
+    </script>
+</body>
+</html>
