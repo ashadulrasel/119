@@ -1,0 +1,2909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="Ultra Premium Live TV Streaming Platform">
+    <title>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞 - Ultra Premium Live TV</title>
+    
+    <!-- External Resources -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 
+        ============================================
+        🎨 CSS VARIABLES - রঙ এবং থিম সেটিংস
+        ============================================
+        */
+        :root {
+            /* Premium Colors */
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --secondary-light: #a78bfa;
+            --accent: #ec4899;
+            --accent-light: #f472b6;
+            
+            /* Dark Theme */
+            --bg-darkest: #0a0e1a;
+            --bg-darker: #0f172a;
+            --bg-dark: #1e293b;
+            --bg-medium: #334155;
+            --bg-light: #475569;
+            
+            /* Glass Effect */
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-bg-hover: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --text-dark: #64748b;
+            
+            /* Status Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.45);
+            --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.55);
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --gradient-premium: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            
+            /* Transitions */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 28px;
+            --radius-full: 9999px;
+            
+            /* Spacing - Responsive */
+            --space-xs: clamp(4px, 1vw, 6px);
+            --space-sm: clamp(8px, 2vw, 12px);
+            --space-md: clamp(16px, 3vw, 24px);
+            --space-lg: clamp(24px, 4vw, 32px);
+            --space-xl: clamp(32px, 5vw, 48px);
+            --space-2xl: clamp(48px, 6vw, 64px);
+        }
+
+        /* 
+        ============================================
+        🎯 GLOBAL RESET
+        ============================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-darkest);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* 
+        ============================================
+        🌌 ANIMATED BACKGROUND - প্রিমিয়াম ব্যাকগ্রাউন্ড
+        ============================================
+        */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1583409430135-1ccd865c940e?q=80&w=1170&auto=format&fit=crop') center/cover fixed;
+            opacity: 0.12;
+            filter: blur(2px);
+            transform: scale(1.1);
+            animation: bgZoom 40s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgZoom {
+            0% { transform: scale(1.1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(0.5deg); }
+            100% { transform: scale(1.2) rotate(0deg); }
+        }
+
+        .bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.2), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.2), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1), transparent 50%);
+            animation: gradientPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating Particles - ফ্লোটিং পার্টিকেল */
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.8), transparent);
+            border-radius: 50%;
+            animation: float linear infinite;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .particle:nth-child(1) { left: 5%; animation-duration: 25s; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 15%; animation-duration: 30s; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 25%; animation-duration: 28s; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 45%; animation-duration: 27s; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 55%; animation-duration: 29s; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 65%; animation-duration: 31s; animation-delay: 2s; }
+        .particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4s; }
+        .particle:nth-child(9) { left: 85%; animation-duration: 33s; animation-delay: 1s; }
+        .particle:nth-child(10) { left: 95%; animation-duration: 28s; animation-delay: 3s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 
+        ============================================
+        🎬 ULTRA PREMIUM LOADING SCREEN
+        ============================================
+        */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #0f172a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-container {
+            text-align: center;
+            animation: introZoomIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes introZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-15deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .intro-logo {
+            width: clamp(100px, 20vw, 150px);
+            height: clamp(100px, 20vw, 150px);
+            margin-bottom: var(--space-xl);
+            border-radius: var(--radius-2xl);
+            animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+            box-shadow: 0 0 80px rgba(99, 102, 241, 0.8);
+            position: relative;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-15px) rotate(3deg) scale(1.05); }
+            50% { transform: translateY(-25px) rotate(-3deg) scale(1.08); }
+            75% { transform: translateY(-15px) rotate(2deg) scale(1.05); }
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(99, 102, 241, 0.6),
+                            0 0 80px rgba(99, 102, 241, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(139, 92, 246, 0.9),
+                            0 0 120px rgba(139, 92, 246, 0.6),
+                            0 0 160px rgba(236, 72, 153, 0.4);
+            }
+        }
+
+        .intro-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 70%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+            animation: textShine 4s ease-in-out infinite;
+            background-size: 300% auto;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        .intro-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2xl);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        /* Premium Loading Spinner - লোডিং স্পিনার */
+        .loading-spinner {
+            width: clamp(60px, 15vw, 80px);
+            height: clamp(60px, 15vw, 80px);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            border-top-color: var(--primary);
+            border-right-color: var(--primary);
+            animation-delay: 0s;
+        }
+
+        .spinner-ring:nth-child(2) {
+            border-bottom-color: var(--secondary);
+            border-left-color: var(--secondary);
+            animation-delay: 0.4s;
+            animation-direction: reverse;
+        }
+
+        .spinner-ring:nth-child(3) {
+            border-top-color: var(--accent);
+            border-bottom-color: var(--accent);
+            animation-delay: 0.8s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .loading-progress {
+            margin-top: var(--space-xl);
+            width: clamp(200px, 50vw, 300px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-premium);
+            border-radius: var(--radius-full);
+            animation: progressLoad 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes progressLoad {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* 
+        ============================================
+        📱 ULTRA PREMIUM NAVIGATION BAR
+        ============================================
+        */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            transition: all var(--transition-normal);
+            animation: navSlideDown 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes navSlideDown {
+            from {
+                transform: translateY(-120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.98);
+            padding: var(--space-sm) var(--space-lg);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .navbar-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            cursor: pointer;
+            transition: transform var(--transition-normal);
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .brand-logo {
+            width: clamp(45px, 8vw, 60px);
+            height: clamp(45px, 8vw, 60px);
+            border-radius: var(--radius-lg);
+            animation: brandPulse 5s ease-in-out infinite;
+            transition: all var(--transition-normal);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes brandPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.5),
+                            0 0 40px rgba(99, 102, 241, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.9),
+                            0 0 80px rgba(139, 92, 246, 0.5);
+                transform: scale(1.08);
+            }
+        }
+
+        .brand-logo:hover {
+            transform: rotate(15deg) scale(1.15);
+            box-shadow: 0 0 60px rgba(99, 102, 241, 1);
+        }
+
+        .brand-text {
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-sm);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: clamp(10px, 2vw, 14px) clamp(18px, 3vw, 26px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
+            border-color: var(--primary);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* 
+        ============================================
+        👤 ULTRA PREMIUM PROFILE SECTION
+        ============================================
+        */
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2.5vw, 22px);
+            background: var(--gradient-premium);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-normal);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .profile-avatar {
+            width: clamp(36px, 6vw, 44px);
+            height: clamp(36px, 6vw, 44px);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+            transition: all var(--transition-normal);
+        }
+
+        .profile-btn:hover .profile-avatar {
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+
+        .profile-name-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .profile-username {
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: white;
+        }
+
+        .profile-plan-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: var(--radius-full);
+            font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+            font-weight: 600;
+        }
+
+        /* Profile Dropdown - প্রোফাইল ড্রপডাউন */
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 15px);
+            right: 0;
+            min-width: clamp(300px, 40vw, 380px);
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-xl);
+            display: none;
+            animation: dropdownSlide 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        .profile-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-premium);
+            border-radius: var(--radius-2xl);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Profile Header - প্রোফাইল হেডার */
+        .profile-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--glass-border);
+            position: relative;
+        }
+
+        .profile-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+        }
+
+        .profile-avatar-large {
+            width: clamp(80px, 15vw, 100px);
+            height: clamp(80px, 15vw, 100px);
+            margin: 0 auto var(--space-md);
+            border-radius: 50%;
+            background: var(--gradient-premium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 900;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.6),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1);
+            animation: avatarPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% {
+                box-shadow: 0 0 40px rgba(99, 102, 241, 0.6),
+                            inset 0 0 30px rgba(255, 255, 255, 0.1);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(139, 92, 246, 0.9),
+                            inset 0 0 40px rgba(255, 255, 255, 0.2);
+                transform: scale(1.05);
+            }
+        }
+
+        .profile-info {
+            padding: var(--space-md) 0;
+        }
+
+        .profile-name {
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .profile-plan {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 8px 20px;
+            background: var(--gradient-accent);
+            border-radius: var(--radius-full);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            box-shadow: 0 6px 20px rgba(75, 172, 254, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: planBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes planBadge {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(75, 172, 254, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(75, 172, 254, 0.7);
+            }
+        }
+
+        /* Profile Stats - প্রোফাইল স্ট্যাটস */
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-lg) 0;
+        }
+
+        .stat-card {
+            padding: var(--space-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: var(--glass-bg-hover);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .stat-icon {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: var(--space-sm);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-value {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: clamp(0.75rem, 1.3vw, 0.85rem);
+            color: var(--text-muted);
+        }
+
+        .profile-expiry {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: var(--space-md);
+            background: var(--gradient-secondary);
+            border: none;
+            color: white;
+            border-radius: var(--radius-lg);
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(240, 147, 251, 0.6);
+        }
+
+        /* Mobile Menu Toggle - মোবাইল মেনু */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-normal);
+        }
+
+        .menu-toggle:hover {
+            background: var(--glass-bg-hover);
+            transform: scale(1.1);
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-normal);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(10px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10px);
+        }
+
+        /* 
+        ============================================
+        📢 PREMIUM NOTICE BAR
+        ============================================
+        */
+        .notice-bar {
+            padding: var(--space-md) var(--space-lg);
+            margin: var(--space-lg);
+            border-radius: var(--radius-xl);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .notice-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .notice-content {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .notice-icon {
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            color: var(--accent);
+            animation: bellRing 4s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes bellRing {
+            0%, 100% { transform: rotate(0deg); }
+            5%, 15% { transform: rotate(-20deg); }
+            10%, 20% { transform: rotate(20deg); }
+            25% { transform: rotate(0deg); }
+        }
+
+        .notice-text {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .marquee {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 
+        ============================================
+        🎞️ ULTRA PREMIUM SLIDER
+        ============================================
+        */
+        .banner-slider {
+            margin: var(--space-lg);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            position: relative;
+            height: clamp(250px, 50vw, 550px);
+            box-shadow: var(--shadow-2xl);
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+            animation: slideZoom 12s ease-in-out infinite;
+        }
+
+        @keyframes slideZoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-2xl);
+            background: linear-gradient(to top, 
+                rgba(0, 0, 0, 0.98) 0%, 
+                rgba(0, 0, 0, 0.85) 40%, 
+                rgba(0, 0, 0, 0.5) 70%, 
+                transparent 100%);
+            animation: slideUp 1s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-title {
+            font-size: clamp(1.5rem, 4vw, 3.2rem);
+            font-weight: 900;
+            margin-bottom: var(--space-md);
+            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-desc {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: var(--space-lg);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 2px solid transparent;
+        }
+
+        .slider-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.3);
+        }
+
+        .slider-dot.active {
+            background: var(--primary);
+            width: 45px;
+            border-radius: var(--radius-full);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 1);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            width: clamp(45px, 8vw, 60px);
+            height: clamp(45px, 8vw, 60px);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            transition: all var(--transition-normal);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-arrow:hover {
+            background: var(--gradient-primary);
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.6);
+        }
+
+        .slider-arrow.prev {
+            left: clamp(15px, 3vw, 30px);
+        }
+
+        .slider-arrow.next {
+            right: clamp(15px, 3vw, 30px);
+        }
+
+        /* Continue in next part... */
+        
+        /* 
+        ============================================
+        🔥 LIVE EVENTS SECTION
+        ============================================
+        */
+        .live-events {
+            margin: var(--space-2xl) var(--space-lg);
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-weight: 900;
+            margin-bottom: var(--space-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            animation: fadeInLeft 1s ease;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-icon {
+            width: clamp(50px, 8vw, 65px);
+            height: clamp(50px, 8vw, 65px);
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5);
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            25% {
+                transform: translateY(-8px) rotate(5deg);
+            }
+            50% { 
+                transform: translateY(-15px) rotate(-5deg); 
+            }
+            75% {
+                transform: translateY(-8px) rotate(3deg);
+            }
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(280px, 40vw, 360px), 1fr));
+            gap: var(--space-lg);
+        }
+
+        .event-card {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.8s ease;
+            animation-fill-mode: both;
+        }
+
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.2s; }
+        .event-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            z-index: 0;
+        }
+
+        .event-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .event-card:hover {
+            transform: translateY(-18px) scale(1.03);
+            box-shadow: 0 30px 70px rgba(99, 102, 241, 0.5);
+            border-color: var(--primary);
+        }
+
+        .event-banner {
+            width: 100%;
+            height: clamp(180px, 30vw, 240px);
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .event-card:hover .event-banner {
+            transform: scale(1.15);
+        }
+
+        .event-content {
+            padding: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-title {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--text-muted);
+            margin-bottom: var(--space-md);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+
+        .event-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 8px 18px;
+            background: var(--danger);
+            border-radius: var(--radius-full);
+            font-size: clamp(0.75rem, 1.3vw, 0.9rem);
+            font-weight: 700;
+            animation: badgePulse 2.5s ease-in-out infinite;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes badgePulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.9;
+                box-shadow: 0 8px 30px rgba(239, 68, 68, 0.8);
+                transform: scale(1.05);
+            }
+        }
+
+        /* 
+        ============================================
+        📺 CATEGORY TABS
+        ============================================
+        */
+        .category-tabs {
+            margin: var(--space-xl) var(--space-lg);
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-btn {
+            padding: clamp(12px, 2vw, 16px) clamp(20px, 3vw, 30px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            transform: translate(-50%, -50%);
+            transition: width 0.7s ease, height 0.7s ease;
+            z-index: -1;
+        }
+
+        .tab-btn:hover::before,
+        .tab-btn.active::before {
+            width: 350px;
+            height: 350px;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+            border-color: var(--primary);
+        }
+
+        /* 
+        ============================================
+        📡 PREMIUM CHANNEL GRID
+        ============================================
+        */
+        .channels-section {
+            margin: var(--space-2xl) var(--space-lg);
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(160px, 25vw, 230px), 1fr));
+            gap: var(--space-lg);
+        }
+
+        .channel-card {
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--primary), transparent 30%);
+            animation: rotate 6s linear infinite;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .channel-card::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: var(--bg-dark);
+            border-radius: var(--radius-lg);
+            z-index: 0;
+        }
+
+        .channel-card:hover::before {
+            opacity: 0.4;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-15px) scale(1.08);
+            box-shadow: 0 25px 60px rgba(99, 102, 241, 0.6);
+            border-color: var(--primary);
+        }
+
+        .channel-logo-container {
+            width: 100%;
+            height: clamp(110px, 20vw, 150px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.04);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .channel-logo {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform var(--transition-slow);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+        }
+
+        .channel-card:hover .channel-logo {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        .channel-name {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: var(--space-md);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        .channel-badges {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            transform: scale(1.15);
+        }
+
+        .badge-live {
+            background: var(--danger);
+            animation: badgePulse 2.5s ease-in-out infinite;
+        }
+
+        .badge-hd {
+            background: var(--primary);
+            box-shadow: 0 3px 12px rgba(99, 102, 241, 0.5);
+        }
+
+        .badge-pro {
+            background: var(--warning);
+            box-shadow: 0 3px 12px rgba(245, 158, 11, 0.5);
+        }
+
+        .badge-free {
+            background: var(--success);
+            box-shadow: 0 3px 12px rgba(16, 185, 129, 0.5);
+        }
+
+        .badge-2k {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.5);
+        }
+
+        .badge-4k {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 3px 12px rgba(240, 147, 251, 0.5);
+        }
+
+        .badge-8k {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 3px 12px rgba(79, 172, 254, 0.5);
+        }
+
+        /* 
+        ============================================
+        🎬 VIDEO PLAYER
+        ============================================
+        */
+        .player-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 99998;
+            padding: clamp(10px, 2vw, 25px);
+        }
+
+        .player-container.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .player-wrapper {
+            width: 100%;
+            max-width: 1800px;
+            position: relative;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9);
+            animation: scaleIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(40px);
+            border-bottom: 2px solid var(--glass-border);
+        }
+
+        .player-title {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-player {
+            background: var(--danger);
+            border: none;
+            color: white;
+            width: clamp(40px, 7vw, 50px);
+            height: clamp(40px, 7vw, 50px);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .close-player:hover {
+            transform: rotate(90deg) scale(1.2);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.7);
+        }
+
+        #videoPlayer {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .player-watermark {
+            position: absolute;
+            top: 50%;
+            left: clamp(20px, 4vw, 50px);
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.85;
+            animation: watermarkFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes watermarkFloat {
+            0%, 100% {
+                transform: translateY(-50%);
+                opacity: 0.85;
+            }
+            50% {
+                transform: translateY(-45%);
+                opacity: 0.95;
+            }
+        }
+
+        .player-watermark img {
+            width: clamp(40px, 7vw, 70px);
+            height: clamp(40px, 7vw, 70px);
+            border-radius: var(--radius-lg);
+            filter: drop-shadow(0 0 20px rgba(99, 102, 241, 1));
+        }
+
+        .player-watermark span {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.6));
+        }
+
+        .player-controls {
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(40px);
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            border-top: 2px solid var(--glass-border);
+        }
+
+        .control-btn {
+            padding: clamp(10px, 2vw, 14px) clamp(18px, 3vw, 26px);
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .control-btn:hover {
+            background: var(--gradient-secondary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+        }
+
+        /* 
+        ============================================
+        🔐 AUTH MODAL
+        ============================================
+        */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(20px);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-lg);
+        }
+
+        .auth-modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(50px) saturate(180%);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-2xl);
+            box-shadow: 0 50px 140px rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--glass-border);
+            animation: slideUpBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes slideUpBounce {
+            from {
+                opacity: 0;
+                transform: translateY(150px) scale(0.8) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .auth-logo {
+            width: clamp(90px, 18vw, 120px);
+            height: clamp(90px, 18vw, 120px);
+            margin: 0 auto var(--space-lg);
+            border-radius: var(--radius-xl);
+            animation: logoFloat 4s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.8);
+        }
+
+        .auth-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 900;
+            background: var(--gradient-premium);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-sm);
+        }
+
+        .auth-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: clamp(14px, 2vw, 18px) var(--space-lg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            color: var(--text-primary);
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+            transition: all var(--transition-normal);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.2);
+            background: var(--glass-bg-hover);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: clamp(14px, 2vw, 18px);
+            background: var(--gradient-premium);
+            border: none;
+            color: white;
+            border-radius: var(--radius-lg);
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: var(--space-md);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.8s ease, height 0.8s ease;
+        }
+
+        .auth-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 45px rgba(99, 102, 241, 0.7);
+        }
+
+        .auth-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            display: none;
+            animation: shake 0.7s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-12px); }
+            20%, 40%, 60%, 80% { transform: translateX(12px); }
+        }
+
+        /* 
+        ============================================
+        🦶 FOOTER
+        ============================================
+        */
+        footer {
+            margin: var(--space-2xl) var(--space-lg) var(--space-lg);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-2xl);
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            width: clamp(50px, 9vw, 60px);
+            height: clamp(50px, 9vw, 60px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transform: scale(0);
+            transition: transform var(--transition-normal);
+            border-radius: 50%;
+        }
+
+        .social-btn:hover::before {
+            transform: scale(1);
+        }
+
+        .social-btn i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-10px) scale(1.2);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            margin-top: var(--space-lg);
+        }
+
+        /* 
+        ============================================
+        📱 MOBILE RESPONSIVE - মোবাইল রেস্পন্সিভ
+        ============================================
+        */
+        @media (max-width: 1024px) {
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 30vw, 200px), 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: var(--space-sm) var(--space-md);
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 88%;
+                max-width: 380px;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(50px);
+                border-right: 2px solid var(--glass-border);
+                flex-direction: column;
+                padding: var(--space-2xl) var(--space-lg);
+                transition: left 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                box-shadow: var(--shadow-2xl);
+                height: 100vh;
+                overflow-y: auto;
+                z-index: 99999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+                padding: var(--space-md);
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .profile-dropdown {
+                min-width: 95vw;
+            }
+
+            .banner-slider {
+                margin: var(--space-md);
+            }
+
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .slider-arrow.prev {
+                left: 10px;
+            }
+
+            .slider-arrow.next {
+                right: 10px;
+            }
+
+            .notice-bar,
+            .live-events,
+            .category-tabs,
+            .channels-section {
+                margin: var(--space-md);
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .channels-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-md);
+            }
+
+            .player-watermark {
+                left: 15px;
+            }
+
+            .player-watermark img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .player-watermark span {
+                font-size: 1rem;
+            }
+
+            footer {
+                margin: var(--space-xl) var(--space-md);
+                padding: var(--space-xl);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .channels-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .category-tabs {
+                gap: var(--space-sm);
+            }
+
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 
+        ============================================
+        🎨 CUSTOM SCROLLBAR
+        ============================================
+        */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+            border: 3px solid var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-secondary);
+        }
+
+        /* 
+        ============================================
+        ✨ SELECTION COLOR
+        ============================================
+        */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        ::-moz-selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 
+        ============================================
+        📊 NO CONTENT MESSAGE
+        ============================================
+        */
+        .no-content {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+
+        .no-content i {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: var(--space-lg);
+            opacity: 0.3;
+            display: block;
+        }
+
+        .no-content p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: var(--space-sm);
+        }
+
+        /* 
+        ============================================
+        🎭 OVERLAY FOR MOBILE MENU
+        ============================================
+        */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Elements -->
+    <div class="background-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-gradient"></div>
+        <div class="bg-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="intro-container">
+            <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="intro-logo">
+            <div class="intro-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+            <div class="intro-subtitle">🎬 Ultra Premium Live TV Experience</div>
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="auth-modal active">
+        <div class="auth-container">
+            <div class="auth-header">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="auth-logo">
+                <h2 class="auth-title">Welcome Back</h2>
+                <p class="auth-subtitle">🔐 Sign in to access premium content</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> Invalid credentials or account expired
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In Securely
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <div class="nav-brand" onclick="scrollToTop()">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Brand Logo" class="brand-logo">
+                <span class="brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</span>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-btn" onclick="closeMenu()">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#channels" class="nav-btn" onclick="closeMenu()">
+                    <i class="fas fa-tv"></i> Channels
+                </a>
+                <a href="https://example.com" class="nav-btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Website 1
+                </a>
+                <a href="https://example.com" class="nav-btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Website 2
+                </a>
+                
+                <!-- Profile Button -->
+                <div id="profileBtn" class="profile-btn" style="display: none;" onclick="toggleProfile(event)">
+                    <div class="profile-avatar" id="avatarText">U</div>
+                    <div class="profile-name-wrapper">
+                        <span class="profile-username" id="profileName">User</span>
+                        <span class="profile-plan-badge" id="profilePlanBadge">Basic</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <!-- Profile Dropdown -->
+                    <div id="profileDropdown" class="profile-dropdown">
+                        <div class="profile-header">
+                            <div class="profile-avatar-large" id="avatarLarge">U</div>
+                        </div>
+                        
+                        <div class="profile-info">
+                            <div class="profile-name" id="dropdownName">User Name</div>
+                            <div class="profile-plan" id="dropdownPlan">
+                                <i class="fas fa-crown"></i> Basic Plan
+                            </div>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-tv"></i></div>
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Channels</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                <div class="stat-value">24h</div>
+                                <div class="stat-label">Watch Time</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-expiry" id="dropdownExpiry">
+                            <i class="far fa-calendar-alt"></i> Expires: Dec 31, 2024
+                        </div>
+                        
+                        <button class="logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notice Bar -->
+    <div class="notice-bar">
+        <div class="notice-content">
+            <i class="fas fa-bell notice-icon"></i>
+            <div class="notice-text">
+                <div class="marquee">
+                    🔥 Welcome to Ultra Premium Live TV! | ✨ HD/4K/8K Quality Available | 🎉 New Channels Added Daily | 📺 Multi-Device Support | 💯 100% Ad-Free for Pro Members | 🚀 Smooth Streaming Experience | 🎬 Watch on Any Device
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Slider -->
+    <div class="banner-slider" id="home">
+        <div class="slider-container">
+            <div class="slide active">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=1600&h=600&fit=crop" alt="Premium Streaming" loading="lazy">
+                <div class="slide-overlay">
+                    <div class="slide-title">🎬 Premium Live TV Streaming</div>
+                    <div class="slide-desc">Experience crystal clear HD, 4K & 8K quality streaming on all your devices with zero buffering</div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1600&h=600&fit=crop" alt="Sports & Entertainment" loading="lazy">
+                <div class="slide-overlay">
+                    <div class="slide-title">⚽ Sports & Entertainment</div>
+                    <div class="slide-desc">Never miss a live match, show or your favorite programs with our 24/7 live streaming</div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1600&h=600&fit=crop" alt="Multi-Device" loading="lazy">
+                <div class="slide-overlay">
+                    <div class="slide-title">📱 Multi-Device Compatible</div>
+                    <div class="slide-desc">Stream seamlessly on Mobile, Tablet, Smart TV, and Desktop with synchronized experience</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="slider-arrow prev" onclick="changeSlide(-1)" aria-label="Previous slide">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slider-arrow next" onclick="changeSlide(1)" aria-label="Next slide">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="slider-nav">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+        </div>
+    </div>
+
+    <!-- Live Events -->
+    <div class="live-events" id="liveEvents">
+        <h2 class="section-title">
+            <div class="section-icon">
+                <i class="fas fa-fire"></i>
+            </div>
+            🔴 Live Events
+        </h2>
+        <div class="events-grid" id="eventsGrid"></div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" onclick="filterCategory('all', event)">
+            <i class="fas fa-th"></i> All Channels
+        </button>
+        <button class="tab-btn" onclick="filterCategory('bangladeshi', event)">
+            <i class="fas fa-flag"></i> Bangladeshi
+        </button>
+        <button class="tab-btn" onclick="filterCategory('kolkata', event)">
+            <i class="fas fa-city"></i> Kolkata
+        </button>
+        <button class="tab-btn" onclick="filterCategory('indian', event)">
+            <i class="fas fa-globe-asia"></i> Indian
+        </button>
+        <button class="tab-btn" onclick="filterCategory('cricket', event)">
+            <i class="fas fa-baseball-ball"></i> Cricket
+        </button>
+        <button class="tab-btn" onclick="filterCategory('football', event)">
+            <i class="fas fa-futbol"></i> Football
+        </button>
+        <button class="tab-btn" onclick="filterCategory('kids', event)">
+            <i class="fas fa-child"></i> Kids
+        </button>
+        <button class="tab-btn" onclick="filterCategory('religious', event)">
+            <i class="fas fa-mosque"></i> Religious
+        </button>
+    </div>
+
+    <!-- Channels Section -->
+    <div class="channels-section" id="channels">
+        <h2 class="section-title">
+            <div class="section-icon">
+                <i class="fas fa-broadcast-tower"></i>
+            </div>
+            📺 Available Channels
+        </h2>
+        <div class="channels-grid" id="channelsGrid"></div>
+    </div>
+
+    <!-- Video Player -->
+    <div id="playerContainer" class="player-container">
+        <div class="player-wrapper">
+            <div class="player-header">
+                <div class="player-title" id="playerChannelName">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Channel Name</span>
+                </div>
+                <button class="close-player" onclick="closePlayer()" aria-label="Close player">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="position: relative;">
+                <video id="videoPlayer" controls autoplay playsinline></video>
+                
+                <div class="player-watermark">
+                    <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo">
+                    <span>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</span>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <button class="control-btn" onclick="togglePIP()">
+                    <i class="fas fa-external-link-alt"></i> Picture in Picture
+                </button>
+                <button class="control-btn" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand"></i> Fullscreen
+                </button>
+                <button class="control-btn" onclick="changeQuality('auto')">
+                    <i class="fas fa-cog"></i> Auto Quality
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://facebook.com" class="social-btn" target="_blank" rel="noopener" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com" class="social-btn" target="_blank" rel="noopener" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://instagram.com" class="social-btn" target="_blank" rel="noopener" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com" class="social-btn" target="_blank" rel="noopener" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://t.me/yourchannel" class="social-btn" target="_blank" rel="noopener" title="Telegram">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="https://wa.me/1234567890" class="social-btn" target="_blank" rel="noopener" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+        
+        <div class="copyright">
+            <p><strong>&copy; 2024 𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</strong> - All Rights Reserved</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">
+                ✨ Ultra Premium Live TV Streaming Platform ✨
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        /* DATABASE - একাউন্ট ডেটা */
+        const AUTHORIZED_ACCOUNTS = {
+            'basic_user': {
+                password: 'basic123',
+                plan: 'Basic',
+                badge: 'B',
+                expiry: '2024-12-31',
+                allowedCategories: ['bangladeshi', 'kids', 'religious']
+            },
+            'pro_user': {
+                password: 'pro456',
+                plan: 'Pro',
+                badge: 'Pro',
+                expiry: '2025-06-30',
+                allowedCategories: ['bangladeshi', 'kolkata', 'indian', 'kids', 'religious']
+            },
+            'ultra_user': {
+                password: 'ultra789',
+                plan: 'Ultra Pro',
+                badge: 'Pro+',
+                expiry: '2025-12-31',
+                allowedCategories: 'all'
+            }
+        };
+
+        /* DATABASE - চ্যানেল ডেটা */
+        const CHANNELS = [
+            { name: 'BTV', logo: 'https://i.ibb.co/HBLc12k/btv.png', url: 'https://example.com/btv.m3u8', category: 'bangladeshi', badges: ['Live', 'HD', 'Free'], requiredPlan: 'B' },
+            { name: 'ATN Bangla', logo: 'https://i.ibb.co/ZKFxW3g/atn-bangla.png', url: 'https://example.com/atn.m3u8', category: 'bangladeshi', badges: ['Live', 'HD'], requiredPlan: 'B' },
+            { name: 'Channel i', logo: 'https://i.ibb.co/4Zsm0Jj/channel-i.png', url: 'https://example.com/channeli.m3u8', category: 'bangladeshi', badges: ['Live', 'HD', 'Pro'], requiredPlan: 'Pro' },
+            { name: 'Somoy TV', logo: 'https://i.ibb.co/kBPCfLv/somoy.png', url: 'https://example.com/somoy.m3u8', category: 'bangladeshi', badges: ['Live', '2K'], requiredPlan: 'B' },
+            { name: 'Star Jalsha', logo: 'https://i.ibb.co/3Y8tFqB/star-jalsha.png', url: 'https://example.com/starjalsha.m3u8', category: 'kolkata', badges: ['Live', '4K', 'Pro'], requiredPlan: 'Pro' },
+            { name: 'Zee Bangla', logo: 'https://i.ibb.co/9YWjXG3/zee-bangla.png', url: 'https://example.com/zeebangla.m3u8', category: 'kolkata', badges: ['Live', 'HD'], requiredPlan: 'Pro' },
+            { name: 'Sony TV', logo: 'https://i.ibb.co/hLXKQvY/sony-tv.png', url: 'https://example.com/sony.m3u8', category: 'indian', badges: ['Live', '4K'], requiredPlan: 'Pro' },
+            { name: 'Star Plus', logo: 'https://i.ibb.co/kBZTBCg/star-plus.png', url: 'https://example.com/starplus.m3u8', category: 'indian', badges: ['Live', 'HD'], requiredPlan: 'Pro' },
+            { name: 'T Sports', logo: 'https://i.ibb.co/9w3ZGnb/tsports.png', url: 'https://example.com/tsports.m3u8', category: 'cricket', badges: ['Live', '8K', 'Pro'], requiredPlan: 'Pro+' },
+            { name: 'Willow Cricket', logo: 'https://i.ibb.co/8XYvBmP/willow.png', url: 'https://example.com/willow.m3u8', category: 'cricket', badges: ['Live', '4K', 'Pro'], requiredPlan: 'Pro+' },
+            { name: 'Sony Ten 1', logo: 'https://i.ibb.co/ZfVhjrL/ten1.png', url: 'https://example.com/ten1.m3u8', category: 'football', badges: ['Live', '4K', 'Pro'], requiredPlan: 'Pro+' },
+            { name: 'Nick', logo: 'https://i.ibb.co/VJY8GVP/nick.png', url: 'https://example.com/nick.m3u8', category: 'kids', badges: ['Live', 'HD', 'Free'], requiredPlan: 'B' },
+            { name: 'Disney', logo: 'https://i.ibb.co/D9ZSd8M/disney.png', url: 'https://example.com/disney.m3u8', category: 'kids', badges: ['Live', '2K'], requiredPlan: 'B' },
+            { name: 'ATN Islamic', logo: 'https://i.ibb.co/bvTmg8Y/atn-islamic.png', url: 'https://example.com/islamic.m3u8', category: 'religious', badges: ['Live', 'HD', 'Free'], requiredPlan: 'B' },
+            { name: 'Peace TV', logo: 'https://i.ibb.co/qmBnHrM/peace.png', url: 'https://example.com/peace.m3u8', category: 'religious', badges: ['Live', 'HD'], requiredPlan: 'B' }
+        ];
+
+        /* DATABASE - লাইভ ইভেন্ট ডেটা */
+        const LIVE_EVENTS = [
+            { title: 'Bangladesh vs India - Live Cricket Match', time: '2024-12-31 15:00', image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=400&h=200&fit=crop', url: 'https://example.com/match1.m3u8', endTime: '2024-12-31 23:00' },
+            { title: 'Premier League - Manchester vs Liverpool', time: '2024-12-25 20:00', image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=200&fit=crop', url: 'https://example.com/match2.m3u8', endTime: '2024-12-25 22:00' },
+            { title: 'ICC World Cup Final 2025', time: '2025-01-15 14:00', image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&h=200&fit=crop', url: 'https://example.com/worldcup.m3u8', endTime: '2025-01-15 23:00' }
+        ];
+
+        /* GLOBAL VARIABLES */
+        let currentUser = null;
+        let currentSlide = 0;
+        let currentCategory = 'all';
+        let hlsPlayer = null;
+        let sliderInterval = null;
+
+        /* PAGE LOAD */
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 2500);
+            checkLocalStorage();
+            startSlider();
+            loadLiveEvents();
+            if (currentUser) loadChannels();
+            window.addEventListener('scroll', handleNavbarScroll);
+        });
+
+        /* NAVBAR SCROLL */
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 100);
+        }
+
+        /* LOCAL STORAGE CHECK */
+        function checkLocalStorage() {
+            const savedUser = localStorage.getItem('liveStreamUser');
+            if (savedUser) {
+                const userData = JSON.parse(savedUser);
+                const account = AUTHORIZED_ACCOUNTS[userData.username];
+                if (account && checkAccountExpiry(account.expiry)) {
+                    currentUser = { username: userData.username, ...account };
+                    document.getElementById('authModal').classList.remove('active');
+                    updateProfileUI();
+                    loadChannels();
+                } else {
+                    localStorage.removeItem('liveStreamUser');
+                }
+            }
+        }
+
+        /* ACCOUNT EXPIRY CHECK */
+        function checkAccountExpiry(expiryDate) {
+            return new Date() <= new Date(expiryDate);
+        }
+
+        /* LOGIN FORM */
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMessage');
+            const account = AUTHORIZED_ACCOUNTS[username];
+            
+            if (account && account.password === password) {
+                if (!checkAccountExpiry(account.expiry)) {
+                    errorMsg.textContent = '⚠️ Your account has expired. Please renew your subscription.';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+                currentUser = { username: username, ...account };
+                localStorage.setItem('liveStreamUser', JSON.stringify({ username: username }));
+                document.getElementById('authModal').classList.remove('active');
+                updateProfileUI();
+                loadChannels();
+                this.reset();
+                errorMsg.classList.remove('show');
+            } else {
+                errorMsg.textContent = '❌ Invalid username or password';
+                errorMsg.classList.add('show');
+            }
+        });
+
+        /* PROFILE UI UPDATE */
+        function updateProfileUI() {
+            const profileBtn = document.getElementById('profileBtn');
+            const avatarText = document.getElementById('avatarText');
+            const avatarLarge = document.getElementById('avatarLarge');
+            const profileName = document.getElementById('profileName');
+            const profilePlanBadge = document.getElementById('profilePlanBadge');
+            const dropdownName = document.getElementById('dropdownName');
+            const dropdownPlan = document.getElementById('dropdownPlan');
+            const dropdownExpiry = document.getElementById('dropdownExpiry');
+            
+            profileBtn.style.display = 'flex';
+            const firstLetter = currentUser.username.charAt(0).toUpperCase();
+            avatarText.textContent = firstLetter;
+            avatarLarge.textContent = firstLetter;
+            profileName.textContent = currentUser.username;
+            profilePlanBadge.textContent = currentUser.badge;
+            dropdownName.textContent = currentUser.username;
+            dropdownPlan.innerHTML = `<i class="fas fa-crown"></i> ${currentUser.plan} Plan`;
+            
+            const expiryDate = new Date(currentUser.expiry);
+            dropdownExpiry.innerHTML = `<i class="far fa-calendar-alt"></i> Expires: ${expiryDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
+        }
+
+        /* LOGOUT */
+        function logout() {
+            localStorage.removeItem('liveStreamUser');
+            currentUser = null;
+            document.getElementById('profileBtn').style.display = 'none';
+            document.getElementById('profileDropdown').classList.remove('active');
+            document.getElementById('channelsGrid').innerHTML = '';
+            document.getElementById('authModal').classList.add('active');
+            closePlayer();
+        }
+
+        /* PROFILE DROPDOWN TOGGLE */
+        function toggleProfile(event) {
+            event.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const profileBtn = document.getElementById('profileBtn');
+            const dropdown = document.getElementById('profileDropdown');
+            if (profileBtn && !profileBtn.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        /* SLIDER FUNCTIONS */
+        function startSlider() {
+            sliderInterval = setInterval(() => changeSlide(1), 6000);
+        }
+
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            clearInterval(sliderInterval);
+            startSlider();
+        }
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            clearInterval(sliderInterval);
+            startSlider();
+        }
+
+        /* LOAD LIVE EVENTS */
+        function loadLiveEvents() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            const today = new Date();
+            const activeEvents = LIVE_EVENTS.filter(event => today <= new Date(event.endTime));
+            
+            if (activeEvents.length === 0) {
+                document.getElementById('liveEvents').style.display = 'none';
+                return;
+            }
+            
+            eventsGrid.innerHTML = activeEvents.map(event => `
+                <div class="event-card" onclick="playChannel('${event.url}', '${event.title}')">
+                    <img src="${event.image}" alt="${event.title}" class="event-banner" loading="lazy">
+                    <div class="event-content">
+                        <div class="event-title">${event.title}</div>
+                        <div class="event-time">
+                            <i class="far fa-clock"></i>
+                            ${new Date(event.time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                        <span class="event-badge">
+                            <i class="fas fa-circle"></i> LIVE NOW
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* LOAD CHANNELS */
+        function loadChannels(category = 'all') {
+            if (!currentUser) return;
+            const channelsGrid = document.getElementById('channelsGrid');
+            let filteredChannels = CHANNELS;
+            
+            if (category !== 'all') {
+                filteredChannels = filteredChannels.filter(ch => ch.category === category);
+            }
+            
+            filteredChannels = filteredChannels.filter(ch => {
+                if (currentUser.allowedCategories === 'all') return true;
+                if (!currentUser.allowedCategories.includes(ch.category)) return false;
+                if (ch.requiredPlan === 'B') return true;
+                if (ch.requiredPlan === 'Pro' && (currentUser.badge === 'Pro' || currentUser.badge === 'Pro+')) return true;
+                if (ch.requiredPlan === 'Pro+' && currentUser.badge === 'Pro+') return true;
+                return false;
+            });
+            
+            if (filteredChannels.length === 0) {
+                channelsGrid.innerHTML = `
+                    <div class="no-content">
+                        <i class="fas fa-tv"></i>
+                        <p>No channels available in this category</p>
+                        <p>Upgrade your plan to access more channels</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            channelsGrid.innerHTML = filteredChannels.map((channel, index) => `
+                <div class="channel-card" onclick="playChannel('${channel.url}', '${channel.name}')" style="animation-delay: ${index * 0.05}s">
+                    <div class="channel-logo-container">
+                        <img src="${channel.logo}" alt="${channel.name}" class="channel-logo" 
+                             onerror="this.src='https://via.placeholder.com/150?text=${encodeURIComponent(channel.name)}'" loading="lazy">
+                    </div>
+                    <div class="channel-name">${channel.name}</div>
+                    <div class="channel-badges">
+                        ${channel.badges.map(badge => {
+                            let badgeClass = 'badge-' + badge.toLowerCase();
+                            if (badge === 'Live') badgeClass = 'badge-live';
+                            if (badge === 'HD') badgeClass = 'badge-hd';
+                            if (badge === 'Pro') badgeClass = 'badge-pro';
+                            if (badge === 'Free') badgeClass = 'badge-free';
+                            if (badge === '2K') badgeClass = 'badge-2k';
+                            if (badge === '4K') badgeClass = 'badge-4k';
+                            if (badge === '8K') badgeClass = 'badge-8k';
+                            return `<span class="badge ${badgeClass}">${badge}</span>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* PLAY CHANNEL */
+        function playChannel(url, channelName) {
+            if (!currentUser) {
+                alert('⚠️ Please login to watch channels');
+                return;
+            }
+            
+            const playerContainer = document.getElementById('playerContainer');
+            const video = document.getElementById('videoPlayer');
+            const playerTitle = document.getElementById('playerChannelName');
+            
+            playerContainer.classList.add('active');
+            playerTitle.querySelector('span').textContent = channelName;
+            
+            if (hlsPlayer) {
+                hlsPlayer.destroy();
+                hlsPlayer = null;
+            }
+            
+            if (url.includes('.m3u8')) {
+                if (Hls.isSupported()) {
+                    hlsPlayer = new Hls({
+                        enableWorker: true,
+                        lowLatencyMode: true,
+                        backBufferLength: 90,
+                        maxBufferLength: 30,
+                        maxMaxBufferLength: 600
+                    });
+                    hlsPlayer.loadSource(url);
+                    hlsPlayer.attachMedia(video);
+                    hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(e => console.log('Autoplay prevented:', e)));
+                    hlsPlayer.on(Hls.Events.ERROR, function(event, data) {
+                        if (data.fatal) {
+                            switch (data.type) {
+                                case Hls.ErrorTypes.NETWORK_ERROR: hlsPlayer.startLoad(); break;
+                                case Hls.ErrorTypes.MEDIA_ERROR: hlsPlayer.recoverMediaError(); break;
+                                default: hlsPlayer.destroy(); alert('❌ Cannot play this stream'); break;
+                            }
+                        }
+                    });
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = url;
+                    video.play().catch(e => console.log('Autoplay prevented:', e));
+                }
+            } else {
+                video.src = url;
+                video.play().catch(e => console.log('Autoplay prevented:', e));
+            }
+            
+            saveToHistory(channelName, url);
+        }
+
+        /* CLOSE PLAYER */
+        function closePlayer() {
+            const playerContainer = document.getElementById('playerContainer');
+            const video = document.getElementById('videoPlayer');
+            playerContainer.classList.remove('active');
+            video.pause();
+            video.src = '';
+            if (hlsPlayer) {
+                hlsPlayer.destroy();
+                hlsPlayer = null;
+            }
+        }
+
+        /* PIP */
+        function togglePIP() {
+            const video = document.getElementById('videoPlayer');
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+            } else if (document.pictureInPictureEnabled) {
+                video.requestPictureInPicture().catch(() => alert('⚠️ PIP not supported'));
+            }
+        }
+
+        /* FULLSCREEN */
+        function toggleFullscreen() {
+            const playerWrapper = document.querySelector('.player-wrapper');
+            if (!document.fullscreenElement) {
+                playerWrapper.requestFullscreen().catch(err => alert(`❌ Fullscreen error: ${err.message}`));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        /* CHANGE QUALITY */
+        function changeQuality(quality) {
+            if (hlsPlayer && quality === 'auto') hlsPlayer.currentLevel = -1;
+        }
+
+        /* CATEGORY FILTER */
+        function filterCategory(category, event) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            loadChannels(category);
+        }
+
+        /* SAVE TO HISTORY */
+        function saveToHistory(channelName, url) {
+            if (!currentUser) return;
+            const history = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+            const newEntry = { channel: channelName, url: url, timestamp: new Date().toISOString(), user: currentUser.username };
+            const filtered = history.filter(item => !(item.channel === channelName && item.user === currentUser.username));
+            filtered.unshift(newEntry);
+            localStorage.setItem('watchHistory', JSON.stringify(filtered.slice(0, 50)));
+        }
+
+        /* MOBILE MENU */
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.getElementById('menuToggle');
+            const menuOverlay = document.getElementById('menuOverlay');
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.getElementById('menuToggle');
+            const menuOverlay = document.getElementById('menuOverlay');
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        /* SCROLL TO TOP */
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* SCRIPT PROTECTION */
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        console.log('%c⚠️ STOP!', 'color: red; font-size: 60px; font-weight: bold;');
+        console.log('%cThis is a browser feature for developers only!', 'font-size: 20px;');
+        console.log('%c✅ Live Stream Platform Loaded Successfully', 'color: #10b981; font-size: 16px; font-weight: bold;');
+    </script>
+
+</body>
+</html>
