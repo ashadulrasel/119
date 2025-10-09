@@ -2,32 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞 - Premium Live TV</title>
     
-    <!-- ============================================
-         CSS স্টাইল - সম্পূর্ণ রেসপন্সিভ ও প্রিমিয়াম ডিজাইন
-    ============================================ -->
     <style>
         /* ==========================================
-           CSS ভেরিয়েবল - সহজে কালার পরিবর্তনের জন্য
+           CSS ভেরিয়েবল - কালার ম্যানেজমেন্ট
         ========================================== */
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f5576c;
             --glass-bg: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.8);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.2);
-            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --backdrop-blur: blur(20px);
         }
 
-        /* ==========================================
-           রিসেট স্টাইল - সব ব্রাউজারে একই লুক
-        ========================================== */
+        /* রিসেট */
         * {
             margin: 0;
             padding: 0;
@@ -40,19 +30,17 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-image: url('https://images.unsplash.com/photo-1583409430135-1ccd865c940e?q=80&w=1170&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1583409430135-1ccd865c940e?q=80&w=1170');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             min-height: 100vh;
+            color: white;
             overflow-x: hidden;
-            position: relative;
-            color: var(--text-primary);
         }
 
-        /* ব্যাকগ্রাউন্ড ওভারলে - গ্লাস ইফেক্ট */
         body::before {
             content: '';
             position: fixed;
@@ -61,12 +49,12 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(10px);
             z-index: -1;
         }
 
         /* ==========================================
-           লোডিং স্ক্রিন - ইম্প্রুভড ডিজাইন
+           লোডিং স্ক্রিন
         ========================================== */
         .loading-screen {
             position: fixed;
@@ -74,13 +62,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: var(--transition-smooth);
+            transition: all 0.5s;
         }
 
         .loading-screen.hidden {
@@ -93,76 +81,44 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            animation: logoRotate 3s ease-in-out infinite;
-            box-shadow: 0 15px 60px rgba(255, 255, 255, 0.4);
-            border: 5px solid rgba(255, 255, 255, 0.3);
             object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            animation: rotate 3s linear infinite;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes logoRotate {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                box-shadow: 0 15px 60px rgba(255, 255, 255, 0.4);
-            }
-            50% { 
-                transform: scale(1.15) rotate(180deg); 
-                box-shadow: 0 20px 80px rgba(255, 255, 255, 0.6);
-            }
+        @keyframes rotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
         .loading-text {
             margin-top: 30px;
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: 2.5rem;
             font-weight: 800;
             color: white;
-            text-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            animation: textGlow 2s ease-in-out infinite;
-            letter-spacing: 3px;
+            text-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            animation: glow 2s ease-in-out infinite;
         }
 
-        @keyframes textGlow {
-            0%, 100% { 
-                text-shadow: 0 5px 30px rgba(255, 255, 255, 0.5);
-                transform: translateY(0);
-            }
-            50% { 
-                text-shadow: 0 10px 50px rgba(255, 255, 255, 0.8);
-                transform: translateY(-5px);
-            }
-        }
-
-        .loading-spinner {
-            margin-top: 20px;
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes glow {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0.8; transform: translateY(-10px); }
         }
 
         /* ==========================================
-           নেভিগেশন বার - রেসপন্সিভ ডিজাইন
+           নেভবার
         ========================================== */
         .navbar {
             background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-smooth);
-        }
-
-        .navbar.scrolled {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(30px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .nav-container {
@@ -171,17 +127,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 2rem;
         }
 
-        /* ব্র্যান্ড লোগো */
         .brand {
             display: flex;
             align-items: center;
             gap: 1rem;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            flex-shrink: 0;
+            transition: transform 0.3s;
         }
 
         .brand:hover {
@@ -192,62 +145,47 @@
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-            animation: brandGlow 3s ease-in-out infinite;
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes brandGlow {
-            0%, 100% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6); }
-            50% { box-shadow: 0 12px 40px rgba(102, 126, 234, 0.9); }
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
         }
 
         .brand-text {
-            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-size: 1.8rem;
             font-weight: 800;
             background: linear-gradient(45deg, #fff, #a8edea);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 1px;
         }
 
-        /* নেভ লিংক - ডেস্কটপ */
         .nav-links {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             align-items: center;
             list-style: none;
-            flex-wrap: wrap;
         }
 
-        .nav-links li a, .nav-links li button {
-            color: var(--text-primary);
+        .nav-links a, .nav-links button {
+            color: white;
             text-decoration: none;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
-            transition: var(--transition-smooth);
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             cursor: pointer;
+            transition: all 0.3s;
             font-size: 0.95rem;
             font-weight: 600;
             white-space: nowrap;
-            display: inline-block;
         }
 
-        .nav-links li a:hover, .nav-links li button:hover {
+        .nav-links a:hover, .nav-links button:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .nav-links li a:active, .nav-links li button:active {
-            transform: translateY(-1px);
-        }
-
-        /* মোবাইল মেনু বাটন */
         .menu-toggle {
             display: none;
             background: var(--glass-bg);
@@ -257,30 +195,22 @@
             padding: 0.6rem 1rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            flex-shrink: 0;
-        }
-
-        .menu-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .menu-toggle:active {
-            transform: scale(0.95);
         }
 
         /* প্রোফাইল বাটন */
-        .profile-btn {
+        .profile-section {
             position: relative;
+        }
+
+        .profile-btn {
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 0.6rem 1.2rem;
             border-radius: 30px;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
@@ -300,15 +230,8 @@
             font-weight: 800;
             color: #667eea;
             font-size: 1.1rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .profile-name {
-            font-weight: 700;
-            color: white;
-        }
-
-        /* প্রোফাইল ড্রপডাউন */
         .profile-dropdown {
             position: absolute;
             top: 110%;
@@ -317,19 +240,18 @@
             backdrop-filter: blur(30px);
             border-radius: 20px;
             padding: 1.5rem;
-            min-width: 320px;
-            box-shadow: var(--shadow-lg);
+            min-width: 300px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-20px) scale(0.95);
-            transition: var(--transition-smooth);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            transform: translateY(-20px);
+            transition: all 0.3s;
         }
 
         .profile-dropdown.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .profile-info {
@@ -341,13 +263,11 @@
         .profile-info h3 {
             color: #333;
             margin-bottom: 0.5rem;
-            font-size: 1.3rem;
         }
 
         .profile-info p {
             color: #666;
             font-size: 0.9rem;
-            margin-bottom: 0.3rem;
         }
 
         .profile-badge {
@@ -357,8 +277,6 @@
             font-size: 0.85rem;
             font-weight: 700;
             margin-top: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .badge-basic {
@@ -379,15 +297,13 @@
         .logout-btn {
             width: 100%;
             padding: 1rem;
-            background: var(--secondary-gradient);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            transition: var(--transition-smooth);
-            font-size: 1rem;
-            margin-top: 0.5rem;
+            transition: all 0.3s;
         }
 
         .logout-btn:hover {
@@ -396,25 +312,23 @@
         }
 
         /* ==========================================
-           নোটিশ বার - স্মুথ স্ক্রলিং
+           নোটিশ বার
         ========================================== */
         .notice-bar {
-            background: var(--secondary-gradient);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             padding: 1rem 0;
             overflow: hidden;
-            position: relative;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
         .notice-content {
             display: flex;
             align-items: center;
-            animation: marquee 25s linear infinite;
+            animation: scroll 25s linear infinite;
             white-space: nowrap;
             gap: 3rem;
         }
 
-        @keyframes marquee {
+        @keyframes scroll {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
@@ -426,7 +340,6 @@
             border-radius: 20px;
             font-weight: 700;
             font-size: 0.85rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
 
         .notice-text {
@@ -436,7 +349,7 @@
         }
 
         /* ==========================================
-           স্লাইডার ব্যানার - রেসপন্সিভ
+           স্লাইডার
         ========================================== */
         .banner-slider {
             max-width: 1400px;
@@ -449,7 +362,7 @@
             height: 450px;
             border-radius: 25px;
             overflow: hidden;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .slide {
@@ -457,7 +370,7 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 1s;
         }
 
         .slide.active {
@@ -468,7 +381,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
         }
 
         .slider-nav {
@@ -482,24 +394,16 @@
             font-size: 2rem;
             padding: 1rem 1.3rem;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             z-index: 10;
         }
 
         .slider-nav:hover {
             background: rgba(255, 255, 255, 0.5);
-            transform: translateY(-50%) scale(1.1);
         }
 
-        .slider-nav.prev {
-            left: 20px;
-            border-radius: 0 15px 15px 0;
-        }
-
-        .slider-nav.next {
-            right: 20px;
-            border-radius: 15px 0 0 15px;
-        }
+        .slider-nav.prev { left: 20px; border-radius: 0 15px 15px 0; }
+        .slider-nav.next { right: 20px; border-radius: 15px 0 0 15px; }
 
         .slider-dots {
             position: absolute;
@@ -517,12 +421,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .dot:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: scale(1.2);
+            transition: all 0.3s;
         }
 
         .dot.active {
@@ -532,7 +431,7 @@
         }
 
         /* ==========================================
-           সেকশন টাইটেল
+           সেকশন
         ========================================== */
         .section {
             max-width: 1400px;
@@ -542,7 +441,7 @@
 
         .section-title {
             color: white;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             text-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
             display: flex;
@@ -552,7 +451,6 @@
         }
 
         .title-icon {
-            display: inline-block;
             width: 12px;
             height: 12px;
             background: red;
@@ -561,50 +459,34 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.3); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         /* ==========================================
-           লাইভ ইভেন্ট গ্রিড
+           ইভেন্ট গ্রিড
         ========================================== */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 1.5rem;
         }
 
         .event-card {
             background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 1.5rem;
             border: 1px solid var(--glass-border);
-            transition: var(--transition-smooth);
             cursor: pointer;
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
 
-        .event-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .event-card:hover::before {
-            left: 100%;
-        }
-
         .event-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .event-header {
@@ -612,8 +494,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
         }
 
         .event-live-badge {
@@ -626,13 +506,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 3px 15px rgba(255, 0, 0, 0.5);
-            animation: pulse-badge 2s infinite;
-        }
-
-        @keyframes pulse-badge {
-            0%, 100% { transform: scale(1); box-shadow: 0 3px 15px rgba(255, 0, 0, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.8); }
         }
 
         .event-live-dot {
@@ -651,7 +524,7 @@
         }
 
         .event-time {
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 1rem;
         }
 
@@ -667,27 +540,17 @@
             padding-bottom: 0.5rem;
         }
 
-        .category-tabs::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .category-tabs::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 3px;
-        }
-
         .category-tab {
             background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             color: white;
             border: 1px solid var(--glass-border);
             padding: 0.8rem 1.5rem;
             border-radius: 25px;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             font-weight: 600;
             white-space: nowrap;
-            flex-shrink: 0;
         }
 
         .category-tab:hover {
@@ -696,53 +559,34 @@
         }
 
         .category-tab.active {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-color: transparent;
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
-            transform: translateY(-3px);
         }
 
         /* ==========================================
-           চ্যানেল গ্রিড - রেসপন্সিভ
+           চ্যানেল গ্রিড
         ========================================== */
         .channels-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1.5rem;
         }
 
         .channel-card {
             background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 1.2rem;
             border: 1px solid var(--glass-border);
-            transition: var(--transition-smooth);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
             text-align: center;
-        }
-
-        .channel-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .channel-card:hover::before {
-            left: 100%;
         }
 
         .channel-card:hover {
             transform: translateY(-8px) scale(1.05);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .channel-logo-container {
@@ -755,18 +599,17 @@
             border-radius: 15px;
             background: rgba(255, 255, 255, 0.05);
             overflow: hidden;
-            padding: 0.5rem;
         }
 
         .channel-logo {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
-            transition: var(--transition-smooth);
+            transition: transform 0.3s;
         }
 
         .channel-card:hover .channel-logo {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.15);
         }
 
         .channel-name {
@@ -789,13 +632,11 @@
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .badge-live {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            animation: pulse-badge 2s infinite;
         }
 
         .badge-hd {
@@ -813,8 +654,8 @@
             color: white;
         }
 
-        .badge-2k, .badge-4k, .badge-8k {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        .badge-4k {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             color: #333;
         }
 
@@ -829,7 +670,7 @@
         }
 
         /* ==========================================
-           প্লেয়ার মডাল - ফুল স্ক্রিন
+           প্লেয়ার মডাল
         ========================================== */
         .player-modal {
             position: fixed;
@@ -843,13 +684,10 @@
             display: none;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.4s;
         }
 
         .player-modal.active {
             display: flex;
-            opacity: 1;
         }
 
         .player-container {
@@ -859,35 +697,20 @@
             backdrop-filter: blur(30px);
             border-radius: 25px;
             overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .player-header {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
         .player-title {
             color: white;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-size: 1.8rem;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -903,15 +726,12 @@
             height: 50px;
             border-radius: 50%;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: all 0.3s;
         }
 
         .close-player:hover {
             background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg) scale(1.1);
+            transform: rotate(90deg);
         }
 
         .video-wrapper {
@@ -927,7 +747,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            outline: none;
         }
 
         .player-brand-overlay {
@@ -940,23 +759,20 @@
             gap: 1rem;
             z-index: 100;
             opacity: 0;
-            animation: fadeInBrand 1s ease-in-out 1.5s forwards;
+            animation: fadeIn 1s ease-in-out 1.5s forwards;
             pointer-events: none;
         }
 
-        @keyframes fadeInBrand {
-            to {
-                opacity: 0.8;
-            }
+        @keyframes fadeIn {
+            to { opacity: 0.8; }
         }
 
         .player-brand-logo {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.5);
             object-fit: cover;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
         }
 
         .player-brand-text {
@@ -971,7 +787,6 @@
             padding: 1.5rem;
             display: flex;
             gap: 1rem;
-            align-items: center;
             flex-wrap: wrap;
         }
 
@@ -983,18 +798,14 @@
             padding: 0.8rem 1.3rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
             font-weight: 600;
         }
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .quality-selector {
@@ -1013,13 +824,10 @@
             flex-direction: column;
             gap: 0.4rem;
             min-width: 120px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--glass-border);
         }
 
         .quality-options.active {
             display: flex;
-            animation: slideUp 0.3s ease-out;
         }
 
         .quality-option {
@@ -1027,17 +835,16 @@
             color: white;
             cursor: pointer;
             border-radius: 10px;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             font-weight: 600;
         }
 
         .quality-option:hover {
             background: rgba(255, 255, 255, 0.15);
-            transform: translateX(5px);
         }
 
         /* ==========================================
-           লগইন মডাল - আইফোন স্টাইল
+           লগইন মডাল
         ========================================== */
         .login-modal {
             position: fixed;
@@ -1051,15 +858,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 1;
-            transition: var(--transition-smooth);
             padding: 1rem;
         }
 
         .login-modal.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            display: none;
         }
 
         .login-box {
@@ -1069,21 +872,17 @@
             padding: 3rem 2.5rem;
             max-width: 450px;
             width: 100%;
-            box-shadow: var(--shadow-lg);
-            animation: modalBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
         }
 
-        @keyframes modalBounce {
-            0% {
-                transform: scale(0.5) translateY(100px);
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
                 opacity: 0;
             }
-            50% {
-                transform: scale(1.05) translateY(-10px);
-            }
-            100% {
-                transform: scale(1) translateY(0);
+            to {
+                transform: translateY(0);
                 opacity: 1;
             }
         }
@@ -1097,16 +896,10 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
+            object-fit: cover;
             margin: 0 auto 1.5rem;
             box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-            animation: loginLogoPulse 3s ease-in-out infinite;
-            object-fit: cover;
             border: 3px solid rgba(102, 126, 234, 0.3);
-        }
-
-        @keyframes loginLogoPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4); }
-            50% { transform: scale(1.08); box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6); }
         }
 
         .login-title {
@@ -1140,7 +933,7 @@
             border: 2px solid #e0e0e0;
             border-radius: 18px;
             font-size: 1.05rem;
-            transition: var(--transition-smooth);
+            transition: all 0.3s;
             background: rgba(255, 255, 255, 0.9);
         }
 
@@ -1148,31 +941,25 @@
             outline: none;
             border-color: #667eea;
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-            transform: translateY(-2px);
         }
 
         .login-btn {
             width: 100%;
             padding: 1.2rem;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 18px;
             font-size: 1.15rem;
             font-weight: 700;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
             margin-top: 1rem;
         }
 
         .login-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        .login-btn:active {
-            transform: translateY(-1px);
         }
 
         .login-error {
@@ -1183,51 +970,35 @@
             margin-top: 1rem;
             text-align: center;
             display: none;
-            font-size: 0.95rem;
-            border: 2px solid #ffcccc;
             font-weight: 600;
         }
 
         .login-error.show {
             display: block;
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-15px); }
-            75% { transform: translateX(15px); }
         }
 
         /* ==========================================
-           M3U আপলোড সেকশন
+           M3U আপলোড
         ========================================== */
         .upload-box {
             background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             border: 3px dashed var(--glass-border);
             border-radius: 25px;
             padding: 3rem 2rem;
             text-align: center;
-            transition: var(--transition-smooth);
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .upload-box:hover {
             border-color: rgba(255, 255, 255, 0.5);
             background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
         }
 
         .upload-icon {
             font-size: 5rem;
             margin-bottom: 1.5rem;
-            animation: uploadFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes uploadFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
         }
 
         .upload-text {
@@ -1238,7 +1009,7 @@
         }
 
         .upload-btn {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 1rem 2.5rem;
             border: none;
@@ -1246,8 +1017,7 @@
             cursor: pointer;
             font-size: 1.1rem;
             font-weight: 700;
-            transition: var(--transition-smooth);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
         }
 
         .upload-btn:hover {
@@ -1260,17 +1030,16 @@
         ========================================== */
         footer {
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: var(--backdrop-blur);
+            backdrop-filter: blur(20px);
             padding: 3rem 2rem;
             margin-top: 4rem;
-            border-top: 1px solid var(--glass-border);
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
         }
 
@@ -1278,7 +1047,6 @@
             color: white;
             margin-bottom: 1.2rem;
             font-size: 1.5rem;
-            font-weight: 700;
         }
 
         .social-links {
@@ -1289,16 +1057,11 @@
 
         .social-btn {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
             color: white;
             padding: 0.8rem 1.3rem;
             border-radius: 25px;
             text-decoration: none;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.95rem;
+            transition: all 0.3s;
             border: 1px solid var(--glass-border);
             font-weight: 600;
         }
@@ -1306,13 +1069,11 @@
         .social-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .footer-text {
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
-            font-size: 1rem;
         }
 
         .copyright {
@@ -1321,27 +1082,6 @@
             margin-top: 2.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--glass-border);
-            font-size: 0.95rem;
-        }
-
-        /* ==========================================
-           স্ক্রলবার কাস্টম ডিজাইন
-        ========================================== */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 6px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
         }
 
         /* ==========================================
@@ -1351,22 +1091,10 @@
             display: none !important;
         }
 
-        .no-select {
-            user-select: none;
-        }
-
         /* ==========================================
-           মোবাইল রেসপন্সিভ - ছোট ডিভাইস
+           রেসপন্সিভ - মোবাইল
         ========================================== */
         @media (max-width: 768px) {
-            html {
-                font-size: 14px;
-            }
-
-            .navbar {
-                padding: 1rem;
-            }
-
             .nav-links {
                 position: fixed;
                 top: 75px;
@@ -1374,12 +1102,10 @@
                 background: rgba(10, 10, 10, 0.98);
                 backdrop-filter: blur(30px);
                 width: 85%;
-                max-width: 350px;
                 height: calc(100vh - 75px);
                 flex-direction: column;
                 padding: 2rem 1.5rem;
-                transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+                transition: left 0.4s;
                 overflow-y: auto;
                 align-items: stretch;
             }
@@ -1392,11 +1118,10 @@
                 width: 100%;
             }
 
-            .nav-links li a, .nav-links li button {
+            .nav-links a, .nav-links button {
                 display: block;
                 width: 100%;
                 text-align: left;
-                padding: 1rem 1.3rem;
             }
 
             .menu-toggle {
@@ -1404,53 +1129,24 @@
             }
 
             .brand-text {
-                font-size: 1.5rem;
-            }
-
-            .brand-logo {
-                width: 45px;
-                height: 45px;
+                font-size: 1.3rem;
             }
 
             .slider-container {
                 height: 250px;
             }
 
-            .slider-nav {
-                font-size: 1.5rem;
-                padding: 0.8rem 1rem;
-            }
-
             .channels-grid {
-                grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 1rem;
-            }
-
-            .channel-logo-container {
-                height: 110px;
             }
 
             .events-grid {
                 grid-template-columns: 1fr;
             }
 
-            .player-container {
-                width: 98%;
-                border-radius: 20px;
-            }
-
-            .player-header {
-                padding: 1rem;
-            }
-
-            .player-title {
-                font-size: 1.1rem;
-            }
-
-            .close-player {
-                width: 40px;
-                height: 40px;
-                font-size: 1.5rem;
+            .section-title {
+                font-size: 1.8rem;
             }
 
             .player-brand-overlay {
@@ -1466,75 +1162,23 @@
                 font-size: 1.2rem;
             }
 
-            .player-controls {
-                padding: 1rem;
-                gap: 0.8rem;
-            }
-
-            .control-btn {
-                padding: 0.7rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .login-box {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-logo {
-                width: 80px;
-                height: 80px;
-            }
-
-            .login-title {
-                font-size: 1.8rem;
-            }
-
             .profile-dropdown {
-                min-width: 280px;
-                right: -80px;
-            }
-
-            .section {
-                margin: 2rem auto;
-            }
-
-            .category-tabs {
-                gap: 0.6rem;
-            }
-
-            .footer-content {
-                gap: 2rem;
+                right: -50px;
             }
         }
 
-        /* ট্যাবলেট রেসপন্সিভ */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .channels-grid {
-                grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
-            }
-
-            .slider-container {
-                height: 350px;
-            }
+        /* স্ক্রলবার */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
 
-        /* বড় ডেস্কটপ */
-        @media (min-width: 1400px) {
-            html {
-                font-size: 18px;
-            }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* ল্যান্ডস্কেপ মোড - মোবাইল */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .slider-container {
-                height: 200px;
-            }
-
-            .login-box {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -1543,7 +1187,6 @@
     <div class="loading-screen" id="loadingScreen">
         <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Loading" class="loading-logo">
         <div class="loading-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
-        <div class="loading-spinner"></div>
     </div>
 
     <!-- লগইন মডাল -->
@@ -1552,16 +1195,16 @@
             <div class="login-header">
                 <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="login-logo">
                 <h2 class="login-title">Welcome Back</h2>
-                <p class="login-subtitle">Sign in to continue streaming</p>
+                <p class="login-subtitle">Sign in to continue</p>
             </div>
             <form id="loginForm">
                 <div class="input-group">
                     <span class="input-icon">👤</span>
-                    <input type="text" id="username" class="login-input" placeholder="Username" required autocomplete="username">
+                    <input type="text" id="username" class="login-input" placeholder="Username" required>
                 </div>
                 <div class="input-group">
                     <span class="input-icon">🔒</span>
-                    <input type="password" id="password" class="login-input" placeholder="Password" required autocomplete="current-password">
+                    <input type="password" id="password" class="login-input" placeholder="Password" required>
                 </div>
                 <button type="submit" class="login-btn">Sign In</button>
                 <div id="loginError" class="login-error"></div>
@@ -1569,37 +1212,37 @@
         </div>
     </div>
 
-    <!-- নেভিগেশন বার -->
-    <nav class="navbar" id="navbar">
+    <!-- নেভবার -->
+    <nav class="navbar">
         <div class="nav-container">
             <div class="brand" onclick="scrollToTop()">
-                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Brand Logo" class="brand-logo">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="brand-logo">
                 <span class="brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</span>
             </div>
             
-            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">☰</button>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">🏠 Home</a></li>
                 <li><a href="#live-events">🔴 Live Events</a></li>
                 <li><a href="#channels">📺 Channels</a></li>
-                <li><a href="#m3u-upload">📤 M3U Upload</a></li>
-                <li><a href="https://example.com" target="_blank" rel="noopener">🔗 Link 1</a></li>
-                <li><a href="https://example.com" target="_blank" rel="noopener">🔗 Link 2</a></li>
+                <li><a href="#m3u-upload">📤 M3U</a></li>
+                <li><a href="https://example.com" target="_blank">🔗 Link 1</a></li>
+                <li><a href="https://example.com" target="_blank">🔗 Link 2</a></li>
                 
-                <li id="profileContainer" class="hidden">
+                <li class="profile-section hidden" id="profileContainer">
                     <div class="profile-btn" onclick="toggleProfile()">
                         <div class="profile-avatar" id="profileAvatar">U</div>
-                        <span class="profile-name" id="profileName">User</span>
-                        <div class="profile-dropdown" id="profileDropdown">
-                            <div class="profile-info">
-                                <h3 id="dropdownName">User Name</h3>
-                                <p id="dropdownEmail">user@example.com</p>
-                                <span class="profile-badge" id="dropdownBadge">Basic</span>
-                                <p style="margin-top: 10px; font-size: 0.85rem; color: #888;" id="dropdownExpiry">Expires: 30 days</p>
-                            </div>
-                            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+                        <span id="profileName">User</span>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-info">
+                            <h3 id="dropdownName">User</h3>
+                            <p id="dropdownEmail">user@example.com</p>
+                            <span class="profile-badge" id="dropdownBadge">Basic</span>
+                            <p style="margin-top: 10px; font-size: 0.85rem; color: #888;" id="dropdownExpiry">Expires: 30 days</p>
                         </div>
+                        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
                     </div>
                 </li>
             </ul>
@@ -1610,39 +1253,37 @@
     <div class="notice-bar">
         <div class="notice-content">
             <span class="notice-badge">🔔 UPDATE</span>
-            <span class="notice-text">Welcome to Premium Live TV Streaming Platform! Enjoy HD, 4K & 8K quality channels.</span>
+            <span class="notice-text">Welcome to Premium Live TV! Enjoy HD & 4K channels!</span>
             <span class="notice-badge">📢 NEWS</span>
-            <span class="notice-text">Watch live cricket, football matches, movies & exclusive content! 🎉</span>
-            <span class="notice-badge">⭐ PREMIUM</span>
-            <span class="notice-text">New channels added daily! Subscribe now for unlimited access!</span>
+            <span class="notice-text">Watch live sports, movies & exclusive content! 🎉</span>
         </div>
     </div>
 
-    <!-- স্লাইডার ব্যানার -->
+    <!-- স্লাইডার -->
     <div class="banner-slider" id="home">
         <div class="slider-container">
             <div class="slide active">
-                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=1400&h=600&fit=crop" alt="Live Sports">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=1400" alt="Banner 1">
             </div>
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1560169897227-fe8b57c47bf0?w=1400&h=600&fit=crop" alt="Entertainment">
+                <img src="https://images.unsplash.com/photo-1560169897227-fe8b57c47bf0?w=1400" alt="Banner 2">
             </div>
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1400&h=600&fit=crop" alt="Movies">
+                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1400" alt="Banner 3">
             </div>
             
-            <button class="slider-nav prev" onclick="changeSlide(-1)" aria-label="Previous Slide">❮</button>
-            <button class="slider-nav next" onclick="changeSlide(1)" aria-label="Next Slide">❯</button>
+            <button class="slider-nav prev" onclick="changeSlide(-1)">❮</button>
+            <button class="slider-nav next" onclick="changeSlide(1)">❯</button>
             
             <div class="slider-dots">
-                <span class="dot active" onclick="currentSlide(0)"></span>
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
             </div>
         </div>
     </div>
 
-    <!-- লাইভ ইভেন্ট সেকশন -->
+    <!-- লাইভ ইভেন্ট -->
     <div class="section" id="live-events">
         <h2 class="section-title">
             <span class="title-icon"></span>
@@ -1651,49 +1292,48 @@
         <div class="events-grid" id="eventsGrid"></div>
     </div>
 
-    <!-- M3U আপলোড সেকশন -->
+    <!-- M3U আপলোড -->
     <div class="section" id="m3u-upload">
         <h2 class="section-title">📤 Import M3U Playlist</h2>
         <div class="upload-box" onclick="document.getElementById('m3uFileInput').click()">
             <div class="upload-icon">📁</div>
-            <div class="upload-text">Click to upload your M3U playlist file</div>
+            <div class="upload-text">Click to upload M3U file</div>
             <button class="upload-btn" type="button">Browse Files</button>
-            <input type="file" id="m3uFileInput" accept=".m3u,.m3u8" onchange="handleM3UUpload(event)" style="display: none;">
+            <input type="file" id="m3uFileInput" accept=".m3u,.m3u8" style="display:none">
         </div>
     </div>
 
-    <!-- ক্যাটাগরি ও চ্যানেল সেকশন -->
+    <!-- চ্যানেল -->
     <div class="section" id="channels">
         <h2 class="section-title">📺 Live Channels</h2>
         
         <div class="category-tabs" id="categoryTabs">
-            <button class="category-tab active" onclick="filterCategory('all')">All</button>
-            <button class="category-tab" onclick="filterCategory('bangladeshi')">Bangladeshi</button>
-            <button class="category-tab" onclick="filterCategory('kolkata')">Kolkata</button>
-            <button class="category-tab" onclick="filterCategory('indian')">Indian</button>
-            <button class="category-tab" onclick="filterCategory('cricket')">Cricket</button>
-            <button class="category-tab" onclick="filterCategory('football')">Football</button>
-            <button class="category-tab" onclick="filterCategory('kids')">Kids</button>
-            <button class="category-tab" onclick="filterCategory('religion')">Religion</button>
-            <button class="category-tab" onclick="filterCategory('m3u')">M3U Playlists</button>
+            <button class="category-tab active" data-category="all">All</button>
+            <button class="category-tab" data-category="bangladeshi">Bangladeshi</button>
+            <button class="category-tab" data-category="kolkata">Kolkata</button>
+            <button class="category-tab" data-category="indian">Indian</button>
+            <button class="category-tab" data-category="cricket">Cricket</button>
+            <button class="category-tab" data-category="football">Football</button>
+            <button class="category-tab" data-category="kids">Kids</button>
+            <button class="category-tab" data-category="religion">Religion</button>
+            <button class="category-tab" data-category="m3u">M3U Playlists</button>
         </div>
         
         <div class="channels-grid" id="channelsGrid"></div>
     </div>
 
-    <!-- ভিডিও প্লেয়ার মডাল -->
+    <!-- প্লেয়ার মডাল -->
     <div class="player-modal" id="playerModal">
         <div class="player-container">
             <div class="player-header">
                 <div class="player-title">
                     <span>📺</span>
-                    <span id="currentChannelName">Channel Name</span>
+                    <span id="currentChannelName">Channel</span>
                 </div>
-                <button class="close-player" onclick="closePlayer()" aria-label="Close Player">×</button>
+                <button class="close-player" onclick="closePlayer()">×</button>
             </div>
             <div class="video-wrapper">
                 <video id="videoPlayer" controls autoplay playsinline></video>
-                
                 <div class="player-brand-overlay">
                     <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Brand" class="player-brand-logo">
                     <span class="player-brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</span>
@@ -1707,7 +1347,6 @@
                         <div class="quality-option" onclick="setQuality('auto')">Auto</div>
                         <div class="quality-option" onclick="setQuality('1080p')">1080p</div>
                         <div class="quality-option" onclick="setQuality('720p')">720p</div>
-                        <div class="quality-option" onclick="setQuality('480p')">480p</div>
                     </div>
                 </div>
                 <button class="control-btn" onclick="toggleFullscreen()">🖥️ Fullscreen</button>
@@ -1720,42 +1359,29 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About Us</h3>
-                <p class="footer-text">
-                    Premium Live TV Streaming platform offering HD, 4K & 8K quality channels. 
-                    Watch your favorite shows, live sports, movies and exclusive content anytime, anywhere.
-                </p>
+                <p class="footer-text">Premium Live TV with HD & 4K channels. Watch anytime, anywhere.</p>
             </div>
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <div class="social-links">
-                    <a href="https://facebook.com" target="_blank" rel="noopener" class="social-btn">📘 Facebook</a>
-                    <a href="https://youtube.com" target="_blank" rel="noopener" class="social-btn">📺 YouTube</a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener" class="social-btn">🐦 Twitter</a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener" class="social-btn">📷 Instagram</a>
-                    <a href="https://t.me/yourchannel" target="_blank" rel="noopener" class="social-btn">✈️ Telegram</a>
-                    <a href="https://whatsapp.com" target="_blank" rel="noopener" class="social-btn">💬 WhatsApp</a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <div class="social-links">
-                    <a href="#" class="social-btn">📄 Terms</a>
-                    <a href="#" class="social-btn">🔒 Privacy</a>
-                    <a href="#" class="social-btn">📞 Contact</a>
-                    <a href="#" class="social-btn">❓ FAQ</a>
+                    <a href="https://facebook.com" target="_blank" class="social-btn">📘 Facebook</a>
+                    <a href="https://youtube.com" target="_blank" class="social-btn">📺 YouTube</a>
+                    <a href="https://t.me/channel" target="_blank" class="social-btn">✈️ Telegram</a>
                 </div>
             </div>
         </div>
         <div class="copyright">
-            <p>© 2024 𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞. All rights reserved. | Crafted with ❤️</p>
+            <p>© 2024 𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
+        console.log('🚀 Script Loading...');
+
         // ==========================================
-        // গ্লোবাল ভেরিয়েবল
+        // ডাটা
         // ==========================================
         
         const ACCOUNTS = {
@@ -1787,28 +1413,21 @@
 
         const LIVE_EVENTS = [
             {
-                id: 1,
                 match: 'Bangladesh vs India',
                 sport: 'Cricket',
                 time: '7:00 PM',
-                date: new Date().toISOString().split('T')[0],
-                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-                isLive: true
+                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
             },
             {
-                id: 2,
                 match: 'Real Madrid vs Barcelona',
                 sport: 'Football',
                 time: '9:00 PM',
-                date: new Date().toISOString().split('T')[0],
-                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-                isLive: true
+                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
             }
         ];
 
         const CHANNELS = [
             {
-                id: 1,
                 name: 'ATN Bangla',
                 logo: 'https://upload.wikimedia.org/wikipedia/en/5/53/ATN_Bangla.svg',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
@@ -1817,7 +1436,6 @@
                 accountType: 'pro'
             },
             {
-                id: 2,
                 name: 'Channel i',
                 logo: 'https://upload.wikimedia.org/wikipedia/en/8/88/Channel-i.svg',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
@@ -1826,7 +1444,6 @@
                 accountType: 'b'
             },
             {
-                id: 3,
                 name: 'Star Jalsha',
                 logo: 'https://upload.wikimedia.org/wikipedia/en/d/d0/Star_Jalsha_logo.jpg',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
@@ -1835,7 +1452,6 @@
                 accountType: 'pro'
             },
             {
-                id: 4,
                 name: 'Sony TV',
                 logo: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Sony_TV_new.png',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
@@ -1844,7 +1460,6 @@
                 accountType: 'pro+'
             },
             {
-                id: 5,
                 name: 'Star Sports',
                 logo: 'https://upload.wikimedia.org/wikipedia/en/1/11/Star_Sports_logo.png',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
@@ -1853,12 +1468,11 @@
                 accountType: 'pro+'
             },
             {
-                id: 6,
                 name: 'Disney Channel',
                 logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/2019_Disney_Channel_logo.svg',
                 url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
                 category: 'kids',
-                badges: ['live', 'hd', 'free', 'b'],
+                badges: ['live', 'free', 'b'],
                 accountType: 'b'
             }
         ];
@@ -1870,40 +1484,26 @@
         let hlsInstance = null;
 
         // ==========================================
-        // পেজ লোড ইভেন্ট
+        // পেজ লোড
         // ==========================================
         
         window.addEventListener('load', function() {
+            console.log('✅ Page Loaded');
+            
             checkLoginStatus();
             displayLiveEvents();
             displayChannels();
             startAutoSlide();
+            initCategoryTabs();
+            initM3UUpload();
             
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
-            }, 2000);
-            
-            protectScript();
-            initScrollEffect();
+            }, 1500);
         });
 
         // ==========================================
-        // স্ক্রল ইফেক্ট - নেভবার
-        // ==========================================
-        
-        function initScrollEffect() {
-            window.addEventListener('scroll', () => {
-                const navbar = document.getElementById('navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        }
-
-        // ==========================================
-        // লগইন স্ট্যাটাস চেক
+        // লগইন চেক
         // ==========================================
         
         function checkLoginStatus() {
@@ -1916,21 +1516,20 @@
                     currentUser = { username: userData.username, ...account };
                     showUserProfile();
                     document.getElementById('loginModal').classList.add('hidden');
+                    console.log('✅ User Logged In:', currentUser.name);
                 } else {
                     localStorage.removeItem('currentUser');
-                    showLoginModal();
                 }
-            } else {
-                showLoginModal();
             }
         }
 
         // ==========================================
-        // লগইন ফর্ম সাবমিট
+        // লগইন ফর্ম
         // ==========================================
         
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log('📝 Login Attempt');
             
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
@@ -1940,37 +1539,32 @@
                 const account = ACCOUNTS[username];
                 
                 if (new Date() > new Date(account.expiry)) {
-                    errorDiv.textContent = '⚠️ Account expired! Please contact support.';
+                    errorDiv.textContent = '⚠️ Account expired!';
                     errorDiv.classList.add('show');
                     setTimeout(() => errorDiv.classList.remove('show'), 3000);
                     return;
                 }
                 
                 currentUser = { username: username, ...account };
-                localStorage.setItem('currentUser', JSON.stringify({
-                    username: username,
-                    loginTime: new Date().toISOString()
-                }));
+                localStorage.setItem('currentUser', JSON.stringify({ username: username }));
                 
                 showUserProfile();
                 document.getElementById('loginModal').classList.add('hidden');
                 this.reset();
-                errorDiv.classList.remove('show');
                 
+                console.log('✅ Login Success:', currentUser.name);
             } else {
-                errorDiv.textContent = '❌ Invalid username or password!';
+                errorDiv.textContent = '❌ Invalid credentials!';
                 errorDiv.classList.add('show');
                 setTimeout(() => errorDiv.classList.remove('show'), 3000);
             }
         });
 
         // ==========================================
-        // ইউজার প্রোফাইল দেখান
+        // প্রোফাইল দেখান
         // ==========================================
         
         function showUserProfile() {
-            if (!currentUser) return;
-            
             document.getElementById('profileContainer').classList.remove('hidden');
             
             const avatar = currentUser.name.charAt(0).toUpperCase();
@@ -1980,12 +1574,12 @@
             document.getElementById('dropdownName').textContent = currentUser.name;
             document.getElementById('dropdownEmail').textContent = currentUser.email;
             
-            const badgeElement = document.getElementById('dropdownBadge');
-            badgeElement.textContent = currentUser.type.toUpperCase();
-            badgeElement.className = 'profile-badge badge-' + currentUser.type;
+            const badge = document.getElementById('dropdownBadge');
+            badge.textContent = currentUser.type.toUpperCase();
+            badge.className = 'profile-badge badge-' + currentUser.type;
             
-            const daysLeft = Math.ceil((new Date(currentUser.expiry) - new Date()) / (1000 * 60 * 60 * 24));
-            document.getElementById('dropdownExpiry').textContent = `Expires in: ${daysLeft} days`;
+            const days = Math.ceil((new Date(currentUser.expiry) - new Date()) / (1000*60*60*24));
+            document.getElementById('dropdownExpiry').textContent = `Expires in: ${days} days`;
             
             displayChannels();
         }
@@ -2004,124 +1598,108 @@
         // ==========================================
         
         function logout() {
-            if (confirm('Are you sure you want to logout?')) {
+            if (confirm('Logout?')) {
                 localStorage.removeItem('currentUser');
                 currentUser = null;
                 document.getElementById('profileContainer').classList.add('hidden');
-                showLoginModal();
                 closePlayer();
+                location.reload();
             }
         }
 
         // ==========================================
-        // লগইন মডাল দেখান
-        // ==========================================
-        
-        function showLoginModal() {
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
-
-        // ==========================================
-        // লাইভ ইভেন্ট ডিসপ্লে
+        // ইভেন্ট দেখান
         // ==========================================
         
         function displayLiveEvents() {
-            const eventsGrid = document.getElementById('eventsGrid');
-            eventsGrid.innerHTML = '';
-            
-            const today = new Date().toISOString().split('T')[0];
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = '';
             
             LIVE_EVENTS.forEach(event => {
-                if (event.date === today && event.isLive) {
-                    const eventCard = document.createElement('div');
-                    eventCard.className = 'event-card';
-                    eventCard.innerHTML = `
-                        <div class="event-header">
-                            <div class="event-live-badge">
-                                <div class="event-live-dot"></div>
-                                LIVE
-                            </div>
-                            <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">${event.sport}</span>
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = `
+                    <div class="event-header">
+                        <div class="event-live-badge">
+                            <div class="event-live-dot"></div>
+                            LIVE
                         </div>
-                        <div class="event-match">${event.match}</div>
-                        <div class="event-time">⏰ ${event.time}</div>
-                    `;
-                    
-                    eventCard.onclick = () => playChannel(event.match, event.url);
-                    eventsGrid.appendChild(eventCard);
-                }
+                        <span style="color: rgba(255,255,255,0.8);">${event.sport}</span>
+                    </div>
+                    <div class="event-match">${event.match}</div>
+                    <div class="event-time">⏰ ${event.time}</div>
+                `;
+                card.onclick = () => playChannel(event.match, event.url);
+                grid.appendChild(card);
             });
-            
-            if (eventsGrid.children.length === 0) {
-                eventsGrid.innerHTML = '<p style="color: white; text-align: center; padding: 3rem; grid-column: 1/-1; font-size: 1.1rem;">No live events at the moment. Check back later! 📺</p>';
-            }
         }
 
         // ==========================================
-        // চ্যানেল ডিসপ্লে
+        // চ্যানেল দেখান
         // ==========================================
         
         function displayChannels() {
-            const channelsGrid = document.getElementById('channelsGrid');
-            channelsGrid.innerHTML = '';
+            const grid = document.getElementById('channelsGrid');
+            grid.innerHTML = '';
             
-            let allChannels = [...CHANNELS, ...m3uChannels];
+            let channels = [...CHANNELS, ...m3uChannels];
             
             if (currentCategory === 'm3u') {
-                allChannels = m3uChannels;
+                channels = m3uChannels;
             } else if (currentCategory !== 'all') {
-                allChannels = allChannels.filter(ch => ch.category === currentCategory);
+                channels = channels.filter(ch => ch.category === currentCategory);
             }
             
             if (currentUser) {
-                allChannels = allChannels.filter(ch => {
+                channels = channels.filter(ch => {
                     if (!ch.accountType) return true;
                     return currentUser.allowedChannels.includes(ch.accountType);
                 });
             }
             
-            allChannels.forEach(channel => {
-                const channelCard = document.createElement('div');
-                channelCard.className = 'channel-card';
+            console.log(`📺 Showing ${channels.length} channels`);
+            
+            channels.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
                 
-                let badgesHTML = '';
-                if (channel.badges && channel.badges.length > 0) {
-                    badgesHTML = channel.badges.map(badge => 
-                        `<span class="badge badge-${badge}">${badge}</span>`
-                    ).join('');
-                }
+                const badges = channel.badges?.map(b => 
+                    `<span class="badge badge-${b}">${b}</span>`
+                ).join('') || '';
                 
-                channelCard.innerHTML = `
+                card.innerHTML = `
                     <div class="channel-logo-container">
                         <img src="${channel.logo}" alt="${channel.name}" class="channel-logo" 
-                             onerror="this.src='https://via.placeholder.com/200x150/667eea/ffffff?text=${encodeURIComponent(channel.name)}'">
+                             onerror="this.src='https://via.placeholder.com/200?text=${encodeURIComponent(channel.name)}'">
                     </div>
                     <div class="channel-name">${channel.name}</div>
-                    <div class="channel-badges">${badgesHTML}</div>
+                    <div class="channel-badges">${badges}</div>
                 `;
                 
-                channelCard.onclick = () => playChannel(channel.name, channel.url);
-                channelsGrid.appendChild(channelCard);
+                card.onclick = () => playChannel(channel.name, channel.url);
+                grid.appendChild(card);
             });
             
-            if (allChannels.length === 0) {
-                channelsGrid.innerHTML = '<p style="color: white; text-align: center; padding: 3rem; grid-column: 1/-1; font-size: 1.1rem;">No channels available. Try upgrading your account! 🎬</p>';
+            if (channels.length === 0) {
+                grid.innerHTML = '<p style="color:white; text-align:center; padding:3rem; grid-column:1/-1;">No channels available</p>';
             }
         }
 
         // ==========================================
-        // ক্যাটাগরি ফিল্টার
+        // ক্যাটাগরি ট্যাব ইনিট
         // ==========================================
         
-        function filterCategory(category) {
-            currentCategory = category;
-            
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
+        function initCategoryTabs() {
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.dataset.category;
+                    displayChannels();
+                    console.log('📂 Category:', currentCategory);
+                });
             });
-            event.target.classList.add('active');
-            
-            displayChannels();
         }
 
         // ==========================================
@@ -2130,54 +1708,37 @@
         
         function playChannel(name, url) {
             if (!currentUser) {
-                alert('Please login to watch channels!');
-                showLoginModal();
+                alert('Please login first!');
                 return;
             }
+            
+            console.log('▶️ Playing:', name);
             
             document.getElementById('playerModal').classList.add('active');
             document.getElementById('currentChannelName').textContent = name;
             
             const video = document.getElementById('videoPlayer');
             
-            // পুরাতন HLS ইনস্ট্যান্স ধ্বংস করুন
             if (hlsInstance) {
                 hlsInstance.destroy();
             }
             
-            if (url.includes('.m3u8') || url.includes('.ts')) {
+            if (url.includes('.m3u8')) {
                 if (Hls.isSupported()) {
-                    hlsInstance = new Hls({
-                        enableWorker: true,
-                        lowLatencyMode: true,
-                        backBufferLength: 90,
-                        maxBufferLength: 30,
-                        maxMaxBufferLength: 60
-                    });
-                    
+                    hlsInstance = new Hls();
                     hlsInstance.loadSource(url);
                     hlsInstance.attachMedia(video);
-                    
-                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                        video.play().catch(e => console.log('Autoplay prevented:', e));
-                    });
-                    
-                    hlsInstance.on(Hls.Events.ERROR, function(event, data) {
-                        if (data.fatal) {
-                            console.error('HLS Error:', data);
-                            alert('Error loading stream. Please try another channel.');
-                        }
+                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                        video.play().catch(e => console.log('Autoplay blocked'));
                     });
                 } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                     video.src = url;
-                    video.play().catch(e => console.log('Autoplay prevented:', e));
+                    video.play();
                 }
             } else {
                 video.src = url;
-                video.play().catch(e => console.log('Autoplay prevented:', e));
+                video.play();
             }
-            
-            saveToHistory(name, url);
         }
 
         // ==========================================
@@ -2197,22 +1758,15 @@
         }
 
         // ==========================================
-        // PIP মোড
+        // PIP
         // ==========================================
         
         function togglePIP() {
             const video = document.getElementById('videoPlayer');
-            
             if (document.pictureInPictureElement) {
                 document.exitPictureInPicture();
             } else {
-                if (document.pictureInPictureEnabled) {
-                    video.requestPictureInPicture().catch(err => {
-                        alert('PIP mode not supported');
-                    });
-                } else {
-                    alert('PIP mode not available');
-                }
+                video.requestPictureInPicture().catch(e => alert('PIP not supported'));
             }
         }
 
@@ -2222,103 +1776,76 @@
         
         function toggleFullscreen() {
             const container = document.querySelector('.player-container');
-            
             if (!document.fullscreenElement) {
-                container.requestFullscreen().catch(err => {
-                    alert('Fullscreen not supported');
-                });
+                container.requestFullscreen();
             } else {
                 document.exitFullscreen();
             }
         }
 
         // ==========================================
-        // কোয়ালিটি টগল
+        // কোয়ালিটি
         // ==========================================
         
         function toggleQuality() {
-            const options = document.getElementById('qualityOptions');
-            options.classList.toggle('active');
+            document.getElementById('qualityOptions').classList.toggle('active');
         }
 
-        function setQuality(quality) {
-            alert(`Quality set to: ${quality}`);
+        function setQuality(q) {
+            console.log('Quality:', q);
             toggleQuality();
-        }
-
-        // ==========================================
-        // হিস্টোরি সেভ
-        // ==========================================
-        
-        function saveToHistory(name, url) {
-            if (!currentUser) return;
-            
-            let history = JSON.parse(localStorage.getItem('watchHistory') || '[]');
-            
-            history.unshift({
-                name: name,
-                url: url,
-                timestamp: new Date().toISOString(),
-                user: currentUser.username
-            });
-            
-            history = history.slice(0, 50);
-            localStorage.setItem('watchHistory', JSON.stringify(history));
         }
 
         // ==========================================
         // M3U আপলোড
         // ==========================================
         
-        function handleM3UUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const content = e.target.result;
-                parseM3U(content);
-            };
-            
-            reader.readAsText(file);
+        function initM3UUpload() {
+            document.getElementById('m3uFileInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    parseM3U(ev.target.result);
+                };
+                reader.readAsText(file);
+            });
         }
 
         function parseM3U(content) {
             const lines = content.split('\n');
             m3uChannels = [];
-            
-            let currentChannel = {};
+            let current = {};
             
             lines.forEach(line => {
                 line = line.trim();
-                
                 if (line.startsWith('#EXTINF:')) {
                     const nameMatch = line.match(/,(.+)$/);
                     const logoMatch = line.match(/tvg-logo="(.+?)"/);
-                    const groupMatch = line.match(/group-title="(.+?)"/);
-                    
-                    currentChannel = {
+                    current = {
                         name: nameMatch ? nameMatch[1] : 'Unknown',
-                        logo: logoMatch ? logoMatch[1] : 'https://via.placeholder.com/200x150/667eea/ffffff?text=TV',
+                        logo: logoMatch ? logoMatch[1] : 'https://via.placeholder.com/200',
                         category: 'm3u',
-                        group: groupMatch ? groupMatch[1] : 'General',
                         badges: ['live', 'free']
                     };
                 } else if (line && !line.startsWith('#')) {
-                    currentChannel.url = line;
-                    currentChannel.id = Date.now() + Math.random();
-                    m3uChannels.push(currentChannel);
-                    currentChannel = {};
+                    current.url = line;
+                    m3uChannels.push(current);
+                    current = {};
                 }
             });
             
-            alert(`✅ Successfully imported ${m3uChannels.length} channels!`);
-            filterCategory('m3u');
+            alert(`✅ Imported ${m3uChannels.length} channels!`);
+            console.log('📁 M3U Channels:', m3uChannels.length);
+            
+            // M3U ট্যাব সিলেক্ট করুন
+            const m3uTab = document.querySelector('[data-category="m3u"]');
+            if (m3uTab) m3uTab.click();
         }
 
         // ==========================================
-        // স্লাইডার ফাংশন
+        // স্লাইডার
         // ==========================================
         
         function changeSlide(direction) {
@@ -2334,7 +1861,7 @@
             dots[currentSlide].classList.add('active');
         }
 
-        function currentSlide(index) {
+        function goToSlide(index) {
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('.dot');
             
@@ -2348,9 +1875,7 @@
         }
 
         function startAutoSlide() {
-            setInterval(() => {
-                changeSlide(1);
-            }, 5000);
+            setInterval(() => changeSlide(1), 5000);
         }
 
         // ==========================================
@@ -2358,8 +1883,7 @@
         // ==========================================
         
         function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
         // ==========================================
@@ -2371,52 +1895,24 @@
         }
 
         // ==========================================
-        // স্ক্রিপ্ট প্রোটেকশন
-        // ==========================================
-        
-        function protectScript() {
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            
-            document.addEventListener('keydown', e => {
-                if (e.keyCode == 123 || 
-                    (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
-                    (e.ctrlKey && e.keyCode == 85)) {
-                    e.preventDefault();
-                }
-            });
-        }
-
-        // ==========================================
-        // ক্লিক আউটসাইড টু ক্লোজ
+        // ক্লিক আউটসাইড
         // ==========================================
         
         document.addEventListener('click', function(e) {
             const profile = document.querySelector('.profile-btn');
             const dropdown = document.getElementById('profileDropdown');
-            
             if (profile && !profile.contains(e.target)) {
                 dropdown.classList.remove('active');
             }
             
-            const qualityBtn = document.querySelector('.quality-selector');
-            const qualityOptions = document.getElementById('qualityOptions');
-            
-            if (qualityBtn && !qualityBtn.contains(e.target)) {
-                qualityOptions.classList.remove('active');
-            }
-
-            // মোবাইল মেনু বাইরে ক্লিক করলে বন্ধ
             const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(e.target) && 
-                !menuToggle.contains(e.target)) {
+            const toggle = document.querySelector('.menu-toggle');
+            if (!navLinks.contains(e.target) && !toggle.contains(e.target)) {
                 navLinks.classList.remove('active');
             }
         });
 
-        // ESC কী দিয়ে প্লেয়ার বন্ধ
+        // ESC কী
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closePlayer();
@@ -2424,6 +1920,8 @@
                 document.getElementById('navLinks').classList.remove('active');
             }
         });
+
+        console.log('✅ Script Ready!');
     </script>
 </body>
 </html>
