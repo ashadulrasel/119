@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞 - Ultra Premium Live TV</title>
+    
+    <!-- HLS.js - m3u8 প্লেয়ারের জন্য -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- Font Awesome - আইকনের জন্য -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - প্রিমিয়াম ফন্টের জন্য -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           CSS রিসেট এবং বেস স্টাইল
+           সব ব্রাউজারে একই লুক দেওয়ার জন্য
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* প্রিমিয়াম রং প্যালেট */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --dark-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            
+            /* গ্লাস মরফিজম কালার */
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            
+            /* টেক্সট কালার */
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            
+            /* স্ট্যাটাস কালার */
+            --live-red: #ff3b30;
+            --hd-blue: #007aff;
+            --pro-gold: #ffd700;
+            --free-green: #34c759;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: #000;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ==========================================
+           3D এনিমেটেড ব্যাকগ্রাউন্ড
+           প্রিমিয়াম লুকের জন্য
+           ========================================== */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        .animated-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1583409430135-1ccd865c940e?q=80&w=1170&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.08;
+            filter: blur(2px);
+        }
+
+        /* পার্টিকেল অ্যানিমেশন ব্যাকগ্রাউন্ড */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* গ্রেডিয়েন্ট ওভারলে */
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientFloat {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* ==========================================
+           আল্ট্রা প্রিমিয়াম গ্লাস ইফেক্ট
+           ========================================== */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* ==========================================
+           3D প্রিমিয়াম ইন্ট্রো স্ক্রিন
+           সম্পূর্ণ নতুন ডিজাইন
+           ========================================== */
+        #introScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        /* 3D ঘূর্ণায়মান রিং */
+        .intro-rings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring {
+            position: absolute;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rotate3D 20s linear infinite;
+        }
+
+        .ring:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            animation-duration: 10s;
+        }
+
+        .ring:nth-child(2) {
+            width: 450px;
+            height: 450px;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        .ring:nth-child(3) {
+            width: 600px;
+            height: 600px;
+            animation-duration: 20s;
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg) rotateX(20deg); }
+            100% { transform: rotateY(360deg) rotateX(20deg); }
+        }
+
+        /* 3D লোগো কন্টেইনার */
+        .intro-logo-container {
+            position: relative;
+            z-index: 10;
+            perspective: 1000px;
+        }
+
+        .intro-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 40px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6),
+                        0 0 0 10px rgba(255, 255, 255, 0.1),
+                        0 0 0 20px rgba(255, 255, 255, 0.05);
+            animation: logo3DFloat 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .intro-logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 45px;
+            z-index: -1;
+            opacity: 0.6;
+            filter: blur(20px);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes logo3DFloat {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) rotateX(0deg);
+            }
+            25% { 
+                transform: translateY(-30px) rotateY(10deg) rotateX(10deg);
+            }
+            50% { 
+                transform: translateY(-15px) rotateY(-10deg) rotateX(-10deg);
+            }
+            75% { 
+                transform: translateY(-30px) rotateY(10deg) rotateX(5deg);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* 3D টেক্সট */
+        .intro-text {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-top: 3rem;
+            background: linear-gradient(45deg, #fff 30%, #f0f0f0 50%, #fff 70%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 3s linear infinite, textFloat 4s ease-in-out infinite;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes textShine {
+            to { background-position: 200% center; }
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* প্রিমিয়াম লোডার */
+        .intro-loader {
+            margin-top: 3rem;
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            border-top-color: rgba(255, 255, 255, 0.6);
+            animation-delay: -0.5s;
+        }
+
+        .loader-ring:nth-child(3) {
+            border-top-color: rgba(255, 255, 255, 0.3);
+            animation-delay: -1s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* লোডিং টেক্সট */
+        .loading-text {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: loadingDots 1.5s infinite;
+        }
+
+        @keyframes loadingDots {
+            0%, 20% { content: 'Loading'; }
+            40% { content: 'Loading.'; }
+            60% { content: 'Loading..'; }
+            80%, 100% { content: 'Loading...'; }
+        }
+
+        /* ইন্ট্রো ফেড আউট */
+        #introScreen.fade-out {
+            animation: introFadeOut 1s ease-out forwards;
+        }
+
+        @keyframes introFadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); visibility: hidden; }
+        }
+
+        /* ==========================================
+           প্রিমিয়াম নেভিগেশন বার
+           3D হোভার ইফেক্ট সহ
+           ========================================== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 2rem;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* লোগো সেকশন - 3D এফেক্ট */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            perspective: 1000px;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .logo-img::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: translateY(-5px) rotateY(10deg) rotateX(5deg);
+        }
+
+        .logo-img:hover::before {
+            opacity: 1;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoGradient 4s ease infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes logoGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* নেভ লিংকস */
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 15px;
+            background: var(--glass-white);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn i {
+            margin-right: 8px;
+        }
+
+        /* মোবাইল মেনু বাটন */
+        .menu-toggle {
+            display: none;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-toggle:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: rotate(90deg);
+        }
+
+        /* প্রোফাইল বাটন - আরও প্রিমিয়াম */
+        .profile-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            overflow: hidden;
+        }
+
+        .profile-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-btn:hover::before {
+            opacity: 1;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .profile-btn * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ==========================================
+           প্রিমিয়াম নোটিশ বার
+           স্ক্রলিং টেক্সট সহ
+           ========================================== */
+        .notice-bar {
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(139, 92, 246, 0.15));
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .notice-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: noticeShine 3s infinite;
+        }
+
+        @keyframes noticeShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .notice-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .notice-icon {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: noticePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes noticePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .notice-text {
+            flex: 1;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           3D ব্যানার স্লাইডার
+           পার্যালাক্স এফেক্ট সহ
+           ========================================== */
+        .banner-section {
+            padding: 2.5rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .banner-slider {
+            position: relative;
+            height: 500px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            perspective: 1000px;
+        }
+
+        .banner-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+            animation: bannerZoom 20s ease-in-out infinite;
+        }
+
+        @keyframes bannerZoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(to top, 
+                rgba(0, 0, 0, 0.95) 0%, 
+                rgba(0, 0, 0, 0.7) 50%, 
+                transparent 100%);
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .banner-slide.active .banner-overlay {
+            transform: translateY(0);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .banner-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8)); }
+        }
+
+        .banner-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ব্যানার নেভিগেশন */
+        .banner-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .banner-nav.prev { left: 20px; }
+        .banner-nav.next { right: 20px; }
+
+        .banner-nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-nav-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: scale(1.1);
+        }
+
+        /* ব্যানার ডটস - নতুন ডিজাইন */
+        .banner-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .banner-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .banner-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .banner-dot.active {
+            background: white;
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        .banner-dot:hover::before {
+            opacity: 0.5;
+        }
+
+        /* ==========================================
+           প্রিমিয়াম লাইভ ইভেন্ট কার্ড
+           3D হোভার এফেক্ট
+           ========================================== */
+        .events-section {
+            padding: 3rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title i {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover .event-image {
+            transform: scale(1.1);
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, #ff3b30, #ff6b6b);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            animation: liveGlow 2s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4);
+        }
+
+        @keyframes liveGlow {
+            0%, 100% { 
+                opacity: 1;
+                box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4);
+            }
+            50% { 
+                opacity: 0.8;
+                box-shadow: 0 4px 25px rgba(255, 59, 48, 0.7);
+            }
+        }
+
+        /* ==========================================
+           প্রিমিয়াম ক্যাটাগরি ফিল্টার
+           ========================================== */
+        .category-filter {
+            padding: 1.5rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .category-filter::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            padding: 0.9rem 1.8rem;
+            background: var(--glass-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            backdrop-filter: blur(20px);
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: -1;
+        }
+
+        .category-btn:hover::before,
+        .category-btn.active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .category-btn i {
+            margin-right: 8px;
+        }
+
+        /* ==========================================
+           3D চ্যানেল কার্ড
+           আরও প্রিমিয়াম ডিজাইন
+           ========================================== */
+        .channels-section {
+            padding: 3rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .channel-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        /* শাইন ইফেক্ট */
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .channel-card:hover::before {
+            left: 100%;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-10px) rotateY(10deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .channel-logo-wrapper {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1rem;
+            perspective: 1000px;
+        }
+
+        .channel-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+            transition: transform 0.5s ease;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+        }
+
+        .channel-card:hover .channel-logo {
+            transform: rotateY(360deg) scale(1.1);
+        }
+
+        .channel-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .channel-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .badge-live {
+            background: linear-gradient(135deg, #ff3b30, #ff6b6b);
+            animation: liveGlow 2s ease-in-out infinite;
+        }
+
+        .badge-hd {
+            background: linear-gradient(135deg, #007aff, #5ac8fa);
+        }
+
+        .badge-pro {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+        }
+
+        .badge-free {
+            background: linear-gradient(135deg, #34c759, #30d158);
+        }
+
+        .badge-2k,
+        .badge-4k,
+        .badge-8k {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .badge-b {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+
+        .badge-pro-plus {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+        }
+
+        /* ==========================================
+           আল্ট্রা প্রিমিয়াম ভিডিও প্লেয়ার
+           ফুল-ফিচার্ড ডিজাইন
+           ========================================== */
+        .player-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .player-modal.active {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-container {
+            width: 95%;
+            max-width: 1400px;
+            background: #000;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
+            animation: playerSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes playerSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .player-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.3rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .player-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-title i {
+            font-size: 1.6rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .close-player {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-player:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: #000;
+        }
+
+        #videoPlayer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* প্লেয়ার ব্র্যান্ড লোগো - আপডেটেড */
+        .player-brand {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(20px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            z-index: 100;
+            animation: brandSlideIn 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes brandSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .player-brand-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .player-brand-text {
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ==========================================
+           আইফোন স্টাইল লগইন মডাল
+           আরও প্রিমিয়াম
+           ========================================== */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(30px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 440px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.98) 0%, 
+                rgba(255, 255, 255, 0.95) 100%);
+            border-radius: 40px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            animation: loginSlideUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes loginSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .login-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.3rem;
+            z-index: 1;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .login-btn {
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .close-login {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: #f1f5f9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-login:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* ==========================================
+           প্রিমিয়াম প্রোফাইল ড্রপডাউন
+           ========================================== */
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 15px);
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            border-radius: 25px;
+            padding: 2rem;
+            min-width: 320px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            display: none;
+            animation: dropdownSlide 0.3s ease;
+            color: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-info {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .profile-plan {
+            display: inline-block;
+            padding: 0.6rem 1.3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+        }
+
+        /* ==========================================
+           প্রিমিয়াম ফুটার
+           ========================================== */
+        footer {
+            margin-top: 5rem;
+            padding: 3rem 2rem;
+            background: var(--glass-white);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--glass-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 1.4rem;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-8px) rotate(360deg);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           মোবাইল রেস্পন্সিভ ডিজাইন
+           সব ডিভাইসে পারফেক্ট
+           ========================================== */
+        @media (max-width: 1024px) {
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* মোবাইল মেনু */
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 85%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(15, 12, 41, 0.98);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                padding: 6rem 2rem 2rem;
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-btn {
+                width: 100%;
+                text-align: left;
+                justify-content: flex-start;
+            }
+
+            /* ইন্ট্রো মোবাইল অপটিমাইজেশন */
+            .intro-text {
+                font-size: 2.2rem;
+            }
+
+            .intro-logo {
+                width: 140px;
+                height: 140px;
+            }
+
+            .ring:nth-child(1) { width: 200px; height: 200px; }
+            .ring:nth-child(2) { width: 300px; height: 300px; }
+            .ring:nth-child(3) { width: 400px; height: 400px; }
+
+            /* ব্যানার মোবাইল */
+            .banner-slider {
+                height: 300px;
+                border-radius: 20px;
+            }
+
+            .banner-title {
+                font-size: 1.8rem;
+            }
+
+            .banner-description {
+                font-size: 1rem;
+            }
+
+            .banner-overlay {
+                padding: 1.5rem;
+            }
+
+            /* সেকশন টাইটেল */
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* চ্যানেল গ্রিড */
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 1.2rem;
+            }
+
+            .channel-card {
+                padding: 1rem;
+            }
+
+            .channel-logo-wrapper {
+                width: 70px;
+                height: 70px;
+            }
+
+            /* ইভেন্ট গ্রিড */
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* প্লেয়ার মোবাইল */
+            .player-container {
+                width: 100%;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .player-brand {
+                top: 15px;
+                left: 15px;
+                padding: 0.6rem 1rem;
+            }
+
+            .player-brand-logo {
+                width: 35px;
+                height: 35px;
+            }
+
+            .player-brand-text {
+                font-size: 1.1rem;
+            }
+
+            /* প্রোফাইল ড্রপডাউন */
+            .profile-dropdown {
+                right: -20px;
+                min-width: 300px;
+            }
+
+            /* লগইন মডাল */
+            .login-container {
+                width: 95%;
+                padding: 2.5rem 2rem;
+                border-radius: 30px;
+            }
+
+            .login-title {
+                font-size: 1.8rem;
+            }
+
+            /* ক্যাটাগরি ফিল্টার */
+            .category-filter {
+                padding: 1rem;
+            }
+
+            .category-btn {
+                padding: 0.7rem 1.4rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* খুব ছোট স্ক্রিন */
+            .logo-text {
+                font-size: 1.4rem;
+            }
+
+            .banner-slider {
+                height: 250px;
+            }
+
+            .banner-title {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 1rem;
+            }
+
+            .channel-card {
+                padding: 0.8rem;
+                border-radius: 15px;
+            }
+
+            .channel-logo-wrapper {
+                width: 60px;
+                height: 60px;
+            }
+
+            .channel-name {
+                font-size: 0.85rem;
+            }
+
+            .badge {
+                padding: 0.25rem 0.6rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        /* ল্যান্ডস্কেপ মোড */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .intro-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .intro-text {
+                font-size: 1.8rem;
+                margin-top: 1rem;
+            }
+
+            .intro-loader {
+                margin-top: 1rem;
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* ট্যাবলেট অপটিমাইজেশন */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        /* ==========================================
+           ইউটিলিটি ক্লাস
+           ========================================== */
+        .hidden {
+            display: none !important;
+        }
+
+        /* কাস্টম স্ক্রলবার - সব ডিভাইসে */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        /* Firefox স্ক্রলবার */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #667eea rgba(255, 255, 255, 0.05);
+        }
+
+        /* সিলেকশন কালার */
+        ::selection {
+            background: rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+
+        /* স্মুথ স্ক্রল */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* পারফরমেন্স অপটিমাইজেশন */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* এন্টি-এলিয়াসিং */
+        body, button, input {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ==========================================
+         এনিমেটেড ব্যাকগ্রাউন্ড
+         ========================================== -->
+    <div class="animated-background"></div>
+    <div class="gradient-overlay"></div>
+    <div id="particles-js"></div>
+
+    <!-- ==========================================
+         3D প্রিমিয়াম ইন্ট্রো স্ক্রিন
+         ========================================== -->
+    <div id="introScreen">
+        <div class="intro-rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+        
+        <div class="intro-logo-container">
+            <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="intro-logo">
+        </div>
+        
+        <div class="intro-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+        
+        <div class="intro-loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- ==========================================
+         প্রিমিয়াম নেভিগেশন বার
+         ========================================== -->
+    <nav class="glass-premium" id="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="logo-img">
+                <div class="logo-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+            </div>
+            
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <button class="nav-btn" onclick="scrollToSection('home')">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-btn" onclick="scrollToSection('events')">
+                    <i class="fas fa-calendar-star"></i> Live Events
+                </button>
+                <button class="nav-btn" onclick="scrollToSection('channels')">
+                    <i class="fas fa-tv"></i> Channels
+                </button>
+                <button class="nav-btn" onclick="window.open('https://example.com', '_blank')">
+                    <i class="fas fa-link"></i> Link 1
+                </button>
+                <button class="nav-btn" onclick="window.open('https://example.com', '_blank')">
+                    <i class="fas fa-link"></i> Link 2
+                </button>
+                
+                <button class="nav-btn" id="authBtn" onclick="showLogin()" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div id="profileBtn" class="hidden" style="position: relative;">
+                    <button class="profile-btn" onclick="toggleProfile()">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <span id="profileName">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-info">
+                            <div class="profile-name" id="dropdownName">User Name</div>
+                            <div class="profile-email" id="dropdownEmail">user@example.com</div>
+                            <span class="profile-plan" id="dropdownPlan">Basic Plan</span>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="daysLeft">--</div>
+                                <div class="stat-label">Days Left</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="watchedChannels">0</div>
+                                <div class="stat-label">Watched</div>
+                            </div>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         প্রিমিয়াম নোটিশ বার
+         ========================================== -->
+    <div class="notice-bar">
+        <div class="notice-content">
+            <i class="fas fa-bullhorn notice-icon"></i>
+            <div class="notice-text">
+                🎉 Welcome to Ultra Premium Live TV! Enjoy unlimited streaming in 4K quality • New channels added every week • Live sports events available 24/7 • Premium content for all members
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         3D ব্যানার স্লাইডার
+         ========================================== -->
+    <section class="banner-section" id="home">
+        <div class="banner-slider" id="bannerSlider">
+            <div class="banner-slide active">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=1600&q=80" alt="Live Sports">
+                <div class="banner-overlay">
+                    <div class="banner-title">Watch Live Sports in 4K</div>
+                    <div class="banner-description">Stream your favorite sports events in ultra HD quality</div>
+                </div>
+            </div>
+
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?w=1600&q=80" alt="Premium Entertainment">
+                <div class="banner-overlay">
+                    <div class="banner-title">Premium Entertainment</div>
+                    <div class="banner-description">Unlimited access to 200+ channels worldwide</div>
+                </div>
+            </div>
+
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1600&q=80" alt="News">
+                <div class="banner-overlay">
+                    <div class="banner-title">24/7 News & Updates</div>
+                    <div class="banner-description">Stay updated with live news from around the world</div>
+                </div>
+            </div>
+
+            <button class="banner-nav prev" onclick="changeBanner(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="banner-nav next" onclick="changeBanner(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="banner-dots" id="bannerDots"></div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         প্রিমিয়াম লাইভ ইভেন্ট সেকশন
+         ========================================== -->
+    <section class="events-section" id="events">
+        <h2 class="section-title">
+            <i class="fas fa-calendar-star"></i>
+            Live Events
+        </h2>
+        <div class="events-grid" id="eventsGrid"></div>
+    </section>
+
+    <!-- ==========================================
+         ক্যাটাগরি ফিল্টার
+         ========================================== -->
+    <div class="category-filter">
+        <button class="category-btn active" onclick="filterChannels('all')">
+            <i class="fas fa-border-all"></i> All Channels
+        </button>
+        <button class="category-btn" onclick="filterChannels('বাংলাদেশী')">
+            <i class="fas fa-flag"></i> Bangladeshi
+        </button>
+        <button class="category-btn" onclick="filterChannels('কলকাতা')">
+            <i class="fas fa-city"></i> Kolkata
+        </button>
+        <button class="category-btn" onclick="filterChannels('ইন্ডিয়ান')">
+            <i class="fas fa-flag"></i> Indian
+        </button>
+        <button class="category-btn" onclick="filterChannels('ক্রিকেট')">
+            <i class="fas fa-baseball-ball"></i> Cricket
+        </button>
+        <button class="category-btn" onclick="filterChannels('ফুটবল')">
+            <i class="fas fa-futbol"></i> Football
+        </button>
+        <button class="category-btn" onclick="filterChannels('কিড')">
+            <i class="fas fa-child"></i> Kids
+        </button>
+        <button class="category-btn" onclick="filterChannels('ধর্ম')">
+            <i class="fas fa-mosque"></i> Religious
+        </button>
+    </div>
+
+    <!-- ==========================================
+         3D চ্যানেল গ্রিড
+         ========================================== -->
+    <section class="channels-section" id="channels">
+        <h2 class="section-title">
+            <i class="fas fa-tv"></i>
+            TV Channels
+        </h2>
+        <div class="channels-grid" id="channelsGrid"></div>
+    </section>
+
+    <!-- ==========================================
+         আল্ট্রা প্রিমিয়াম ভিডিও প্লেয়ার
+         ========================================== -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-container">
+            <div class="player-header">
+                <div class="player-title">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="currentChannelName">Channel Name</span>
+                </div>
+                <button class="close-player" onclick="closePlayer()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="video-wrapper">
+                <div class="player-brand">
+                    <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="player-brand-logo">
+                    <div class="player-brand-text">𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞</div>
+                </div>
+
+                <video id="videoPlayer" controls autoplay playsinline></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         আইফোন স্টাইল লগইন মডাল
+         ========================================== -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <button class="close-login" onclick="closeLogin()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="login-header">
+                <img src="https://avatars.githubusercontent.com/u/192325222?v=4" alt="Logo" class="login-logo">
+                <h2 class="login-title">Welcome Back</h2>
+                <p class="login-subtitle">Sign in to continue streaming</p>
+            </div>
+
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" class="login-input" placeholder="Username" required autocomplete="username">
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="login-input" placeholder="Password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         প্রিমিয়াম ফুটার
+         ========================================== -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank" class="social-btn" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" class="social-btn" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="social-btn" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="social-btn" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://t.me/yourchannel" target="_blank" class="social-btn" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://wa.me/1234567890" target="_blank" class="social-btn" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="footer-text">
+                © 2024 𝕃𝕚𝕧𝕖 𝕊𝕥𝕣𝕖𝕒𝕞. All rights reserved. | Ultra Premium Live TV Streaming Platform
+            </p>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         JavaScript কোড
+         ========================================== -->
+    <script>
+        /* ==========================================
+           একাউন্ট পারমিশন ডেটা
+           তিনটি ভিন্ন প্ল্যান সহ
+           ========================================== */
+        const authorizedAccounts = {
+            'basic_user': {
+                password: 'basic123',
+                plan: 'Basic',
+                badge: 'B',
+                expiryDate: '2024-12-31',
+                allowedCategories: ['বাংলাদেশী', 'ধর্ম'],
+                email: 'basic@liveStream.com'
+            },
+            'pro_user': {
+                password: 'pro123',
+                plan: 'Pro',
+                badge: 'Pro',
+                expiryDate: '2025-03-31',
+                allowedCategories: ['বাংলাদেশী', 'কলকাতা', 'ইন্ডিয়ান', 'ধর্ম', 'কিড'],
+                email: 'pro@livestream.com'
+            },
+            'ultra_user': {
+                password: 'ultra123',
+                plan: 'Ultra Pro',
+                badge: 'Pro+',
+                expiryDate: '2025-12-31',
+                allowedCategories: 'all',
+                email: 'ultra@livestream.com'
+            }
+        };
+
+        /* ==========================================
+           চ্যানেল ডেটা
+           ========================================== */
+        const channels = [
+            // বাংলাদেশী চ্যানেল
+            {
+                name: 'BTV',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Bangladesh_Television_Logo.png',
+                category: 'বাংলাদেশী',
+                url: 'https://edge01.iptv.digijadoo.net/live/btv/playlist.m3u8',
+                badges: ['Live', 'HD', 'B'],
+                type: 'm3u8'
+            },
+            {
+                name: 'ATN Bangla',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/5/53/ATN_Bangla.svg',
+                category: 'বাংলাদেশী',
+                url: 'https://edge01.iptv.digijadoo.net/live/atn_bangla/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Channel I',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/8/88/Channel-i.svg',
+                category: 'বাংলাদেশী',
+                url: 'https://edge01.iptv.digijadoo.net/live/channel_i/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'RTV',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/4/41/Rtv_bangladesh.PNG',
+                category: 'বাংলাদেশী',
+                url: 'https://edge01.iptv.digijadoo.net/live/rtv/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Star Jalsha',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/d/d0/Star_Jalsha_logo.jpg',
+                category: 'কলকাতা',
+                url: 'https://edge01.iptv.digijadoo.net/live/star_jalsha/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Zee Bangla',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/8/8b/Zee_Bangla.png',
+                category: 'কলকাতা',
+                url: 'https://edge01.iptv.digijadoo.net/live/zee_bangla/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Sony TV',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Sony_TV_new_logo.png',
+                category: 'ইন্ডিয়ান',
+                url: 'https://edge01.iptv.digijadoo.net/live/sony_tv/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Star Plus',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Star_Plus_2016.png',
+                category: 'ইন্ডিয়ান',
+                url: 'https://edge01.iptv.digijadoo.net/live/star_plus/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'T Sports',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/1/11/T_Sports_logo.png',
+                category: 'ক্রিকেট',
+                url: 'https://edge01.iptv.digijadoo.net/live/t_sports/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Star Sports',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/1/11/Star_Sports_logo.png',
+                category: 'ক্রিকেট',
+                url: 'https://edge01.iptv.digijadoo.net/live/star_sports_1/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Sony Sports',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/5/5b/Sony_Sports_Network.png',
+                category: 'ফুটবল',
+                url: 'https://edge01.iptv.digijadoo.net/live/sony_sports/playlist.m3u8',
+                badges: ['Live', '4K', 'Pro+'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Cartoon Network',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fe/CARTOON_NETWORK_logo.png',
+                category: 'কিড',
+                url: 'https://edge01.iptv.digijadoo.net/live/cartoon_network/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Nick',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/8/85/Nickelodeon_2009_logo.svg',
+                category: 'কিড',
+                url: 'https://edge01.iptv.digijadoo.net/live/nick/playlist.m3u8',
+                badges: ['Live', 'HD', 'Pro'],
+                type: 'm3u8'
+            },
+            {
+                name: 'Peace TV',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/4/43/Peace_TV_Bangla.png',
+                category: 'ধর্ম',
+                url: 'https://edge01.iptv.digijadoo.net/live/peace_tv/playlist.m3u8',
+                badges: ['Live', 'Free', 'B'],
+                type: 'm3u8'
+            },
+            {
+                name: 'ATN Islamic',
+                logo: 'https://upload.wikimedia.org/wikipedia/en/2/22/ATN_Islamic_TV_Logo.png',
+                category: 'ধর্ম',
+                url: 'https://edge01.iptv.digijadoo.net/live/atn_islamic/playlist.m3u8',
+                badges: ['Live', 'Free', 'B'],
+                type: 'm3u8'
+            }
+        ];
+
+        /* ==========================================
+           লাইভ ইভেন্ট ডেটা
+           ========================================== */
+        const liveEvents = [
+            {
+                title: 'Bangladesh vs India - Cricket Match',
+                image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&q=80',
+                startTime: '2024-01-15T14:00:00',
+                endTime: '2024-01-15T22:00:00',
+                channelUrl: 'https://edge01.iptv.digijadoo.net/live/t_sports/playlist.m3u8',
+                category: 'ক্রিকেট'
+            },
+            {
+                title: 'Premier League - Live Football',
+                image: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',
+                startTime: '2024-01-20T19:00:00',
+                endTime: '2024-01-20T21:00:00',
+                channelUrl: 'https://edge01.iptv.digijadoo.net/live/sony_sports/playlist.m3u8',
+                category: 'ফুটবল'
+            }
+        ];
+
+        /* ==========================================
+           গ্লোবাল ভেরিয়েবল
+           ========================================== */
+        let currentUser = null;
+        let currentCategory = 'all';
+        let bannerInterval = null;
+        let currentBannerIndex = 0;
+        let hls = null;
+
+        /* ==========================================
+           ইন্ট্রো স্ক্রিন হ্যান্ডলিং
+           3.5 সেকেন্ড পর ফেড আউট
+           ========================================== */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const introScreen = document.getElementById('introScreen');
+                introScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                }, 1000);
+            }, 3500);
+        });
+
+        /* ==========================================
+           স্ক্রল ইফেক্ট - নেভবার
+           ========================================== */
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        /* ==========================================
+           মোবাইল মেনু টগল
+           ========================================== */
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        /* ==========================================
+           স্মুথ স্ক্রল টু সেকশন
+           ========================================== */
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                document.getElementById('navLinks').classList.remove('active');
+            }
+        }
+
+        /* ==========================================
+           ব্যানার স্লাইডার ইনিশিয়ালাইজ
+           ========================================== */
+        function initBanner() {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dotsContainer = document.getElementById('bannerDots');
+
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `banner-dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToBanner(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            bannerInterval = setInterval(() => {
+                changeBanner(1);
+            }, 5000);
+        }
+
+        function updateBanner() {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.banner-dot');
+
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentBannerIndex);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentBannerIndex);
+            });
+        }
+
+        function changeBanner(direction) {
+            const slides = document.querySelectorAll('.banner-slide');
+            currentBannerIndex = (currentBannerIndex + direction + slides.length) % slides.length;
+            updateBanner();
+            resetBannerInterval();
+        }
+
+        function goToBanner(index) {
+            currentBannerIndex = index;
+            updateBanner();
+            resetBannerInterval();
+        }
+
+        function resetBannerInterval() {
+            clearInterval(bannerInterval);
+            bannerInterval = setInterval(() => {
+                changeBanner(1);
+            }, 5000);
+        }
+
+        /* ==========================================
+           ইভেন্ট রেন্ডারিং
+           শুধু চলমান ইভেন্ট দেখায়
+           ========================================== */
+        function renderEvents() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            const now = new Date();
+
+            const activeEvents = liveEvents.filter(event => {
+                const start = new Date(event.startTime);
+                const end = new Date(event.endTime);
+                return now >= start && now <= end;
+            });
+
+            if (activeEvents.length === 0) {
+                eventsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
+                        <i class="fas fa-calendar-times" style="font-size: 5rem; opacity: 0.2; margin-bottom: 1.5rem;"></i>
+                        <p style="opacity: 0.6; font-size: 1.2rem;">No live events at the moment</p>
+                    </div>
+                `;
+                return;
+            }
+
+            eventsGrid.innerHTML = activeEvents.map(event => `
+                <div class="event-card" onclick='playChannel(${JSON.stringify(event.channelUrl)}, "${event.title}", "m3u8")'>
+                    <img src="${event.image}" alt="${event.title}" class="event-image" loading="lazy">
+                    <div class="event-content">
+                        <div class="event-title">${event.title}</div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            ${new Date(event.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                        <span class="event-status">
+                            <i class="fas fa-circle" style="font-size: 0.6rem;"></i> LIVE NOW
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ==========================================
+           চ্যানেল রেন্ডারিং
+           ফিল্টার এবং পারমিশন চেক সহ
+           ========================================== */
+        function renderChannels() {
+            const channelsGrid = document.getElementById('channelsGrid');
+            
+            let filteredChannels = channels;
+
+            if (currentCategory !== 'all') {
+                filteredChannels = channels.filter(ch => ch.category === currentCategory);
+            }
+
+            if (currentUser) {
+                const userPlan = authorizedAccounts[currentUser].allowedCategories;
+                if (userPlan !== 'all') {
+                    filteredChannels = filteredChannels.filter(ch => 
+                        userPlan.includes(ch.category)
+                    );
+                }
+            }
+
+            channelsGrid.innerHTML = filteredChannels.map(channel => `
+                <div class="channel-card" onclick='handleChannelClick(${JSON.stringify(channel)})'>
+                    <div class="channel-logo-wrapper">
+                        <img src="${channel.logo}" 
+                             alt="${channel.name}" 
+                             class="channel-logo" 
+                             loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/90?text=${encodeURIComponent(channel.name)}'">
+                    </div>
+                    <div class="channel-name">${channel.name}</div>
+                    <div class="channel-badges">
+                        ${channel.badges.map(badge => `
+                            <span class="badge badge-${badge.toLowerCase().replace('+', '-plus')}">${badge}</span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ==========================================
+           ক্যাটাগরি ফিল্টার
+           ========================================== */
+        function filterChannels(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderChannels();
+        }
+
+        /* ==========================================
+           চ্যানেল ক্লিক হ্যান্ডলার
+           লগইন এবং প্ল্যান চেক
+           ========================================== */
+        function handleChannelClick(channel) {
+            if (!currentUser) {
+                alert('⚠️ Please sign in to watch channels');
+                showLogin();
+                return;
+            }
+
+            const userPlan = authorizedAccounts[currentUser];
+            const requiredBadge = channel.badges.find(b => ['B', 'Pro', 'Pro+'].includes(b));
+            
+            if (requiredBadge === 'Pro' && userPlan.badge === 'B') {
+                alert('⚠️ This channel requires Pro plan or higher');
+                return;
+            }
+
+            if (requiredBadge === 'Pro+' && (userPlan.badge === 'B' || userPlan.badge === 'Pro')) {
+                alert('⚠️ This channel requires Ultra Pro plan');
+                return;
+            }
+
+            playChannel(channel.url, channel.name, channel.type);
+            updateWatchHistory(channel.name);
+        }
+
+        /* ==========================================
+           ভিডিও প্লেয়ার
+           HLS.js সহ সম্পূর্ণ সাপোর্ট
+           ========================================== */
+        function playChannel(url, name, type) {
+            const playerModal = document.getElementById('playerModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const channelName = document.getElementById('currentChannelName');
+
+            playerModal.classList.add('active');
+            channelName.textContent = name;
+
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
+
+            if (type === 'm3u8') {
+                if (Hls.isSupported()) {
+                    hls = new Hls({
+                        enableWorker: true,
+                        lowLatencyMode: true,
+                        backBufferLength: 90,
+                        maxBufferLength: 30,
+                        maxMaxBufferLength: 600,
+                        xhrSetup: function(xhr, url) {
+                            xhr.withCredentials = false;
+                        }
+                    });
+                    
+                    hls.loadSource(url);
+                    hls.attachMedia(videoPlayer);
+                    
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        videoPlayer.play().catch(e => {
+                            console.log('Autoplay prevented:', e);
+                        });
+                    });
+
+                    hls.on(Hls.Events.ERROR, function(event, data) {
+                        if (data.fatal) {
+                            switch(data.type) {
+                                case Hls.ErrorTypes.NETWORK_ERROR:
+                                    hls.startLoad();
+                                    break;
+                                case Hls.ErrorTypes.MEDIA_ERROR:
+                                    hls.recoverMediaError();
+                                    break;
+                                default:
+                                    hls.destroy();
+                                    break;
+                            }
+                        }
+                    });
+                } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                    videoPlayer.src = url;
+                    videoPlayer.addEventListener('loadedmetadata', function() {
+                        videoPlayer.play();
+                    });
+                }
+            } else {
+                videoPlayer.src = url;
+                videoPlayer.play();
+            }
+
+            // PIP সাপোর্ট
+            if (document.pictureInPictureEnabled) {
+                videoPlayer.addEventListener('dblclick', function() {
+                    if (document.pictureInPictureElement) {
+                        document.exitPictureInPicture();
+                    } else {
+                        videoPlayer.requestPictureInPicture();
+                    }
+                });
+            }
+        }
+
+        /* ==========================================
+           প্লেয়ার বন্ধ করা
+           ========================================== */
+        function closePlayer() {
+            const playerModal = document.getElementById('playerModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            playerModal.classList.remove('active');
+            videoPlayer.pause();
+            videoPlayer.src = '';
+
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
+        }
+
+        /* ==========================================
+           লগইন মডাল
+           ========================================== */
+        function showLogin() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        /* ==========================================
+           লগইন হ্যান্ডলার
+           ========================================== */
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (!authorizedAccounts[username]) {
+                alert('❌ Invalid username or password');
+                return;
+            }
+
+            const account = authorizedAccounts[username];
+
+            if (account.password !== password) {
+                alert('❌ Invalid username or password');
+                return;
+            }
+
+            const expiryDate = new Date(account.expiryDate);
+            const today = new Date();
+
+            if (today > expiryDate) {
+                alert('❌ Your account has expired. Please renew your subscription.');
+                return;
+            }
+
+            currentUser = username;
+            
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('loginTime', new Date().toISOString());
+
+            updateAuthUI();
+            closeLogin();
+
+            alert(`✅ Welcome ${account.plan} user! Enjoy streaming.`);
+        }
+
+        /* ==========================================
+           লগআউট
+           ========================================== */
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('loginTime');
+            
+            updateAuthUI();
+            renderChannels();
+
+            alert('👋 You have been logged out successfully');
+        }
+
+        /* ==========================================
+           অথ UI আপডেট
+           ========================================== */
+        function updateAuthUI() {
+            const authBtn = document.getElementById('authBtn');
+            const profileBtn = document.getElementById('profileBtn');
+
+            if (currentUser) {
+                const account = authorizedAccounts[currentUser];
+                
+                authBtn.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
+
+                const firstLetter = currentUser.charAt(0).toUpperCase();
+                document.getElementById('profileAvatar').textContent = firstLetter;
+                document.getElementById('profileName').textContent = account.plan;
+                
+                document.getElementById('dropdownName').textContent = currentUser;
+                document.getElementById('dropdownEmail').textContent = account.email;
+                document.getElementById('dropdownPlan').textContent = `${account.plan} (${account.badge})`;
+
+                const daysLeft = Math.ceil((new Date(account.expiryDate) - new Date()) / (1000 * 60 * 60 * 24));
+                document.getElementById('daysLeft').textContent = daysLeft;
+
+                const watchHistory = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+                document.getElementById('watchedChannels').textContent = watchHistory.length;
+
+                renderChannels();
+            } else {
+                authBtn.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+            }
+        }
+
+        /* ==========================================
+           প্রোফাইল ড্রপডাউন টগল
+           ========================================== */
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileBtn = document.getElementById('profileBtn');
+            const dropdown = document.getElementById('profileDropdown');
+            
+            if (profileBtn && !profileBtn.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        /* ==========================================
+           ওয়াচ হিস্টরি
+           ========================================== */
+        function updateWatchHistory(channelName) {
+            let history = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+            
+            if (!history.includes(channelName)) {
+                history.push(channelName);
+                localStorage.setItem('watchHistory', JSON.stringify(history));
+                
+                if (currentUser) {
+                    document.getElementById('watchedChannels').textContent = history.length;
+                }
+            }
+        }
+
+        /* ==========================================
+           অটো লগইন চেক
+           ========================================== */
+        function checkAutoLogin() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser && authorizedAccounts[savedUser]) {
+                const account = authorizedAccounts[savedUser];
+                const expiryDate = new Date(account.expiryDate);
+                const today = new Date();
+
+                if (today <= expiryDate) {
+                    currentUser = savedUser;
+                    updateAuthUI();
+                } else {
+                    localStorage.removeItem('currentUser');
+                }
+            }
+        }
+
+        /* ==========================================
+           পেজ ইনিশিয়ালাইজেশন
+           ========================================== */
+        document.addEventListener('DOMContentLoaded', function() {
+            initBanner();
+            renderEvents();
+            renderChannels();
+            checkAutoLogin();
+
+            setInterval(renderEvents, 60000);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePlayer();
+                    closeLogin();
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
+
+        /* ==========================================
+           সিকিউরিটি প্রোটেকশন
+           ========================================== */
+        (function() {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+
+            document.addEventListener('keydown', e => {
+                if (e.keyCode == 123 || 
+                    (e.ctrlKey && e.shiftKey && e.keyCode == 73) || 
+                    (e.ctrlKey && e.shiftKey && e.keyCode == 74) || 
+                    (e.ctrlKey && e.keyCode == 85)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            const devtools = /./;
+            devtools.toString = function() {
+                this.opened = true;
+            }
+            
+            setInterval(() => {
+                if (devtools.opened) {
+                    window.location.reload();
+                }
+                devtools.opened = false;
+            }, 1000);
+        })();
+    </script>
+
+    <!-- Particles.js CDN (Optional - পার্টিকেল ব্যাকগ্রাউন্ডের জন্য) -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // পার্টিকেল কনফিগারেশন
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: '#667eea' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#667eea',
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: 'none',
+                        random: false,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+        }
+    </script>
+</body>
+</html>
+
